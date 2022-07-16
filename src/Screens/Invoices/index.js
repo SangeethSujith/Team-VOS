@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Invoices = ({ navigation }) => {
   const [state, setstate] = useState()
+  const [details, setdetails] = useState()
 
   useEffect(() => {
     getInvoices()
@@ -45,11 +46,11 @@ const Invoices = ({ navigation }) => {
         Authorization: 'Bearer ' + token,
       }
     };
-    axios.get(`${API_URL}/${GET_INVOICES}?Offset=0&Limit=0&FromDate=09-04-2021&ToDate=31-03-2022&CustomerCode=C08954`,
+    axios.get(`${API_URL}/${GET_INVOICES}?Offset=0&Limit=0&FromDate=${'09-04-2021'}&ToDate=${'31-03-2022'}&CustomerCode=${'C08954'}`,
       headers).then(async (response) => {
 
         await setstate(response.data.Data)
-        console.log(state);
+        //console.log(state);
         return {
           response: response.data
         };
@@ -58,7 +59,7 @@ const Invoices = ({ navigation }) => {
       });
   }
 
-  async function InvoiceDetails() {
+  async function InvoiceDetails(ID) {
     const token = await AsyncStorage.getItem('userToken');
 
     let headers = {
@@ -66,11 +67,12 @@ const Invoices = ({ navigation }) => {
         Authorization: 'Bearer ' + token,
       }
     };
-    axios.get(`${API_URL}/${GET_INVOICES_DETAILS}?ID=${295934}`,
+    axios.get(`${API_URL}/${GET_INVOICES_DETAILS}?ID=${JSON.stringify(ID)}`,
       headers).then(async (response) => {
 
-        await setstate(response.data.Data)
-        console.log(state);
+        await setdetails(response.data.Data)
+        console.log(details);
+        console.log(JSON.stringify(ID));
         return {
           response: response.data
         };
@@ -114,7 +116,7 @@ const Invoices = ({ navigation }) => {
           }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => openModal(item)}>
+              <TouchableOpacity onPress={() => InvoiceDetails(item.ID) && openModal(item)}>
                 <View style={styles.card}>
                   <Icon
                     name={"file-text1"}
@@ -185,28 +187,28 @@ const Invoices = ({ navigation }) => {
                     <Text style={styles.text2}>{'Invoice No'}</Text>
                     <Text style={styles.text2}>{': '}</Text>
                   </View>
-                  <Text style={styles.text}>{'358'}</Text>
+                  <Text style={styles.text}>{details.InvoiceNo}</Text>
                 </View>
                 <View style={styles.textrow}>
                   <View style={styles.innerrow}>
                     <Text style={styles.text2}>{'No.of Items'}</Text>
                     <Text style={styles.text2}>{': '}</Text>
                   </View>
-                  <Text style={styles.text}>{'3'}</Text>
+                  <Text style={styles.text}>{details.NoOfItems}</Text>
                 </View>
                 <View style={styles.textrow}>
                   <View style={styles.innerrow}>
                     <Text style={styles.text2}>{'Date'}</Text>
                     <Text style={styles.text2}>{': '}</Text>
                   </View>
-                  <Text style={styles.text}>{'22/02/2022'}</Text>
+                  <Text style={styles.text}>{details.InvoiceDate}</Text>
                 </View>
                 <View style={styles.textrow}>
                   <View style={styles.innerrow}>
                     <Text style={styles.text2}>{'Amount'}</Text>
                     <Text style={styles.text2}>{': '}</Text>
                   </View>
-                  <Text style={styles.text}>{'3587/-'}</Text>
+                  <Text style={styles.text}>{details.NetAmount}</Text>
                 </View>
               </View>
             </View>

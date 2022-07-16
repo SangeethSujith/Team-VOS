@@ -4,15 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import qs from 'qs'
 
 export async function getInvoices() {
-    //const url = require("url");
-    // const params = {
-    //     FromDate: "01-03-2022",
-    //     ToDate: "31-03-2022",
-    //     CustomerCode: "C08954",
-    //     Offset: "0",
-    //     Limit: "0"
-    // };
-    //const param = new url.URLSearchParams(params);
     const token = await AsyncStorage.getItem('userToken');
 
     let headers = {
