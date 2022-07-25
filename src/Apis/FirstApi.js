@@ -8,6 +8,7 @@ module.exports = {
   GET_ORDERS: 'Sales/SalesAPI/GetSalesOrderListForAPI',
   GET_ORDERS_DETAILS: 'Sales/SalesAPI/GetSalesOrderDetailsForAPI',
   GET_INVOICES: 'Sales/SalesAPI/GetSalesInvoiceListForAPI',
-  GET_INVOICES_DETAILS: 'Sales/SalesAPI/GetSalesInvoiceDetailsForAPI'
+  GET_INVOICES_DETAILS: 'Sales/SalesAPI/GetSalesInvoiceDetailsForAPI',
+  GET_TARGET: 'SalesAPI/GetTargetAndAchievementByFSOForAPI'
 
 };

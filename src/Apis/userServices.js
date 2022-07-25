@@ -15,7 +15,7 @@ export async function getToken() {
     axios.post(`${API_URL}/${GET_TOKEN}`, qs.stringify(body)).then(async (response) => {
       //console.log(response.data);
       try {
-        //console.log(response.data.access_token);
+        console.log(response.data.access_token);
         await setAuthAsyncStorage(response.data);
 
       } catch (e) { }

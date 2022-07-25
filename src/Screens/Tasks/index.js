@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 import { COLORS, Fonts, SIZES } from '../../Styles/theme';
@@ -6,38 +6,44 @@ import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import LinearGradient from 'react-native-linear-gradient';
 import CheckBox from '@react-native-community/checkbox';
 import { CustomButton } from '../../Components/CustomButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+import { GET_TARGET, API_URL } from '../../Apis/FirstApi';
+import axios from 'axios';
 //import {Cust}
 
 const Tasks = ({ navigation }) => {
 
   const [isSelected, setSelection] = useState([]);
 
-  const [state, setstate] = useState({
-    data: [
-      { id: 1, name: 'Elaj ayrvedic clinic', date: 'july 2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-      { id: 2, name: 'Kalpetta ayrvedic clinic', date: 'april 2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-      { id: 3, name: 'Kannur ayrvedic clinic', date: 'march 2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-      { id: 4, name: 'Elaj ayrvedic clinic', date: 'feb 2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    ]
-  })
-  const showAlert = () =>
-    Alert.alert(
-      "Do you want to mark as completed ?",
-      " ",
-      [
-        {
-          text: "Cancel",
-          cancelable: true,
-          style: "cancel",
-        },
-        {
-          text: "Ok",
-          cancelable: true,
-          //onPress: () => Alert.alert("Cancel Pressed"),
-          style: "cancel",
-        },
-      ],
-    );
+  const [state, setstate] = useState()
+  useEffect(() => {
+    getTarget();
+  }, []);
+
+  async function getTarget() {
+    const token = await AsyncStorage.getItem('userToken');
+    const current = new Date();
+    const prior = new Date().setDate(current.getDate() - 30);
+    console.log(current.toISOString().split('T')[0]);
+    let headers = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      }
+    };
+    axios.get(`${API_URL}/${GET_TARGET}?ID=${param}`,
+      headers).then(async (response) => {
+
+        await setstate(response.data.Data)
+        console.log('state' + state);
+        return {
+          response: response.data
+        };
+      }).catch((err) => {
+        console.log(err)
+      });
+  }
+
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
