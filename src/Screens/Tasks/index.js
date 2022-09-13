@@ -8,34 +8,36 @@ import CheckBox from '@react-native-community/checkbox';
 import { CustomButton } from '../../Components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { GET_TARGET, API_URL } from '../../Apis/FirstApi';
+import { GET_TARGET, API_URL, GET_TARGET_FSO } from '../../Apis/FirstApi';
+import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import axios from 'axios';
 //import {Cust}
 
 const Tasks = ({ navigation }) => {
 
   const [isSelected, setSelection] = useState([]);
-
-  const [state, setstate] = useState()
+  const [loader, setloader] = useState(false);
+  const [state, setstate] = useState('')
   useEffect(() => {
     getTarget();
   }, []);
 
   async function getTarget() {
+    setloader(true);
     const token = await AsyncStorage.getItem('userToken');
-    const current = new Date();
-    const prior = new Date().setDate(current.getDate() - 30);
-    console.log(current.toISOString().split('T')[0]);
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+    console.log(Data.UserCode)
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
       }
     };
-    axios.get(`${API_URL}/${GET_TARGET}?ID=${param}`,
+    axios.get(`${API_URL}/${GET_TARGET_FSO}?FSOCode=${Data.UserCode}`,
       headers).then(async (response) => {
-
+        setloader(false);
         await setstate(response.data.Data)
-        console.log('state' + state);
+        console.log('state' + JSON.stringify(response.data.Data));
         return {
           response: response.data
         };
@@ -50,58 +52,78 @@ const Tasks = ({ navigation }) => {
         heading={'Targets'}
         onpress={() => navigation.goBack()}
       />
-      <FlatList style={{ backgroundColor: 'white', marginTop: 20 }}
-        data={state.data}
-        horizontal={false}
-        scrollEnabled={true}
-        //ListFooterComponent={}
-        showsVerticalScrollIndicator={false}
-        numColumns={1}
-        keyExtractor={(item) => {
-          return item.id;
-        }}
-        renderItem={({ item }) => {
-          return (
-            <View>
-              <View style={styles.card}>
-                <View style={{ margin: 10 }}>
-                  <View>
-                    <View style={styles.textrow}>
-                      <View style={styles.innerrow}>
-                        <Text style={styles.text}>{'Target For'}</Text>
-                        <Text style={styles.text}>{': '}</Text>
+      {state !== '' ?
+        <FlatList style={{ backgroundColor: 'white', marginTop: 20 }}
+          data={state}
+          horizontal={false}
+          scrollEnabled={true}
+          //inverted={true}
+          //contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
+          //ListFooterComponent={}
+          showsVerticalScrollIndicator={false}
+          numColumns={1}
+          keyExtractor={(item) => {
+            return item.FSOID;
+          }}
+          renderItem={({ item }) => {
+            return (
+              <View>
+                <View style={styles.card}>
+                  <View style={{ margin: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text}>{'Target For'}</Text>
+                          <Text style={styles.text}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text3}>{item.Month} {item.Year}</Text>
                       </View>
-                      <Text style={styles.text3}>{item.date}</Text>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text3}>{'Target Type'}</Text>
+                          <Text style={styles.text3}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text2}>{'Patent'}</Text>
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text3}>{'Target Amount'}</Text>
+                          <Text style={styles.text3}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text2}>{item.TargetAmount}</Text>
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text3}>{'Achieved'}</Text>
+                          <Text style={styles.text3}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text2}>{item.AchievementAmount}</Text>
+                      </View>
                     </View>
-                    <View style={styles.textrow}>
-                      <View style={styles.innerrow}>
-                        <Text style={styles.text3}>{'Target Type'}</Text>
-                        <Text style={styles.text3}>{': '}</Text>
-                      </View>
-                      <Text style={styles.text2}>{'Patent'}</Text>
-                    </View>
-                    <View style={styles.textrow}>
-                      <View style={styles.innerrow}>
-                        <Text style={styles.text3}>{'Target Amount'}</Text>
-                        <Text style={styles.text3}>{': '}</Text>
-                      </View>
-                      <Text style={styles.text2}>{'789764'}</Text>
-                    </View>
-                    <View style={styles.textrow}>
-                      <View style={styles.innerrow}>
-                        <Text style={styles.text3}>{'Achieved'}</Text>
-                        <Text style={styles.text3}>{': '}</Text>
-                      </View>
-                      <Text style={styles.text2}>{'6466'}</Text>
+                    <View style={{
+                      width: 60, height: 60, borderColor: COLORS.primary, backgroundColor: COLORS.primary_light,
+                      borderRadius: 30, borderWidth: 1, alignItems: 'center', justifyContent: 'center'
+                    }}>
+                      <Text style={styles.text4}>
+                        {parseFloat(item.AchievementAmount / item.TargetAmount * 100).toFixed(2)} %
+                      </Text>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
-          )
-        }}
-      />
-
+            )
+          }}
+        />
+        :
+        <View>
+          <LoaderTwo loader={loader} />
+          <Text>Loading...............</Text>
+        </View>}
+      {state.length == 0 && loader == false &&
+        <View style={{ marginTop: '60%', alignSelf: 'center' }}>
+          <Text>No Targets</Text>
+        </View>
+      }
     </View>
   )
 }
@@ -144,6 +166,13 @@ const styles = StyleSheet.create({
     fontSize: SIZES.vsmall,
     fontFamily: Fonts.font_400,
     marginVertical: 3,
+  },
+  text4: {
+    color: 'black',
+    fontSize: SIZES.vsmall,
+    fontFamily: Fonts.font_600,
+    marginVertical: 3,
+    //width: '50%'
   },
   text3: {
     color: COLORS.heading_black,

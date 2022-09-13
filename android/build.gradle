@@ -5,6 +5,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 buildscript {
     ext {
         buildToolsVersion = "31.0.0"
+        //kotlinVersion = "1.3.72"
         minSdkVersion = 21
         compileSdkVersion = 31
         targetSdkVersion = 31
@@ -21,6 +22,7 @@ buildscript {
             ndkVersion = "21.4.7075529"
         }
     }
+    //ext.kotlin_version ="1.5.31"
     repositories {
         google()
         mavenCentral()

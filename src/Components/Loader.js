@@ -10,7 +10,7 @@ import { COLORS } from '../Styles/theme';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
-export { LoaderTwo, LoaderOne }
+export { LoaderTwo, LoaderOne, LoaderThree }
 
 
 
@@ -19,7 +19,7 @@ const LoaderOne = (props) => {
     return (
         <Spinner
             visible={loader}
-            // textContent={'Loading...'}
+            textContent={'Loading...'}
             textStyle={styles.spinnerTextStyle}
             cancelable={true}
             color={'blue'}
@@ -42,7 +42,18 @@ const LoaderTwo = (props) => {
         />
     )
 }
+const LoaderThree = (props) => {
 
+    const { style, loader } = props;
+
+    return (
+        <ActivityIndicator size="small"
+            color={COLORS.primary}
+            style={{ backgroundColor: 'transparent', alignSelf: 'center', marginTop: -30 }}
+            animating={loader}
+        />
+    )
+}
 
 
 

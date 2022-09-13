@@ -6,9 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import { GET_ORDERS_DETAILS, API_URL } from '../../Apis/FirstApi';
 import axios from 'axios';
+import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 
 const Detail = ({ navigation, route }) => {
-
+    const [loader, setloader] = useState(false);
     const { param } = route.params;
     console.log(param)
     const [state, setstate] = useState('')
@@ -18,6 +19,7 @@ const Detail = ({ navigation, route }) => {
     }, []);
 
     async function getOrder() {
+        setloader(true);
         const token = await AsyncStorage.getItem('userToken');
         const current = new Date();
         const prior = new Date().setDate(current.getDate() - 30);
@@ -29,9 +31,9 @@ const Detail = ({ navigation, route }) => {
         };
         axios.get(`${API_URL}/${GET_ORDERS_DETAILS}?ID=${param}`,
             headers).then(async (response) => {
-
                 await setstate(response.data.Data)
-                console.log('state' + state);
+                setloader(false);
+                console.log(response.data.Data);
                 return {
                     response: response.data
                 };
@@ -59,13 +61,13 @@ const Detail = ({ navigation, route }) => {
                         return (
                             <View>
                                 <View style={styles.card}>
-                                    <View style={{ width: '80%' }}>
+                                    <View style={{ width: '95%' }}>
                                         <Text style={styles.textitem}>{item.ItemName}</Text>
                                         <Text style={styles.textitem2}>{item.Qty}</Text>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={styles.text5}>Price :{item.MRP}</Text>
                                             <Text style={styles.text5}>Quantity :{item.Qty}</Text>
-                                            <Text style={styles.text5}>Amount :{item.GrossAmount}</Text>
+                                            <Text style={styles.text5}>Amount :{item.NetAmount}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -88,26 +90,37 @@ const Detail = ({ navigation, route }) => {
                 heading={'Order Details'}
                 onpress={() => navigation.goBack()}
             />
-            <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
-                <Text style={styles.text}>{state.CustomerName}</Text>
-                <Text style={styles.text3}>{'Place'}</Text>
-                <View style={styles.line} />
-                <View style={styles.textrow}>
-                    <Text style={styles.text3}>{'No.of Items'}</Text>
-                    <Text style={styles.text4}>{state.length === 0 ? '0.00' : state.NoOfItems}</Text>
+            {state !== '' ?
+                <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
+                    <Text style={styles.text}>{state.CustomerName}</Text>
+                    {/* <Text style={styles.text3}>{'Place'}</Text> */}
+                    <View style={styles.line} />
+                    <View style={styles.textrow}>
+                        <Text style={styles.text3}>{'No.of Items'}</Text>
+                        <Text style={styles.text4}>{state.length === 0 ? '0.00' : state.NoOfItems}</Text>
+                    </View>
+                    <View style={styles.textrow}>
+                        <Text style={styles.text3}>{'Net Amount'}</Text>
+                        <Text style={styles.text4}>{state.length === 0 ? '0.00' : state.NetAmount}</Text>
+                    </View>
+                    <View style={styles.line} />
+                    <Text style={styles.text1}>{'Items'}</Text>
+                    <View style={styles.itemcontainer}>
+                        {state.length === 0 ?
+                            <Text style={styles.text2}>{'No Orders'}</Text>
+                            : <ListOfItems />}
+                    </View>
                 </View>
-                <View style={styles.textrow}>
-                    <Text style={styles.text3}>{'Gross Amount'}</Text>
-                    <Text style={styles.text4}>{state.length === 0 ? '0.00' : state.NetAmount}</Text>
+                :
+                <View>
+                    <LoaderTwo loader={loader} />
+                    <Text>Loading...............</Text>
+                </View>}
+            {state.length == 0 && loader == false &&
+                <View style={{ marginTop: '60%', alignSelf: 'center' }}>
+                    <Text>No Order Details To Display</Text>
                 </View>
-                <View style={styles.line} />
-                <Text style={styles.text1}>{'Items'}</Text>
-                <View style={styles.itemcontainer}>
-                    {state.length === 0 ?
-                        <Text style={styles.text2}>{'No Orders'}</Text>
-                        : <ListOfItems />}
-                </View>
-            </View>
+            }
             {/*</KeyboardAwareScrollView>*/}
         </View>
 
@@ -255,7 +268,7 @@ const styles = StyleSheet.create({
     itemcontainer: {
         //flex:1,
         width: '100%',
-        height: '60%',
+        height: '80%',
         borderRadius: 7,
         backgroundColor: COLORS.background,
         //justifyContent:'center'

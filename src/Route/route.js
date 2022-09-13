@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import CustomDrawerContent from '../Components/CustomDrawer';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLORS } from '../Styles/theme';
 import Home from '../Screens/Home';
 import CreateCall from '../Screens/CreateCall';
@@ -25,13 +26,32 @@ import Messages from '../Screens/Messages';
 import Expenseslist from '../Screens/Expenseslist';
 import ChangePassword from '../Screens/ChangePassword';
 import TrainingVideo from '../Screens/TrainingVideo';
+import ArdhavilamKC from '../Screens/TrainingVideo/VideoPages/ArdhavilamKC';
+import Vyoshamrutham from '../Screens/TrainingVideo/VideoPages/Vyoshamrutham';
+import NisothamadiK from '../Screens/TrainingVideo/VideoPages/NisothamadiK';
+import SapthachadadiK from '../Screens/TrainingVideo/VideoPages/SapthachadadiK';
+import AadareesahacharadiK from '../Screens/TrainingVideo/VideoPages/AadareesahacharadiK';
+import Amalakarishtam from '../Screens/TrainingVideo/VideoPages/Amalakarishtam';
+import BruhathNK from '../Screens/TrainingVideo/VideoPages/BruhathNK';
+import PanchagandhadiC from '../Screens/TrainingVideo/VideoPages/PanchagandhadiC';
+import ThakrarishtaC from '../Screens/TrainingVideo/VideoPages/ThakrarishtaC';
+import ChithrakagranthikadiK from '../Screens/TrainingVideo/VideoPages/ChithrakagranthikadiK';
 import Expenses from '../Screens/Expenses';
 import Target from '../Screens/Target';
 import SelectProducts from '../Screens/SelectProducts';
 import OrderDetails from '../Screens/OrderDetails';
 import InvoiceOrder from '../Screens/InvoiceOrder';
+import InvoiceDetails from '../Screens/InvoiceDetails';
 import Detail from '../Screens/Details';
-
+import Reports from '../Screens/Reports';
+import SubLedger from '../Screens/SubLedger';
+import ItemsNCustomers from '../Screens/ItemsNCustomers';
+import SalesByCustomer from '../Screens/SalesByCustomer';
+import ItemWiseSales from '../Screens/ItemWiseSales';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../redux/slices/authSlice';
 import {
     Platform,
     StatusBar,
@@ -49,20 +69,42 @@ const useInitialRender = () => {
 const MainStackCreator = createNativeStackNavigator();
 function MainSectionStack({ navigation }) {
     const isInitialRender = useInitialRender();
+    useEffect(() => {
+        getUserToken();
+    }, []);
+
+    const [Error, setError] = useState('');
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const getUserToken = async () => {
+        const value = await AsyncStorage.getItem("User_Data");
+        const auth = JSON.parse(value)
+        console.log(auth)
+        setError(auth.Status);
+        console.log(Error);
+    }
+    getUserToken();
     return (
         <MainStackCreator.Navigator
-            initialRouteName="SignIn"
+            initialRouteName={Error ? "Home" : "SignIn"}
             screenOptions={(props) => ({
                 header: () => null
             })} >
-            <MainStackCreator.Screen name="SignIn" component={SignIn}
+            {/* {Error !== 1 && <MainStackCreator.Screen name="SignIn" component={SignIn}
                 options={(props) => ({
                     header: () => null,
                     transitionSpec: {
                         open: config,
                         close: config,
                     },
-                })} />
+                })} />} */}
+            {Error == false && <MainStackCreator.Screen name="SignIn" component={SignIn}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />}
             <MainStackCreator.Screen name="Home" component={Home}
                 options={(props) => ({
                     header: () => null,
@@ -112,6 +154,14 @@ function MainSectionStack({ navigation }) {
                     },
                 })} />
             <MainStackCreator.Screen name="Invoices" component={Invoices}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                 <MainStackCreator.Screen name="InvoiceDetails" component={InvoiceDetails}
                 options={(props) => ({
                     header: () => null,
                     transitionSpec: {
@@ -223,6 +273,86 @@ function MainSectionStack({ navigation }) {
                         close: config,
                     },
                 })} />
+                <MainStackCreator.Screen name="ArdhavilamKC" component={ArdhavilamKC}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="Vyoshamrutham" component={Vyoshamrutham}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="NisothamadiK" component={NisothamadiK}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="SapthachadadiK" component={SapthachadadiK}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="AadareesahacharadiK" component={AadareesahacharadiK}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="Amalakarishtam" component={Amalakarishtam}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="BruhathNK" component={BruhathNK}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="PanchagandhadiC" component={PanchagandhadiC}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="ThakrarishtaC" component={ThakrarishtaC}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="ChithrakagranthikadiK" component={ChithrakagranthikadiK}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
             <MainStackCreator.Screen name="Expenses" component={Expenses}
                 options={(props) => ({
                     header: () => null,
@@ -271,12 +401,72 @@ function MainSectionStack({ navigation }) {
                         close: config,
                     },
                 })} />
-
+            <MainStackCreator.Screen name="Reports" component={Reports}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="ItemWiseSales" component={ItemWiseSales}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+            <MainStackCreator.Screen name="SubLedger" component={SubLedger}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+            <MainStackCreator.Screen name="ItemsNCustomers" component={ItemsNCustomers}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+            <MainStackCreator.Screen name="SalesByCustomer" component={SalesByCustomer}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                
 
 
         </MainStackCreator.Navigator>
     )
 }
+const BeforeLoginCreator = createNativeStackNavigator();
+function BeforeLoginStack({ navigation }) {
+    return (
+        <NavigationContainer>
+            <BeforeLoginCreator.Navigator
+                initialRouteName="SignIn"  >
+                <BeforeLoginCreator.Screen name="SignIn" component={SignIn}
+                    options={{
+                        header: () => null,
+                        transitionSpec: {
+                            open: config,
+                            close: config,
+                        },
+                    }}
+                />
+            </BeforeLoginCreator.Navigator>
+        </NavigationContainer>
+    )
+}
+
 
 const Drawer = createDrawerNavigator();
 function AppStack() {
@@ -312,7 +502,6 @@ const config = {
 
 
 function MainNavigation() {
-
     return (
         <>
             <AppStack />
@@ -325,9 +514,12 @@ function MainNavigation() {
 
 
 export default function route() {
+
     return (
         <NavigationContainer>
-            <MainNavigation />
+            <Provider store={store}>
+                <MainNavigation />
+            </Provider>
         </NavigationContainer>
     )
 }

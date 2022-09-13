@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Icon, icoMoonConfigSet } from '../../Styles/icons';
@@ -7,72 +7,106 @@ import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import { CustomInput } from '../../Components/CustomInput';
 import { CustomButton } from '../../Components/CustomButton';
 import { CustomButtonTwo } from '../../Components/CustomButtonTwo';
-import LinearGradient from 'react-native-linear-gradient';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LoaderOne, LoaderTwo } from '../../Components/Loader';
+import { API_URL, GET_AGING } from '../../Apis/FirstApi';
+import qs from 'qs';
+import axios from 'axios';
 //import {Cust}
 
 const CustomerDetails = ({ navigation, route }) => {
   const { param } = route.params;
-  const [state, setstate] = useState('')
-  const [isSelected, setSelection] = useState(false);
+  const [loader, setloader] = useState(false);
+  const [loader1, setloader1] = useState('ERORR');
+  const [state1, setstate1] = useState('');
+  useEffect(() => {
+    getAging()
+  }, []);
+
+  async function getAging() {
+    setloader(true);
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+    console.log(Data.UserCode);
+    const token = await AsyncStorage.getItem('userToken');
+    let headers = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      }
+    };
+    axios.get(`${API_URL}/${GET_AGING}?CustomerCode=${param.sc}`,
+      headers).then(async (response) => {
+        setloader(false)
+        await setstate1(response.data.Data)
+        console.log(state1);
+        return {
+          response: response.data
+        };
+      }).catch((err) => {
+        //setloader(false)
+        console.log(err)
+      });
+  }
   return (
     <View style={styles.container}>
-      {/*<KeyboardAwareScrollView behavior={"position"} 
-                                contentContainerStyle={{ flexGrow: 1, }} 
-                                enableOnAndroid={Platform.OS === 'android'} 
-                                enableAutomaticScroll={true} >*/}
       <CustomHeaderTwo
         heading={'Customer Details'}
         onpress={() => navigation.goBack()}
       />
-      <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
-        <Text style={styles.text}>{param.name}</Text>
-        <Text style={styles.text3}>{param.place}</Text>
-        <Text style={styles.text1}>{'Outstanding'}</Text>
-        <View style={styles.line} />
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'0-30 Days'}</Text>
-          <Text style={styles.text4}>{'0.00'}</Text>
-        </View>
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'31-60 Days'}</Text>
-          <Text style={styles.text4}>{'0.00'}</Text>
-        </View>
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'61-90 Days'}</Text>
-          <Text style={styles.text4}>{'3564.00'}</Text>
-        </View>
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'91-180 Days'}</Text>
-          <Text style={styles.text4}>{'56747.00'}</Text>
-        </View>
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'181-360 Days'}</Text>
-          <Text style={styles.text4}>{'577.00'}</Text>
-        </View>
-        <View style={styles.textrow}>
-          <Text style={styles.text3}>{'Above 365 Days'}</Text>
-          <Text style={styles.text4}>{'0.00'}</Text>
-        </View>
-        <View style={styles.line} />
-        <View style={styles.buttonrow}>
+      {state1 !== '' && state1.length > 0 ?
+        <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
+          <Text style={styles.text}>{param.n}</Text>
+          <Text style={styles.text3}>{param.c}</Text>
+          <Text style={styles.text1}>{'Outstanding'}</Text>
+          <View style={styles.line} />
+          {/* <View style={styles.textrow}>
+            <Text style={styles.text3}>{'0-30 Days'}</Text>
+            <Text style={styles.text4}>{'0.00'}</Text>
+          </View> */}
+          <FlatList style={{ backgroundColor: 'white' }}
+            data={state1}
+            horizontal={false}
+            scrollEnabled={true}
+            //ListHeaderComponent={renderHeader}
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            keyExtractor={(item, index) => {
+              return index;
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.textrow}>
+                  <Text style={styles.text4}>{item.Ageing}</Text>
+                  <Text style={styles.text4}>{item.OutstandingAmount}</Text>
+                </View>
+                // <View style={styles.line} />
+              )
+            }}
+          />
+          <View style={styles.line} />
+          <View style={styles.buttonrow}>
+            <CustomButtonTwo
+              title={'Order Details'}
+              width1={SIZES.image210}
+              onPress={() => navigation.navigate('InvoiceOrder', { param: param.sc })}
+            />
+            <CustomButtonTwo
+              title={'Invoices'}
+              width1={SIZES.image210}
+              onPress={() => navigation.navigate('Invoices', { param: true, param1: param.sc })}
+            />
+          </View>
           <CustomButtonTwo
-            title={'Order Details'}
-            width1={SIZES.image210}
-            onPress={() => navigation.navigate('InvoiceOrder')}
+            title={'View Subledger'}
+            //width1 ={SIZES.image210} 
+            onPress={() => navigation.navigate('SubLedger', { param: param.sc })}
           />
           <CustomButtonTwo
-            title={'Invoices'}
-            width1={SIZES.image210}
-            onPress={() => navigation.navigate('Invoices')}
+            title={'Products  Not  Purchased '}
+            //width1 ={SIZES.image210} 
+            onPress={() => navigation.navigate('ItemsNCustomers', { param: param.sc })}
           />
-        </View>
-        <CustomButtonTwo
-          title={'View Subledger'}
-        //width1 ={SIZES.image210} 
-        //onPress={()=>navigation.navigate('DispatchDetails')}
-        />
-        {/*<View style={styles.buttonrow}>
+          {/*<View style={styles.buttonrow}>
                  <CustomButtonTwo
                      title  ={'Dispatch Details'}
                      width1 ={SIZES.image210} 
@@ -84,8 +118,12 @@ const CustomerDetails = ({ navigation, route }) => {
                      onPress={()=>navigation.navigate('SampleIssue')}
                   />
                   </View>*/}
-      </View>
-      {/*</KeyboardAwareScrollView>*/}
+        </View>
+        :
+        <View>
+          <LoaderTwo loader={loader} />
+          {/* <Text>Loading...............</Text> */}
+        </View>}
     </View>
 
   )
@@ -135,13 +173,14 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
     fontFamily: Fonts.font_400,
     alignSelf: 'center',
-    marginVertical: 5,
+    //marginVertical: 5,
   },
   text4: {
     color: COLORS.black,
     fontSize: SIZES.medium,
     fontFamily: Fonts.font_400,
     alignSelf: 'center',
+    //marginBottom: 5
     marginVertical: 5,
   },
   plusbutton: {
@@ -196,6 +235,7 @@ const styles = StyleSheet.create({
   textrow: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'space-between'
   },
   line: {
