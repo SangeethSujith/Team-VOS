@@ -53,7 +53,7 @@ const Invoices = ({ navigation, route }) => {
   function datefilter() {
     setstate('')
     getInvoices()
-    console.log("30 days before" + date)
+    // console.log("30 days before" + date)
     setPickerVisible(false)
     //setData
   }
@@ -122,18 +122,18 @@ const Invoices = ({ navigation, route }) => {
         heading={'Invoices'}
         onpress={() => navigation.goBack()}
       />
-      <LoaderThree loader={loader1} />
+      <LoaderThree loader={loader1}/>
       <CustomFilter
         value1={date1}
         value2={date2}
         onPressdate1={() => setIsPickerShow(true)}
         condition1={isPickerShow}
-        text1={moment(date1).format("YYYY-MM-DD")}
         onChangevalue1={onDateSelected1}
+        text1={moment(date1).format("YYYY-MM-DD")}
         onPressdate2={() => setIsPickerShow2(true)}
         condition2={isPickerShow2}
-        text2={moment(date2).format("YYYY-MM-DD")}
         onChangevalue2={onDateSelected2}
+        text2={moment(date2).format("YYYY-MM-DD")}
         onPress={() => datefilter()}
         PickerVisible={PickerVisible}
         PickerVisibletrue={() => setPickerVisible(true)}

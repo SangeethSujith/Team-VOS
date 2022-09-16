@@ -38,15 +38,15 @@ const Expenses = ({ navigation, route }) => {
   }, []);
   const onChange = (event, value) => {
     setDate(value);
-    const route = state.filter((item) => item.date == moment(date).format("YYYY-MM-DD"))
-    console.log(route)
-    if (route.length > 0) {
-      console.log(route[0].route_name)
-      setroute(route[0].route_name)
-    }
-    else {
-      setroute('no routes')
-    }
+    // const route = state.filter((item) => item.date == moment(date).format("YYYY-MM-DD"))
+    // console.log(route)
+    // if (route.length > 0) {
+    //   console.log(route[0].route_name)
+    //   setroute(route[0].route_name)
+    // }
+    // else {
+    //   setroute('no routes')
+    // }
     if (Platform.OS === 'android') {
       setIsPickerShow(false);
     }
