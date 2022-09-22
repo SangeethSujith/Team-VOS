@@ -15,7 +15,7 @@ module.exports = {
     EXPENCES: 'ajax/get_expenses',
     SAVE_EXP: 'ajax/save_expense',
     CALLS_TODAY: 'ajax/get_calls_update',
-    SAVE_CALL: '/ajax/save_call'
-
-
+    SAVE_CALL: '/ajax/save_call',
+    SAMPLEISSUE:'/ajax/issue_sample',
+    SAMPLESTOCK:'/ajax/get_sample_stock',
 };

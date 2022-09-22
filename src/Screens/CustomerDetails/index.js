@@ -106,6 +106,14 @@ const CustomerDetails = ({ navigation, route }) => {
             //width1 ={SIZES.image210} 
             onPress={() => navigation.navigate('ItemsNCustomers', { param: param.sc })}
           />
+          <CustomButtonTwo
+            title={'Sample Issue'}
+            //width1 ={SIZES.image210}
+            // onPress={() => navigation.navigate('ItemsNCustomers', { param: param.sc })}
+            onPress={() =>
+              navigation.navigate('SampleIssue', {param: param.sc})
+            }
+          />
           {/*<View style={styles.buttonrow}>
                  <CustomButtonTwo
                      title  ={'Dispatch Details'}

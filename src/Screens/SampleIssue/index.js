@@ -1,41 +1,59 @@
-import React ,{useState}from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View ,TouchableOpacity,StyleSheet ,FlatList , Modal} from 'react-native';
 import { Icon, icoMoonConfigSet} from '../../Styles/icons';
 import { COLORS ,Fonts ,SIZES } from '../../Styles/theme';
 import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import { CustomButton } from '../../Components/CustomButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import qs from 'qs';
+import {LoaderTwo } from '../../Components/Loader';
 //import Modal from 'react-native-modal';
 //import {Cust}
 
-const SampleIssue = ({navigation}) => {
-
-  const [PickerVisible, setPickerVisible]   = useState(false);
-  const [state, setstate] = useState({
-    data: [{ id:1  , name : 'VYOSHAMRITHA (SAMPLE) 50 Ml' , code :'FG00871'},
-           { id:2  , name : 'RASA THAILAM (SAMPLE) 50 Ml' , code :'FG00878'},
-           { id:3  , name : 'VYOSHAMRITHA (SAMPLE) 50 Ml' , code :'FG00879'},
-           { id:4  , name : 'VYOSHAMRITHA (SAMPLE) 50 Ml' , code :'FG00871'},
-           { id:5  , name : 'RASA THAILAM (SAMPLE) 50 Ml' , code :'FG00878'},
-           { id:6  , name : 'VYOSHAMRITHA (SAMPLE) 50 Ml' , code :'FG00879'}, ] })
-  const openModal = (item) => {
-    setPickerVisible(true);
-  }
+const SampleIssue = ({navigation,route}) => {
+           const { param } = route.params; 
+           const [state, setstate] = useState('');
+           const [loader, setloader] = useState(false) 
+  useEffect(() => {
+    getsamples()
+  }, []);
+           async function getsamples() {
+            setloader(true);
+            const userData = await AsyncStorage.getItem('User_Data');
+            let Data = JSON.parse(userData)
+            let body = {
+              user_id: Data.Userid,
+            }
+            axios.post(`https://ayurwarecrm.com/demo/ajax/get_sample_stock`,
+              qs.stringify(body)).then(async (response) => {
+                setloader(false)
+                await setstate(response.data.data)
+                console.log(response.data.data);
+                return {
+                  response: response.data
+                };
+              }).catch((err) => {
+                console.log(err)
+              });
+          }
   return (
     <View style={styles.container}>
             <CustomHeaderTwo
                     heading ={'Sample Issue'}
                     onpress={()=> navigation.goBack()}
                     />
+                    {state !== '' ?
             <View style={{marginHorizontal:25,marginTop:20 ,marginBottom:60}}>
             <FlatList style={{backgroundColor:'white'}}
-                    data={state.data}
+                    data={state}
                     horizontal={false}
                     scrollEnabled={true}
                     //ListFooterComponent={}
                     showsVerticalScrollIndicator={false}
                     numColumns={1}
                     keyExtractor={(item) => {
-                        return item.id;
+                        return item.product_id;
                     }}
                     renderItem={({ item }) => {
                         return (
@@ -49,9 +67,9 @@ const SampleIssue = ({navigation}) => {
                                    style ={{marginTop:5}}
                                 />
                                 <View style={{width:'59%'}}>
-                                    <Text style={styles.text}>{item.name}</Text>
-                                    <Text style={styles.text2}>{item.code}</Text>
-                                    <Text style={styles.text3}>{'Sample Stock'}</Text>
+                                    <Text style={styles.text}>{item.product_name}</Text>
+                                    <Text style={styles.text2}>{item.product_code}</Text>
+                                    <Text style={styles.text3}>Available Stock : {item.stock}</Text>
                                 </View>
                                 <View style={{marginLeft:20}}>
                                     <CustomButton
@@ -67,7 +85,17 @@ const SampleIssue = ({navigation}) => {
                     }} 
             />
             </View>
-           
+            :
+          <View>
+          <LoaderTwo loader={loader}/>
+          <Text>Loading ....</Text>
+          </View>
+          } 
+          {state.length == 0 && loader == false &&
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={styles.text2}>{'Check Connection'}</Text>
+        </View>
+      }
         </View>
    
   )
