@@ -37,13 +37,14 @@ const CustomerDetails = ({ navigation, route }) => {
     axios.get(`${API_URL}/${GET_AGING}?CustomerCode=${param.sc}`,
       headers).then(async (response) => {
         setloader(false)
+        console.log(param.sc);
         await setstate1(response.data.Data)
         console.log(state1);
         return {
           response: response.data
         };
       }).catch((err) => {
-        //setloader(false)
+        setloader(false)
         console.log(err)
       });
   }
