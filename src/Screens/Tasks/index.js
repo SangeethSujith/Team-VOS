@@ -83,7 +83,7 @@ const Tasks = ({ navigation }) => {
                           <Text style={styles.text3}>{'Target Type'}</Text>
                           <Text style={styles.text3}>{': '}</Text>
                         </View>
-                        <Text style={styles.text2}>{'Patent'}</Text>
+                        <Text style={styles.text2}>{item.TargetType}</Text>
                       </View>
                       <View style={styles.textrow}>
                         <View style={styles.innerrow}>
