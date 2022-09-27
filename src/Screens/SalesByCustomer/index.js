@@ -185,13 +185,11 @@ const SalesByCustomer = ({navigation}) => {
                   <CustomButton
                     style={{ alignSelf: 'flex-end' }}
                     width1={'30%'}
-                    title={'close'}
+                    title={'Close'}
                     height1={'25%'}
                     onPress={() => setModalVisible(false)}
                   />
                 </View>
-
-
               </View>
             </View>
           </Modal>
@@ -347,7 +345,7 @@ const styles = StyleSheet.create({
     //width:300
   },
   innerrow: {
-    width: '50%',
+    width: '55%',
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between'
