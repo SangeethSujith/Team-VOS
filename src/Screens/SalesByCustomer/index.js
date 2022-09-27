@@ -149,10 +149,10 @@ const SalesByCustomer = ({navigation}) => {
                       </View>
                       <View style={styles.textrow}>
                         <View style={styles.innerrow}>
-                          <Text style={styles.text2}>{'Date'}</Text>
+                          <Text style={styles.text2}>{'Customer ID'}</Text>
                           <Text style={styles.text2}>{': '}</Text>
                         </View>
-                        <Text style={styles.text}>{state1.CustomerCode}</Text>
+                        <Text style={styles.text}>{state1.CustomerID}</Text>
                         {/* <Text style={styles.text}>{''}</Text> */}
                       </View>
                       <View style={styles.textrow}>
