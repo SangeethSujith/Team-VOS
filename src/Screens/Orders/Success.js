@@ -229,8 +229,8 @@ const Success = ({ navigation, route }) => {
       headers).then(async (response) => {
 
         await setstate(response.data.Data)
-        setloader(false);
         console.log(state);
+        setloader(false);
         return {
           response: response.data
         };
@@ -301,6 +301,7 @@ const Success = ({ navigation, route }) => {
                     <View style={{ margin: 10 }}>
                       <Text style={styles.text}>{item.CustomerName}</Text>
                       <Text style={styles.textitem}>Order No : {item.SONo}</Text>
+                      <Text style={styles.textitem}>Serial No : {item.ID}</Text>
                       <View style={styles.raw}>
                         <Text style={styles.text5}>No.of Items :{item.NoOfItems}</Text>
                         <Text style={styles.text5}>Amount :{item.NetAmount}</Text>

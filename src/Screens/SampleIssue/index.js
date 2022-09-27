@@ -11,7 +11,7 @@ import {Icon, icoMoonConfigSet} from '../../Styles/icons';
 import {COLORS, Fonts, SIZES} from '../../Styles/theme';
 import {CustomHeaderTwo} from '../../Components/CustomHeaderTwo';
 import {CustomButton} from '../../Components/CustomButton';
-import { CustomInput } from '../../Components/CustomInput';
+import {CustomInput} from '../../Components/CustomInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import qs from 'qs';
@@ -22,12 +22,68 @@ import {LoaderTwo} from '../../Components/Loader';
 const SampleIssue = ({navigation, route}) => {
   const {param} = route.params;
   const [state, setstate] = useState('');
+  const [state1,setstate1]=useState('');
   const [loader, setloader] = useState(false);
-  const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [qty,setqty]=useState('');
   const Height = Dimensions.get('window').height;
   useEffect(() => {
     getsamples();
   }, []);
+  const openModal=(item)=>{
+    setstate1(item);
+    setOpen(true)
+    console.log(param.sc);
+  }
+  const PostSave = async () => {
+    console.log('inside')
+    //const Route = await AsyncStorage.getItem('Routes');
+    //let route = JSON.parse(Route)
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+    let posts = {
+      user_id: Data.Userid,
+      product_id:state1.product_id,
+      customer_id:param.sc,
+      quantity:qty,
+    };
+    console.log(user_id);
+    console.log(product_id);
+    console.log(customer_id);
+    console.log(quantity);
+    console.log('upload');
+    console.log(posts)
+    axios
+      .post(
+        `https://ayurwarecrm.com/demo/ajax/issue_sample`,
+        qs.stringify(body),
+      )
+      (async (response) => {
+        if (response.status == 200) {
+          setloader(false);
+          Alert.alert(
+            "Saved Successfully ", ' ',
+            [
+              {
+                text: "Yes",
+                cancelable: true,
+                onPress: () => navigation.navigate('Home'),
+                style: "cancel",
+              }],
+          );
+        }
+        else {
+          setloader(false);
+          Alert.alert(
+            "Failed Save, Try Again")
+        }
+      }
+      ).catch((err) => {
+        console.log(err)
+      });
+  
+    }
+
   async function getsamples() {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
@@ -54,57 +110,59 @@ const SampleIssue = ({navigation, route}) => {
   }
   return (
     <View style={styles.container}>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={open}
-            onBackdropPress={() => setOpen(false)}
-            backdropOpacity={0.5}
-            onRequestClose={() => {
-              setOpen(!open);
-            }}>
-           <View style={[styles.modalStyle, { marginTop: Height / 5 ,paddingHorizontal:'5%'}]}>
-              <View style={{ margin: 10 }}>
-                <Text style={styles.heading}>Issue sample</Text>
-                <View style={styles.line} />
-            </View>
-            <Text style={styles.text3}>
-                        Available Stock :
-                      </Text>
-            <CustomInput
-            type='text'
-            keyboardType='numeric'
-            label='Quantity'
-            labelBG='white'
-            width='80%'
-            // placeholderText=' '
-            // value={input.town}
-            onChangeText={(text) => {
-              setinput({ ...input, town: text })
-            }}
-          //iconname='location'
-
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={open}
+        onBackdropPress={() => setOpen(false)}
+        backdropOpacity={0.5}
+        onRequestClose={() => {
+          setOpen(!open);
+        }}>
+        <View
+          style={[
+            styles.modalStyle,
+            {marginTop: Height / 10, paddingHorizontal: '5%'},
+          ]}>
+          <View style={{margin: 10}}>
+            <Text style={styles.heading}>Issue sample</Text>
+            <View style={styles.line} />
+          </View>
+          <Text style={styles.text3}>Available Stock :{state1.stock}</Text>
+          <CustomInput
+            type="text"
+            keyboardType="numeric"
+            label="Quantity"
+            labelBG="white"
+            width="80%"
+            // placeholderText=''
+            value={setqty}
+            //iconname='location'
           />
-            <View style={{flexDirection:'row',justifyContent:'space-between',width:'50%',alignSelf:'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '50%',
+              alignSelf: 'center',
+            }}>
             <CustomButton
-              style={{alignSelf:'center'}}
+              style={{alignSelf: 'center'}}
               width1={'150%'}
               title={'Close'}
               height1={'35%'}
-              onPress={() => setOpen
-              (false)}
+              onPress={() => setOpen(false)}
             />
             <CustomButton
-              style={{alignSelf:'center'}}
+              style={{alignSelf: 'center'}}
               width1={'120%'}
               title={'Submit'}
               height1={'35%'}
-              onPress={() => setOpen
-              (false)}
+              onPress={() => PostSave()}
             />
-            </View>
-            </View>
-          </Modal>
+          </View>
+        </View>
+      </Modal>
       <CustomHeaderTwo
         heading={'Sample Issue'}
         onpress={() => navigation.goBack()}
@@ -140,10 +198,15 @@ const SampleIssue = ({navigation, route}) => {
                       </Text>
                     </View>
                     <View style={{marginLeft: 20}}>
-                      <CustomButton width1={80} height1={30} title={'Issue'} onPress={()=>setOpen(true)}/>
+                      <CustomButton
+                        width1={80}
+                        height1={30}
+                        title={'Issue'}
+                        onPress={() => openModal(item)}
+                      />
                     </View>
                   </View>
-                  <View style={styles.line}/>
+                  <View style={styles.line} />
                 </View>
               );
             }}
@@ -183,10 +246,10 @@ const styles = StyleSheet.create({
     //fontStyle : 'normal',
     //textAlign:'center',
     //marginTop:heightPercentageToDP(.5),
-    //fontSize: Theme.FONT_BIG,  
+    //fontSize: Theme.FONT_BIG,
     //fontSize : Theme.FONT_TWNETY,
     color: COLORS.primary_black,
-    marginBottom: 10
+    marginBottom: 10,
   },
   container: {
     flex: 1,

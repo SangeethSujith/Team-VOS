@@ -71,8 +71,8 @@ const Invoices = ({ navigation, route }) => {
         Authorization: 'Bearer ' + token,
       }
     };
-    let Home = `${API_URL}/${GET_INVOICES}?Offset=0&Limit=0&FromDate=${'01-06-2022'}&ToDate=${'01-07-2022'}&CustomerCode=${param1}`
-    let Customer = `${API_URL}/${GET_INVOICES_FSO}?Offset=0&Limit=0&FromDate=${'01-06-2022'}&ToDate=${'01-06-2022'}&FSOCode=${Data.UserCode}`
+    let Home = `${API_URL}/${GET_INVOICES}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&CustomerCode=${param1}`
+    let Customer = `${API_URL}/${GET_INVOICES_FSO}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&FSOCode=${Data.UserCode}`
     console.log(Home);
     // console.log(Customer);
     axios.get(param ? Home : Customer,

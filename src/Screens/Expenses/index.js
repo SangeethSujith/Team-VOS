@@ -289,7 +289,7 @@ dropDownContainerStyle={{
             //keyboardType='numeric'
             label='Town Visited'
             labelBG='white'
-            placeholderText='Enter Town Visited           '
+            placeholderText='Enter Town Visited'
             value={input.town}
             onChangeText={(text) => {
               setinput({ ...input, town: text })

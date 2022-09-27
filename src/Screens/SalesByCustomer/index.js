@@ -13,6 +13,7 @@ import moment from 'moment'
 
 const SalesByCustomer = ({navigation}) => {
   const [state, setstate] = useState('');
+  const [state1,setstate1]=useState('');
   const [loader, setloader] = useState(false);
   const [loader1, setloader1] = useState(false);
   const [details, setdetails] = useState('')
@@ -50,6 +51,11 @@ const SalesByCustomer = ({navigation}) => {
     setPickerVisible(false)
     //setData
   }
+  const openModal=(item)=>{
+    setstate1(item);
+    setModalVisible(true)
+    // console.log(param.sc);
+  }
   async function getItems() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
@@ -66,13 +72,13 @@ const SalesByCustomer = ({navigation}) => {
     axios.get(`${API_URL}/${GET_CUS_SALES}?&FSOCode=Z0001`,headers).then(async(response) => {
         setloader(false)
         await setstate(response.data.Data)
-        console.log(state);
         return {
           response: response.data
         };
       }).catch((err) => {
         console.log(err)
       });
+      console.log(state);
   }
   return (
     <View style={styles.container}>
@@ -100,6 +106,95 @@ const SalesByCustomer = ({navigation}) => {
         PickerVisiblefalse={() => setPickerVisible(false)}
       />
           <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 90 }}>
+          <Modal
+            animationType='fade'
+            transparent={true}
+            visible={modalVisible}
+            onBackdropPress={() => setModalVisible(false)}
+            backdropOpacity={0.5}
+            onRequestClose={() => {
+              //Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={[styles.modalStyle, { marginTop: Height / 10 }]}>
+              <View style={{ margin: 10 }}>
+                <Text style={styles.heading}>Invoice Details</Text>
+                <View style={styles.line} />
+                <View>
+                  <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <Icon
+                      name={"file-text1"}
+                      color={'#319A2E'}
+                      size={SIZES.radius15}
+                      config={icoMoonConfigSet}
+                      style={{ marginTop: 5 }}
+                    />
+                    <View style={{ marginLeft: 10, width: SIZES.windowwidth / 2.3 }}>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text2}>{'Customer Code'}</Text>
+                          <Text style={styles.text2}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text}>{state1.CustomerCode}</Text>
+                        {/* <Text style={styles.text}>{''}</Text> */}
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text2}>{'Customer Name'}</Text>
+                          <Text style={styles.text2}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text}>{state1.CustomerName}</Text>
+                        {/* <Text style={styles.text}>{''}</Text> */}
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text2}>{'Date'}</Text>
+                          <Text style={styles.text2}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text}>{state1.CustomerCode}</Text>
+                        {/* <Text style={styles.text}>{''}</Text> */}
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text2}>{'Net Amount'}</Text>
+                          <Text style={styles.text2}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text}>{state1.NetAmount}</Text>
+                        {/* <Text style={styles.text}>{''}</Text> */}
+                      </View>
+                      <View style={styles.textrow}>
+                        <View style={styles.innerrow}>
+                          <Text style={styles.text2}>{'Taxable Amount'}</Text>
+                          <Text style={styles.text2}>{': '}</Text>
+                        </View>
+                        <Text style={styles.text}>{state1.TaxableAmount}</Text>
+                        {/* <Text style={styles.text}>{''}</Text> */}
+                      </View>
+                    </View>
+                  </View>
+                  {/* <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <Icon
+                      name={"file-text1"}
+                      color={'#319A2E'}
+                      size={SIZES.radius15}
+                      config={icoMoonConfigSet}
+                      style={{ marginTop: 5 }}
+                    />
+                     </View> */}
+                  <CustomButton
+                    style={{ alignSelf: 'flex-end' }}
+                    width1={'30%'}
+                    title={'close'}
+                    height1={'25%'}
+                    onPress={() => setModalVisible(false)}
+                  />
+                </View>
+
+
+              </View>
+            </View>
+          </Modal>
             <FlatList style={{ backgroundColor: 'white', height: '97%' }}
               //contentContainerStyle={{marginBottom:170}}
               data={state}
@@ -112,7 +207,7 @@ const SalesByCustomer = ({navigation}) => {
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
-                  //onPress={() => InvoiceDetails(item)}
+                  onPress={() => openModal(item)}
                   >
                     <View style={styles.card}>
                       <Icon
@@ -235,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#b2b8b4'
   },
   modalStyle: {
-    height: '40%',
+    height: '35%',
     width: '90%',
     backgroundColor: COLORS.white,
     alignSelf: 'center',
