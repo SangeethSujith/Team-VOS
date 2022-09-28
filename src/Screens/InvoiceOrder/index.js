@@ -131,6 +131,7 @@ const InvoiceOrder = ({ navigation, route }) => {
                                             <Text style={styles.text}>{item.CustomerName}</Text>
                                             <Text style={styles.textitem}>Order No : {item.SONo}</Text>
                                             <View style={styles.raw}>
+                                                <Text style={styles.text5}>Serial No :{item.ID}</Text>
                                                 <Text style={styles.text5}>No.of Items :{item.NoOfItems}</Text>
                                                 <Text style={styles.text5}>Amount :{item.NetAmount}</Text>
                                             </View>
