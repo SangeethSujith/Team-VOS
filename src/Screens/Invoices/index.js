@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, FlatList, Modal, Dimensions, ViewComponent } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList, Modal, Dimensions, ViewComponent,TextInput } from 'react-native';
 import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 import { COLORS, Fonts, SIZES } from '../../Styles/theme';
 import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
@@ -57,6 +57,33 @@ const Invoices = ({ navigation, route }) => {
     setPickerVisible(false)
     //setData
   }
+  const [search,setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState('');
+  // const [masterDataSource, setMasterDataSource] = useState(state);
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = state.filter(
+        function (item) {
+          const itemData = item.CustomerName
+            ? item.CustomerName.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(state);
+      // console.log(filteredDataSource);
+      setSearch(text);
+    }
+  };
   async function getInvoices() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
@@ -79,6 +106,7 @@ const Invoices = ({ navigation, route }) => {
       headers).then(async (response) => {
         setloader(false)
         await setstate(response.data.Data)
+        setFilteredDataSource(response.data.Data);
         console.log(response.data.Data);
         return {
           response: response.data
@@ -139,12 +167,41 @@ const Invoices = ({ navigation, route }) => {
         PickerVisibletrue={() => setPickerVisible(true)}
         PickerVisiblefalse={() => setPickerVisible(false)}
       />
+       {/* Search bar here */}
+       <View style={styles.searchheader}>
+            <Icon
+              name={'search'}
+              color={COLORS.primary}
+              size={SIZES.icon}
+              config={icoMoonConfigSet}
+              style={{opacity: 0.4, marginHorizontal: SIZES.ten}}
+            />
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              returnKeyType={'next'}
+              autoFocus={false}
+              //showSoftInputOnFocus={false}
+              //onChangeText={(text) => searchFilterFunction(text)}
+              //onClear={(text) => searchFilterFunction('')}
+              //status='info'
+              placeholder="Search Customers"
+              style={{
+                fontFamily: Fonts.font_400,
+                fontSize: SIZES.medium,
+                width: '100%',
+              }}
+              textStyle={{color: '#000', fontFamily: Fonts.font_400}}
+            />
+          </View>
       {state !== '' && state.length > 0 ?
         <View>
-          <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 90 }}>
+          <View style={{ marginHorizontal: 25,marginBottom: 90 }}>
             <FlatList style={{ backgroundColor: 'white', height: '97%' }}
               //contentContainerStyle={{marginBottom:170}}
-              data={state}
+              data={filteredDataSource}
               horizontal={false}
               scrollEnabled={true}
               //ListFooterComponent={}
@@ -340,10 +397,24 @@ const Invoices = ({ navigation, route }) => {
 export default Invoices;
 
 const styles = StyleSheet.create({
+  searchheader: {
+    // backgroundColor: '#fff',
+    height: SIZES.image50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    // backgroundColor: COLORS.white,
+    //borderColor:COLORS.primary,
+    //borderWidth:.5,
+    borderRadius: SIZES.radius30,
+    // elevation: 10,
+    shadowColor: 'black',
+    marginHorizontal:20,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
-    width: '100%'
+    width: '100%',
   },
   card: {
     backgroundColor: 'white',

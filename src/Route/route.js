@@ -48,6 +48,7 @@ import SubLedger from '../Screens/SubLedger';
 import ItemsNCustomers from '../Screens/ItemsNCustomers';
 import SalesByCustomer from '../Screens/SalesByCustomer';
 import ItemWiseSales from '../Screens/ItemWiseSales';
+import SampleIssue2 from '../Screens/SampleIssue2';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { useSelector } from 'react-redux';
@@ -146,6 +147,14 @@ function MainSectionStack({ navigation }) {
                     },
                 })} />
             <MainStackCreator.Screen name="SampleIssue" component={SampleIssue}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="SampleIssue2" component={SampleIssue2}
                 options={(props) => ({
                     header: () => null,
                     transitionSpec: {

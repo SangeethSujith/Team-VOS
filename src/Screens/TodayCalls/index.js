@@ -96,7 +96,7 @@ const TodayCalls = ({ navigation }) => {
                       {/* <Text style={styles.text2}>{item.information_conveyed}</Text> */}
                       <Text style={styles.text3}>{item.customer.smCity}</Text>
                     </View>
-                    <View style={{}}>
+                    <View>
                       <Text style={styles.text2}>{item.status == 'Not Visited' ? 'Not Visited' : 'Visited'}</Text>
                       <Text style={styles.text3}>{item.date}</Text>
                     </View>
