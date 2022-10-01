@@ -13,13 +13,11 @@ import { BASE_URL, LEADS } from '../../Apis/SecondApi';
 //import {Cust}
 
 const Leads = ({ navigation }) => {
-
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
   useEffect(() => {
     getLeads()
   }, []);
-
   async function getLeads() {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
@@ -41,7 +39,6 @@ const Leads = ({ navigation }) => {
         console.log(err)
       });
   }
-
   const [state, setstate] = useState({
     data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
     { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
@@ -96,7 +93,7 @@ const Leads = ({ navigation }) => {
                       <Text style={styles.text3}>{item.date}</Text>
                     </View>
                   </View>
-                  <View style={styles.line} />
+                  <View style={styles.line}/>
                 </TouchableOpacity>
               )
             }}

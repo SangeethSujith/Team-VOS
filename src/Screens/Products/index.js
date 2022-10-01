@@ -134,8 +134,6 @@ const Products = ({ navigation }) => {
       setstate1(state2.filter((items) => items.pmCategory === active));
     }
   };
-
-
   function RenderHeader() {
     return (
       <View
@@ -166,14 +164,13 @@ const Products = ({ navigation }) => {
       </View>
     )
   }
-
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
         heading={'Products'}
         onpress={() => navigation.goBack()}
       />
-      {state1 !== '' ?
+      {state1 && state2 !== '' ?
         <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
           <Text style={styles.text}>{'Categories'}</Text>
           <View >

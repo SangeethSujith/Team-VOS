@@ -16,6 +16,7 @@ const TodayCalls = ({ navigation }) => {
 
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
+  // const { param } = route.params;
   useEffect(() => {
     getCalls()
   }, []);
@@ -27,8 +28,7 @@ const TodayCalls = ({ navigation }) => {
     //console.log(Data.Userid);
     let body = {
       user_id: Data.Userid,
-      //user_id: 82,
-      date: moment().format("YYYY-MM-DD")
+      date: moment().format("YYYY-MM-DD"),
     }
     axios.post(`https://ayurwarecrm.com/demo/ajax/get_calls_update`,
       qs.stringify(body)).then(async (response) => {

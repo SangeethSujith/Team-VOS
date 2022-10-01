@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { SAVE_CALL, BASE_URL } from '../../Apis/SecondApi';
+import { SAVE_CALL, BASE_URL ,ROUTES} from '../../Apis/SecondApi';
 import { LoaderOne, LoaderThree, LoaderTwo } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
@@ -34,43 +34,35 @@ const CreateCall = ({ navigation,route}) => {
     getRoutes()
   }, []);
   async function getRoutes() {
-    //uploadBusinessImage = async () => {
-      setloader(true);
+    setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-      //console.log(Data.Userid);
-
-    const data = new FormData();
-    //data.append('logo', this.state.image);
-    data.append('user_id', Data.Userid);
-    var config = {
-      method: 'POST',
-      url: 'https://ayurwarecrm.com/demo/ajax/get_routes',
-      data: data,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(state);
+    //console.log(Data.Userid);
+    let body = {
+      user_id: Data.Userid,
+      assigned_date:moment().format("YYYY-MM-DD"),
+    }
+    axios.post(`${BASE_URL}/${ROUTES}`,
+      qs.stringify(body)).then(async (response) => {
         setloader(false)
+        // await setstate(response.data.routes)
+        console.log(response.data.routes);
+        // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label: item.route_name,
           value: item.route_id
         }))
         // console.log(dropdata);
         setstate(dropdata)
-      })
-      .catch(function (error) {
-        console.log(error);
-        setLoader(false);
+        return {
+          response: response.data
+        };
+      }).catch((err) => {
+        console.log(err)
       });
+  }
     //}
     //);
-  }; 
   const [loginError, setloginError] = useState({
     name: '',
     phone: '',
