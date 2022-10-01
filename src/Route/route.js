@@ -10,6 +10,7 @@ import CreateCall from '../Screens/CreateCall';
 import SignIn from '../Screens/SignIn';
 import Orders from '../Screens/Orders';
 import TodayCalls from '../Screens/TodayCalls';
+import TodayCallsRoute from '../Screens/TodayCallsRoute';
 import CallDetails from '../Screens/CallDetails';
 import SampleIssue from '../Screens/SampleIssue';
 import Invoices from '../Screens/Invoices';
@@ -163,6 +164,14 @@ function MainSectionStack({ navigation }) {
                     },
                 })} />
             <MainStackCreator.Screen name="Invoices" component={Invoices}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="TodayCallsRoute" component={TodayCallsRoute}
                 options={(props) => ({
                     header: () => null,
                     transitionSpec: {
