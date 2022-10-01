@@ -7,11 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
+import moment from 'moment'
 import { BASE_URL, ROUTES } from '../../Apis/SecondApi';
 //import {Cust}
 
 const Routes = ({ navigation }) => {
-
+  const [value1, setvalue1] = useState(moment().format('YYYY-MM-DD'));
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
   useEffect(() => {
@@ -23,8 +24,10 @@ const Routes = ({ navigation }) => {
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     //console.log(Data.Userid);
+    let date=value1
     let body = {
-      user_id: Data.Userid
+      user_id: Data.Userid,
+      assigned_date:date
     }
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
@@ -74,11 +77,11 @@ const Routes = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             numColumns={1}
             keyExtractor={(item) => {
-              return item.route_assign_id;
+              return item.route_id;
             }}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate('TodayCalls', { param: item })}>
+                <TouchableOpacity onPress={() => navigation.navigate('TodayCallsRoute', { param: item })}>
                   <View style={styles.card}>
                     <Image
                       style={{ width: '15%', height: '100%', resizeMode: 'contain', alignSelf: 'center', opacity: .6 }}
