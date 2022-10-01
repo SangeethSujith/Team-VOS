@@ -18,4 +18,5 @@ module.exports = {
     SAVE_CALL: '/ajax/save_call',
     SAMPLEISSUE:'/ajax/issue_sample',
     SAMPLESTOCK:'/ajax/get_sample_stock',
+    ALL_CALLS:'/ajax/get_all_calls',
 };
