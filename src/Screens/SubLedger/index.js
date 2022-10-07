@@ -235,7 +235,7 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                         paddingLeft: 6,
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{color: COLORS.primary, fontSize: 16,}}>
                         Debit
                       </Text>
                     </View>
@@ -299,19 +299,19 @@ const SubLedger = ({navigation, route}) => {
                           color: COLORS.primary,
                           fontSize: 16,
                           textAlign: 'right',
-                          marginRight: 5,
+                          // marginRight: 5,
                         }}>
                         {parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Debit;
                           }, 0),
-                        ).toFixed(2)}{' '}
+                        ).toFixed(2)}
                       </Text>
                     </View>
                     <View
                       style={{
                         width: Width / 5,
-                        alignItems: 'center',
+                        // alignItems: 'center',
                         height: 30,
                         justifyContent: 'center',
                       }}>
@@ -320,13 +320,13 @@ const SubLedger = ({navigation, route}) => {
                           color: COLORS.primary,
                           fontSize: 16,
                           textAlign: 'right',
-                          marginRight: 5,
+                          
                         }}>
                         {parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Credit;
                           }, 0),
-                        ).toFixed(2)}{' '}
+                        ).toFixed(2)}
                       </Text>
                     </View>
                   </View>
@@ -370,7 +370,6 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                       }}>
                       <Text style={{color: COLORS.primary, fontSize: 16}}>
-                        {' '}
                       </Text>
                     </View>
                     <View
@@ -380,7 +379,7 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{color: COLORS.primary, fontSize: 16,textAlign: 'right',}}>
                         {parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Credit;
@@ -390,7 +389,7 @@ const SubLedger = ({navigation, route}) => {
                             state.reduce((a, c) => {
                               return a + c.Debit;
                             }, 0),
-                          ).toFixed(2)}{' '}
+                          ).toFixed(2)}
                       </Text>
                     </View>
                   </View>
