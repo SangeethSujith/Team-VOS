@@ -126,7 +126,7 @@ const SelectProducts = ({ navigation, route }) => {
 
 
   const openModal = (item) => {
-    setQuantity('0')
+    setQuantity('')
     setModalVisible(true);
     getOffer(item)
     setitem(item)
