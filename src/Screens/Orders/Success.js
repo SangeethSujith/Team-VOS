@@ -189,6 +189,7 @@ const Success = ({ navigation, route }) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [isPickerShow2, setIsPickerShow2] = useState(false);
   const [PickerVisible, setPickerVisible] = useState(false);
+  const [number,setnumber]=useState(1);
   // function onDateSelected1(event, value) {
   //   setvalue1(value);
   //   setDatePicker(false);
@@ -213,7 +214,9 @@ const Success = ({ navigation, route }) => {
   useEffect(() => {
     getOrder();
   }, []);
-
+  function addnumber(){
+    setnumber=number+1;
+  }
   async function getOrder() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
@@ -229,6 +232,7 @@ const Success = ({ navigation, route }) => {
       headers).then(async (response) => {
 
         await setstate(response.data.Data)
+
         console.log(state);
         setloader(false);
         return {
@@ -291,7 +295,7 @@ const Success = ({ navigation, route }) => {
             keyExtractor={(item) => {
               return item.ID;
             }}
-            renderItem={({ item }) => {
+            renderItem={({ item,index }) => {
               return (
                 <View style={{ marginVertical: 5, marginHorizontal: 15 }}>
                   <TouchableOpacity style={styles.card}
@@ -299,9 +303,11 @@ const Success = ({ navigation, route }) => {
                       param: item.ID
                     })}>
                     <View style={{ margin: 10 }}>
+                      <View style={{flexDirection:'row'}}><Text style={styles.text}>{index+1}. </Text>
+                      {/* setstate{setnumber(number+1)} */}
                       <Text style={styles.text}>{item.CustomerName}</Text>
+                      </View>
                       <Text style={styles.textitem}>Order No : {item.SONo}</Text>
-                      <Text style={styles.textitem}>Serial No : {item.ID}</Text>
                       <View style={styles.raw}>
                         <Text style={styles.text5}>No.of Items :{item.NoOfItems}</Text>
                         <Text style={styles.text5}>Amount :{item.NetAmount}</Text>
