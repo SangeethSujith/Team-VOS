@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, FlatList, Modal, Dimensions, ViewComponent } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList, Modal, Dimensions, ViewComponent,TextInput } from 'react-native';
 import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 import { COLORS, Fonts, SIZES } from '../../Styles/theme';
 import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
@@ -21,6 +21,7 @@ const ItemWiseSales = ({navigation}) => {
     useEffect(() => {
       getItems()
       console.log("30 days before" + date)
+      setFilteredDataSource(state);
     }, []);
     const Height = Dimensions.get('window').height;
     const [modalVisible, setModalVisible] = useState(false);
@@ -66,6 +67,7 @@ const ItemWiseSales = ({navigation}) => {
       axios.get(`${API_URL}/${GET_ITEM_SALES}?FromDate=${value2}&ToDate=${value1}&FSOCode=Z0001`,headers).then(async(response) => {
           setloader(false)
           await setstate(response.data.Data)
+          setFilteredDataSource(response.data.Data)
           console.log(state);
           return {
             response: response.data
@@ -74,6 +76,33 @@ const ItemWiseSales = ({navigation}) => {
           console.log(err)
         });
       }
+      const [search,setSearch] = useState('');
+      const [filteredDataSource, setFilteredDataSource] = useState('');
+      // const [masterDataSource, setMasterDataSource] = useState(state);
+      const searchFilterFunction = (text) => {
+        // Check if searched text is not blank
+        if (text) {
+          // Inserted text is not blank
+          // Filter the masterDataSource
+          // Update FilteredDataSource
+          const newData = state.filter(
+            function (item) {
+              const itemData = item.ItemName
+                ? item.ItemName.toUpperCase()
+                : ''.toUpperCase();
+              const textData = text.toUpperCase();
+              return itemData.indexOf(textData) > -1;
+          });
+          setFilteredDataSource(newData);
+          setSearch(text);
+        } else {
+          // Inserted text is blank
+          // Update FilteredDataSource with masterDataSource
+          setFilteredDataSource(state);
+          // console.log(filteredDataSource);
+          setSearch(text);
+        }
+      };
     return (
       <View style={styles.container}>
       <CustomHeaderTwo
@@ -99,10 +128,38 @@ const ItemWiseSales = ({navigation}) => {
         PickerVisibletrue={() => setPickerVisible(true)}
         PickerVisiblefalse={() => setPickerVisible(false)}
       />
+      <View style={styles.searchheader}>
+            <Icon
+              name={'search'}
+              color={COLORS.primary}
+              size={SIZES.icon}
+              config={icoMoonConfigSet}
+              style={{opacity: 0.4, marginHorizontal: SIZES.ten}}
+            />
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              returnKeyType={'next'}
+              autoFocus={false}
+              //showSoftInputOnFocus={false}
+              //onChangeText={(text) => searchFilterFunction(text)}
+              //onClear={(text) => searchFilterFunction('')}
+              //status='info'
+              placeholder="Search Items"
+              style={{
+                fontFamily: Fonts.font_400,
+                fontSize: SIZES.medium,
+                width: '100%',
+              }}
+              textStyle={{color: '#000', fontFamily: Fonts.font_400}}
+            />
+          </View>
           <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 90 }}>
             <FlatList style={{ backgroundColor: 'white', height: '97%' }}
               //contentContainerStyle={{marginBottom:170}}
-              data={state}
+              data={filteredDataSource}
               horizontal={false}
               scrollEnabled={true}
               //ListFooterComponent={}
@@ -170,6 +227,20 @@ const ItemWiseSales = ({navigation}) => {
 export default ItemWiseSales
 
 const styles = StyleSheet.create({
+  searchheader: {
+    // backgroundColor: '#fff',
+    height: SIZES.image50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    // backgroundColor: COLORS.white,
+    //borderColor:COLORS.primary,
+    //borderWidth:.5,
+    borderRadius: SIZES.radius30,
+    // elevation: 10,
+    shadowColor: 'black',
+    marginHorizontal:20,
+  },
     container: {
       flex: 1,
       backgroundColor: 'white',
