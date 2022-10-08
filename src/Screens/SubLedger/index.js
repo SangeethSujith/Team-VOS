@@ -235,7 +235,7 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                       }}>
                       <Text style={{color: COLORS.primary, fontSize: 16}}>
-                        Trans No
+                        Trans Type
                       </Text>
                     </View>
                     <View
