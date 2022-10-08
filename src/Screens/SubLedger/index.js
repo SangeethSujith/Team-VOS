@@ -1,4 +1,4 @@
-import {StyleSheet, View, FlatList, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, FlatList, Text, Dimensions,TouchableOpacity,Modal} from 'react-native';
 import {CustomHeaderTwo} from '../../Components/CustomHeaderTwo';
 import {COLORS, Fonts, SIZES} from '../../Styles/theme';
 import axios from 'axios';
@@ -7,94 +7,106 @@ import {API_URL, GET_LEDGER} from '../../Apis/FirstApi';
 import React, {useState, useEffect} from 'react';
 import {LoaderOne, LoaderTwo} from '../../Components/Loader';
 import {CustomFilter} from '../../Components/CustomFilter';
+import {Icon, icoMoonConfigSet} from '../../Styles/icons';
+import {CustomButton} from '../../Components/CustomButton';
 import moment from 'moment';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const item = ({item}) => {
-  const Width = Dimensions.get('window').width;
 
-  return (
-    <>
-      <View
-        style={{flexDirection: 'row', borderWidth: 1, borderColor: '#d1d7db'}}>
-        <View
-          style={{
-            borderRightWidth: 1,
-            borderColor: '#d1d7db',
-            width: Width / 4,
-            paddingLeft: 6,
-            height: 30,
-            justifyContent: 'center',
-          }}>
-          <Text style={{color: COLORS.primary, fontSize: 12}}>
-            {' '}
-            {item.TransDate}
-          </Text>
-        </View>
-        <View
-          style={{
-            borderRightWidth: 1,
-            borderColor: '#d1d7db',
-            width: Width / 5.5,
-            height: 30,
-            justifyContent: 'center',
-            paddingLeft: 6,
-          }}>
-          <Text
-            style={{
-              color: COLORS.primary,
-              fontSize: 16,
-              textAlign: 'right',
-              marginRight: 5,
-            }}>
-            {item.TransNo}
-          </Text>
-        </View>
-        <View
-          style={{
-            borderRightWidth: 1,
-            borderColor: '#d1d7db',
-            width: Width / 5,
-            height: 30,
-            justifyContent: 'center',
-            paddingLeft: 6,
-          }}>
-          <Text
-            style={{
-              color: COLORS.primary,
-              fontSize: 16,
-              textAlign: 'right',
-              marginRight: 5,
-            }}>
-            {item.Debit}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: Width / 5,
-            height: 30,
-            justifyContent: 'center',
-            paddingLeft: 6,
-          }}>
-          <Text
-            style={{
-              color: COLORS.primary,
-              fontSize: 16,
-              textAlign: 'right',
-              marginRight: 5,
-            }}>
-            {item.Credit}
-          </Text>
-        </View>
-      </View>
-    </>
-  );
-};
 const SubLedger = ({navigation, route}) => {
+  const [state1, setstate1] = useState('');
+  const item = ({item}) => {
+    const Width = Dimensions.get('window').width;
+    const openModal = item => {
+      setstate1(item);
+      setModalVisible(true);
+      // console.log(param.sc);
+    };
+    return (
+      <>
+        <View
+          style={{flexDirection: 'row', borderWidth: 1, borderColor: '#d1d7db'}}>
+          <View
+            style={{
+              borderRightWidth: 1,
+              borderColor: '#d1d7db',
+              width: Width / 4,
+              paddingLeft: 6,
+              height: 30,
+              justifyContent: 'center',
+            }}>
+            <Text style={{color: COLORS.primary, fontSize: 12}}>
+              {' '}
+              {item.TransDate}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => openModal(item)}>
+          <View
+            style={{
+              borderRightWidth: 1,
+              borderColor: '#d1d7db',
+              width: Width / 5.5,
+              height: 30,
+              justifyContent: 'center',
+              paddingLeft: 6,
+            }}>
+            <Text
+              style={{
+                color: COLORS.primary,
+                fontSize: 16,
+                textAlign: 'right',
+                marginRight: 5,
+              }}>
+              {item.TransNo}
+            </Text>
+          </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              borderRightWidth: 1,
+              borderColor: '#d1d7db',
+              width: Width / 5,
+              height: 30,
+              justifyContent: 'center',
+              paddingLeft: 6,
+            }}>
+            <Text
+              style={{
+                color: COLORS.primary,
+                fontSize: 16,
+                textAlign: 'right',
+                marginRight: 5,
+              }}>
+              {item.Debit}
+            </Text>
+          </View>
+          <View
+            style={{
+              width: Width / 5,
+              height: 30,
+              justifyContent: 'center',
+              paddingLeft: 6,
+            }}>
+            <Text
+              style={{
+                color: COLORS.primary,
+                fontSize: 16,
+                textAlign: 'right',
+                marginRight: 5,
+              }}>
+              {item.Credit}
+            </Text>
+          </View>
+        </View>
+      </>
+    );
+  };
   const {param} = route.params;
   const [loader, setloader] = useState(false);
   const [state, setstate] = useState('');
   const Width = Dimensions.get('window').width;
   const Height = Dimensions.get('window').height;
+  const [modalVisible, setModalVisible] = useState(false);
   // const [datePicker, setDatePicker] = useState(false);
   // const [datePicker1, setDatePicker1] = useState(false);
   const [value1, setvalue1] = useState(moment().format('DD-MM-YYYY'));
@@ -149,7 +161,7 @@ const SubLedger = ({navigation, route}) => {
         // let sum = response.data.Data.reduce((a, c) => { return a + c.Debit }, 0);
         // console.log('sum: ', sum)
         setloader(false);
-        // console.log(response.data.Data);
+        console.log(response.data.Data);
         return {
           response: response.data,
         };
@@ -189,7 +201,7 @@ const SubLedger = ({navigation, route}) => {
               //inverted
               data={state}
               renderItem={item}
-              keyExtractor={item => item.id}
+              keyExtractor={(item, index) => index}
               style={{marginBottom: 70}}
               //height={}}
               ListHeaderComponent={
@@ -396,6 +408,80 @@ const SubLedger = ({navigation, route}) => {
                 </View>
               }
             />
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onBackdropPress={() => setModalVisible(false)}
+              backdropOpacity={0.5}
+              onRequestClose={() => {
+                //Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+              }}>
+              <View style={[styles.modalStyle, {marginTop: Height / 10}]}>
+                <View style={{margin: 10}}>
+                  <Text style={styles.heading}>Invoice Details</Text>
+                  <View style={styles.line} />
+                  <View>
+                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                      <Icon
+                        name={'file-text1'}
+                        color={'#319A2E'}
+                        size={SIZES.radius15}
+                        config={icoMoonConfigSet}
+                        style={{marginTop: 5}}
+                      />
+                      <View
+                        style={{
+                          marginLeft: 10,
+                          width: Width / 2.3,
+                        }}>
+                        {/* <View style={styles.textrow}>
+                          <View style={styles.innerrow}>
+                            <Text style={styles.text2}>{'Customer Name'}</Text>
+                            <Text style={styles.text2}>{': '}</Text>
+                          </View>
+                          <Text style={styles.text}>{state1.CustomerName}</Text>
+                          {/* <Text style={styles.text}>{''}</Text>
+                        </View> */}
+                        <View style={styles.textrow}>
+                          <View style={styles.innerrow}>
+                            <Text style={styles.text2}>{'Trans Number'}</Text>
+                            <Text style={styles.text2}>{': '}</Text>
+                          </View>
+                          <Text style={styles.text}>{state1.TransNo}</Text>
+                          
+                        </View>
+                        <View style={styles.textrow}>
+                          <View style={styles.innerrow}>
+                            <Text style={styles.text2}>{'Trans Date'}</Text>
+                            <Text style={styles.text2}>{': '}</Text>
+                          </View>
+                          <Text style={styles.text}>{state1.TransDate}</Text>
+                          
+                        </View>
+                      </View>
+                    </View>
+                    {/* <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <Icon
+                      name={"file-text1"}
+                      color={'#319A2E'}
+                      size={SIZES.radius15}
+                      config={icoMoonConfigSet}
+                      style={{ marginTop: 5 }}
+                    />
+                     </View> */}
+                    <CustomButton
+                      style={{alignSelf: 'flex-end'}}
+                      width1={'30%'}
+                      title={'Close'}
+                      height1={'35%'}
+                      onPress={() => setModalVisible(false)}
+                    />
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
         ) : (
           <View>
@@ -415,9 +501,44 @@ const SubLedger = ({navigation, route}) => {
 export default SubLedger;
 
 const styles = StyleSheet.create({
+  modalStyle: {
+    height: '20%',
+    width: '90%',
+    backgroundColor: COLORS.white,
+    alignSelf: 'center',
+    elevation: 60,
+    shadowColor: 'black',
+    borderRadius: 10,
+    //justifyContent:'center',
+    //alignItems:'center'
+  },
+  textrow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    //width:300
+  },
+  innerrow: {
+    width: '55%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  heading: {
+    //fontFamily: "poppins",
+    fontFamily: Fonts.font_400,
+    fontSize: SIZES.large,
+    //fontStyle : 'normal',
+    //textAlign:'center',
+    //marginTop:heightPercentageToDP(.5),
+    //fontSize: Theme.FONT_BIG,
+    //fontSize : Theme.FONT_TWNETY,
+    color: COLORS.primary_black,
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
+    width: '100%',
   },
   card: {
     backgroundColor: 'white',
@@ -425,6 +546,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 'auto',
     flexDirection: 'row',
+    //justifyContent: 'space-around',
     margin: 10,
   },
   elevation: {
@@ -433,31 +555,22 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.black,
-    fontSize: SIZES.verylarge,
+    fontSize: SIZES.small,
     fontFamily: Fonts.font_500,
-    marginBottom: 3,
-    alignSelf: 'center',
-  },
-  text1: {
-    color: COLORS.black,
-    fontSize: SIZES.large,
-    fontFamily: Fonts.font_500,
-    marginVertical: 15,
-    //alignSelf:'center'
+    marginBottom: 5,
   },
   text2: {
-    color: COLORS.heading_black,
-    fontSize: SIZES.large,
-    fontFamily: Fonts.font_400,
-    marginBottom: 3,
-    alignSelf: 'center',
+    color: COLORS.black,
+    fontSize: SIZES.small,
+    fontFamily: Fonts.font_500,
+    marginBottom: 5,
   },
   text3: {
-    color: 'grey',
-    fontSize: SIZES.medium,
+    color: COLORS.heading_black,
+    fontSize: SIZES.vsmall,
     fontFamily: Fonts.font_400,
-    alignSelf: 'center',
-    //marginVertical: 5,
+    marginBottom: 5,
+    //marginVertical:15,
   },
   text4: {
     color: COLORS.black,
