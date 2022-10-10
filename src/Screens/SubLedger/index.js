@@ -30,7 +30,7 @@ const SubLedger = ({navigation, route}) => {
             style={{
               borderRightWidth: 1,
               borderColor: '#d1d7db',
-              width: Width / 4,
+              width: Width / 5,
               paddingLeft: 6,
               height: 30,
               justifyContent: 'center',
@@ -45,7 +45,7 @@ const SubLedger = ({navigation, route}) => {
             style={{
               borderRightWidth: 1,
               borderColor: '#d1d7db',
-              width: Width / 5.5,
+              width: Width / 4.4,
               height: 30,
               justifyContent: 'center',
               paddingLeft: 6,
@@ -216,7 +216,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4,
+                        width: Width / 5,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -229,7 +229,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5.5,
+                        width: Width / 4.4,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -277,7 +277,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4,
+                        width: Width / 5,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -290,7 +290,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5.5,
+                        width: Width / 4.4,
                         alignItems: 'center',
                         height: 30,
                         justifyContent: 'center',
@@ -352,7 +352,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4,
+                        width: Width / 5,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -365,7 +365,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5.5,
+                        width: Width / 4.4,
                         alignItems: 'center',
                         height: 30,
                         justifyContent: 'center',
@@ -434,7 +434,7 @@ const SubLedger = ({navigation, route}) => {
                       <View
                         style={{
                           marginLeft: 10,
-                          width: Width / 2.3,
+                          width: Width/2.7,
                         }}>
                         {/* <View style={styles.textrow}>
                           <View style={styles.innerrow}>
@@ -446,7 +446,7 @@ const SubLedger = ({navigation, route}) => {
                         </View> */}
                         <View style={styles.textrow}>
                           <View style={styles.innerrow}>
-                            <Text style={styles.text2}>{'Trans Number'}</Text>
+                            <Text style={styles.text2}>{'Transaction Type'}</Text>
                             <Text style={styles.text2}>{': '}</Text>
                           </View>
                           <Text style={styles.text}>{state1.TransNo}</Text>
@@ -454,11 +454,17 @@ const SubLedger = ({navigation, route}) => {
                         </View>
                         <View style={styles.textrow}>
                           <View style={styles.innerrow}>
+                            <Text style={styles.text2}>{'Transaction Number'}</Text>
+                            <Text style={styles.text2}>{': '}</Text>
+                          </View>
+                          <Text style={styles.text}>{state1.TransactionNo}</Text>
+                        </View>
+                        <View style={styles.textrow}>
+                          <View style={styles.innerrow}>
                             <Text style={styles.text2}>{'Trans Date'}</Text>
                             <Text style={styles.text2}>{': '}</Text>
                           </View>
                           <Text style={styles.text}>{state1.TransDate}</Text>
-                          
                         </View>
                       </View>
                     </View>
@@ -502,7 +508,7 @@ export default SubLedger;
 
 const styles = StyleSheet.create({
   modalStyle: {
-    height: '20%',
+    height: '22%',
     width: '90%',
     backgroundColor: COLORS.white,
     alignSelf: 'center',
@@ -514,11 +520,11 @@ const styles = StyleSheet.create({
   },
   textrow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     //width:300
   },
   innerrow: {
-    width: '55%',
+    width: '100%',
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
