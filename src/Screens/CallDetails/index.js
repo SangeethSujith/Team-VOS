@@ -16,7 +16,6 @@ import { LoaderOne, LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
 import { Validate } from '../../Components/ValidateInput';
-//import {Cust}
 
 const CallDetails = ({ navigation, route }) => {
   const { param } = route.params;
@@ -97,15 +96,16 @@ const CallDetails = ({ navigation, route }) => {
       status: isSelected ? 'Visited' : 'Not Available',
       products_prescribed: input.pProdct,
       order_booked: input.orderAmount,
-      //date:param.date,
-      //complaints: input.complaints,
+      // Now defaulted today's date but need to fix this in the api
+      date:moment().format("YYYY-MM-DD"),
+      complaints: input.complaints,
       information_conveyed: input.informtn,
       collection: input.collection,
       distance: input.distance,
       remarks: input.remarks
 
     }
-    console.log(posts)
+    console.log(posts,'the data')
     setloader(true);
 
     axios.post(`https://ayurwarecrm.com/demo/ajax/save_call`, qs.stringify(posts)).then(async (response) => {
