@@ -207,8 +207,32 @@ const Products = ({ navigation }) => {
           {/*<View style={styles.logosecond}>
                         <Text style={styles.text2}>{'All Categories'}</Text>  
                     </View>*/}
-
-          <RenderHeader />
+                    <View
+        style={styles.searchheader}>
+        <Icon
+          name={"search"}
+          color={COLORS.primary}
+          size={SIZES.icon}
+          config={icoMoonConfigSet}
+          style={{ opacity: .4, marginHorizontal: SIZES.ten }}
+        />
+        <TextInput
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={(value) => handleSearch(value)}
+          value={search}
+          returnKeyType={"next"}
+          autoFocus={true}
+          status='info'
+          placeholder='Search Products'
+          style={{
+            fontFamily: Fonts.font_400,
+            fontSize: SIZES.medium,
+            width: '100%'
+          }}
+          textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
+        />
+      </View>
           <FlatList style={{ backgroundColor: 'white', marginBottom: 180 }}
             data={state1}
             horizontal={false}
