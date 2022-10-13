@@ -1,14 +1,5 @@
-// import React, { useEffect, useState } from 'react';
-// import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { CustomFilter } from '../../Components/CustomFilter';
-// import { useIsFocused } from "@react-navigation/native";
-// import { SIZES, COLORS, Fonts } from '../../Styles/theme';
-// import { API_URL, GET_ORDERS } from '../../Apis/FirstApi';
-// import { LoaderOne, LoaderTwo } from '../../Components/Loader';
-// import moment from 'moment'
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity,TextInput } from 'react-native';
 import { CustomFilter } from '../../Components/CustomFilter';
 import axios from 'axios';
 import { SIZES, COLORS, Fonts } from '../../Styles/theme';
@@ -17,168 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL, GET_ORDERS } from '../../Apis/FirstApi';
 import { LoaderOne, LoaderTwo, LoaderThree } from '../../Components/Loader';
 import moment from 'moment'
-
+import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 const Success = ({ navigation, route }) => {
-  //   const isFocused = useIsFocused();
-  //   const [data, setdata] = useState('')
-  //   useEffect(() => {
-  //     if(isFocused) {
-  //     //setstate(param2)
-  //     readData();
-  //     console.log('useEffect')}
-  //   }, [isFocused]);
-  //   const readData = async () => {
-  //     try {
-  //       const myArray = await AsyncStorage.getItem("save");
-  //       if (myArray !== null) {
-  //         // We have data!
-  //         console.log(JSON.parse(myArray));
-  //         setdata(JSON.parse(myArray))
-  //         console.log(data.CustomerData)
-  //         console.log('save');
-  //       }
-  //     } catch (error) {
-  //       //setdata('')
-  //       alert(error)
-  //       //setdata('')
-  //       //alert('Failed to fetch the input from storage');
-  //     }
-  //   };
-  //   if (data.length === 0 ){
-  //   return (
-  //     <View style={styles.containerone}>
-  //        <Image
-  //           style={styles.tinyLogo}
-  //           source={require('../../Assets/Images/noorder.jpg')}
-  //       />
-  //       <Text style={{alignSelf:'center'}}>No Confirmed orders </Text>
-  //     </View>
-  //   )}
-  //   else{
-  //     return(
-  //       <View style={styles.container}>
-  //          <CustomFilter/>
-  //       <FlatList style={{backgroundColor:'transparent'}}
-  //                   data={data}
-  //                   horizontal={false}
-  //                   scrollEnabled={true}
-  //                   //ListHeaderComponent={renderHeader}
-  //                   showsVerticalScrollIndicator={false}
-  //                   numColumns={1}
-  //                   keyExtractor={(item) => {
-  //                       return item.id;
-  //                   }}
-  //                   renderItem={({ item }) => {
-  //                       return (
-  //                       <View style ={{marginVertical:5,marginHorizontal:15}}>
-  //                               <TouchableOpacity style={styles.card} 
-  //                                                 onPress ={()=>navigation.navigate('OrderDetails',{
-  //                                                               param:  item.CustomerDetails ,
-  //                                                               param2: item.CustomerData})}>
-  //                                 <View style={{margin :10}}>
-  //                                   <Text style={styles.text}>{item.CustomerDetails.name}</Text>
-  //                                   <Text style={styles.textitem}>Order No : VMOS00S{item.id}</Text>
-  //                                   <View style={styles.raw}>
-  //                                       <Text style={styles.text5}>No.of Items :{item.items}</Text>
-  //                                       <Text style={styles.text5}>Amount :{item.amount}</Text>
-  //                                   </View>
-  //                                   <View style={styles.raw}>
-  //                                       <Text style={styles.text5}>Date :{item.time}</Text>
-  //                                       <Text style={styles.text5}>Time :{item.date}</Text>
-  //                                   </View>
-  //                               </View>
-  //                               </TouchableOpacity>
-  //                           </View>
-  //                  )
-  //                   }} 
-  //                 />
-
-  //     </View>
-  //     )
-  //   }
-  // }
-  // export default Success;
-  // const styles = StyleSheet.create({
-  //   tinyLogo:{
-  //     width:SIZES.image120,
-  //     height:SIZES.image120,
-  //     //marginTop:200,
-  //     alignSelf:'center',
-  //     opacity:.7
-  //   },
-  // containerone:{
-  //   flex: 1,
-  //   backgroundColor:'white',
-  //   alignItems:'center',
-  //   justifyContent:'center'
-  // },
-  // container:{
-  //   flex: 1,
-  //   backgroundColor:'white',
-  // },
-  // card:{
-  //   width:'100%' ,
-  //   height:'auto',
-  //   backgroundColor:COLORS.primary_light,
-  //   alignSelf:'center',
-  //   borderColor:COLORS.primary,
-  //   borderWidth:.5,
-  //   borderRadius:7
-  //   //shadowColor:COLORS.primary,
-  //   //elevation:20
-  // },
-  // text:{
-  //   color:COLORS.black,
-  //   fontSize:SIZES.large,
-  //   fontFamily:Fonts.font_600,
-  //   marginBottom:3,
-  //   //alignSelf:'center'
-  // },
-  // text1:{
-  // color:COLORS.black,
-  // fontSize:SIZES.large,
-  // fontFamily:Fonts.font_500,
-  // marginVertical:15,
-  // //alignSelf:'center'
-  // },
-  // textitem:{
-  // color:COLORS.primary_black,
-  // fontSize:SIZES.medium,
-  // fontFamily:Fonts.font_500,
-  // //marginVertical:15,
-  // //alignSelf:'center'
-  // },
-  // text2:{
-  // color:'#b2b8b4',
-  // fontSize:SIZES.medium,
-  // fontFamily:Fonts.font_400,
-  // //marginTop:'50%',
-  // //marginBottom:3,
-  // alignSelf:'center'
-  // },
-  // text3:{
-  // color:'grey',
-  // fontSize:SIZES.medium,
-  // fontFamily:Fonts.font_400,
-  // alignSelf:'center',
-  // marginVertical:5,
-  // },
-  // text5:{
-  // color:'grey',
-  // fontSize:SIZES.small,
-  // fontFamily:Fonts.font_400,
-  // alignSelf:'center',
-  // marginVertical:5,
-  // },
-  // raw:{
-  //   flexDirection:'row',
-  //   justifyContent:'space-between',
-  //   backgroundColor:'transparent',
-  //   //width:'80%',
-  //   //alignSelf:'center'
-  // }
-  // })
-
   const [loader, setloader] = useState(false);
   const [state, setstate] = useState('');
   const [data, setdata] = useState('')
@@ -189,11 +20,6 @@ const Success = ({ navigation, route }) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [isPickerShow2, setIsPickerShow2] = useState(false);
   const [PickerVisible, setPickerVisible] = useState(false);
-  const [number,setnumber]=useState(1);
-  // function onDateSelected1(event, value) {
-  //   setvalue1(value);
-  //   setDatePicker(false);
-  // };
   const onDateSelected1 = (event, value) => {
     setDate1(value);
     setvalue2(moment(date1).format('DD-MM-YYYY'))
@@ -213,10 +39,35 @@ const Success = ({ navigation, route }) => {
   }
   useEffect(() => {
     getOrder();
+    setFilteredDataSource(state);
   }, []);
-  function addnumber(){
-    setnumber=number+1;
-  }
+  const [search,setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState('');
+  // const [masterDataSource, setMasterDataSource] = useState(state);
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = state.filter(
+        function (item) {
+          const itemData = item.CustomerName
+            ? item.CustomerName.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(state);
+      // console.log(filteredDataSource);
+      setSearch(text);
+    }
+  };
   async function getOrder() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
@@ -232,7 +83,7 @@ const Success = ({ navigation, route }) => {
       headers).then(async (response) => {
 
         await setstate(response.data.Data)
-
+        setFilteredDataSource(response.data.Data)
         console.log(state);
         setloader(false);
         return {
@@ -243,28 +94,8 @@ const Success = ({ navigation, route }) => {
       });
   }
 
-
-  // if (state.length === 0) {
-  //     return (
-  //         <View style={{ flex: 1 }} >
-  //             <CustomHeaderTwo
-  //                 heading={'Orders'}
-  //                 onpress={() => navigation.goBack()}
-  //             />
-  //             <View style={styles.containerone}>
-  //                 <Image
-  //                     style={styles.tinyLogo}
-  //                     source={require('../../Assets/Images/noorder.jpg')}
-  //                 />
-  //                 <Text style={{ alignSelf: 'center' }}>No Confirmed orders </Text>
-  //             </View>
-  //         </View>
-  //     )
-  // }
-  // else {
   return (
     <View style={styles.container}>
-
       <CustomFilter
         value1={date1}
         value2={date2}
@@ -281,15 +112,36 @@ const Success = ({ navigation, route }) => {
         PickerVisibletrue={() => setPickerVisible(true)}
         PickerVisiblefalse={() => setPickerVisible(false)}
       />
+      <View style={styles.searchheader}>
+            <Icon
+              name={'search'}
+              color={COLORS.primary}
+              size={SIZES.icon}
+              config={icoMoonConfigSet}
+              style={{opacity: 0.4, marginHorizontal: SIZES.ten}}
+            />
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              returnKeyType={'next'}
+              autoFocus={false}
+              placeholder="Search Items"
+              style={{
+                fontFamily: Fonts.font_400,
+                fontSize: SIZES.medium,
+                width: '100%',
+              }}
+              textStyle={{color: '#000', fontFamily: Fonts.font_400}}
+            />
+          </View>
       {state !== '' && state.length > 0 ?
-        <View>
-          <FlatList style={{ backgroundColor: 'transparent', marginBottom: 50 }}
-            data={state}
+        <View style={{height:'85%'}}>
+          <FlatList style={{ backgroundColor: 'transparent'}}
+            data={filteredDataSource}
             horizontal={false}
             scrollEnabled={true}
-            //inverted={true}
-            //contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
-            //ListHeaderComponent={renderHeader}
             showsVerticalScrollIndicator={false}
             numColumns={1}
             keyExtractor={(item) => {
@@ -339,6 +191,20 @@ const Success = ({ navigation, route }) => {
 }
 export default Success;
 const styles = StyleSheet.create({
+  searchheader: {
+    // backgroundColor: '#fff',
+    height: SIZES.image50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    // backgroundColor: COLORS.white,
+    //borderColor:COLORS.primary,
+    //borderWidth:.5,
+    borderRadius: SIZES.radius30,
+    // elevation: 10,
+    shadowColor: 'black',
+    marginHorizontal:20,
+  },
   tinyLogo: {
     width: SIZES.image120,
     height: SIZES.image120,
@@ -363,9 +229,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: COLORS.primary,
     borderWidth: .5,
-    borderRadius: 7
-    //shadowColor:COLORS.primary,
-    //elevation:20
+    borderRadius: 7,
   },
   text: {
     color: COLORS.black,
