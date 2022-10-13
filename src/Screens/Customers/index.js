@@ -13,10 +13,12 @@ import { BASE_URL, CUSTOMERS } from '../../Apis/SecondApi';
 
 const Customers = ({ navigation }) => {
   const [loader, setloader] = useState(false);
+  const [state, setstate] = useState('');
   const [state1, setstate1] = useState('');
   const [state2, setstate2] = useState('');
   useEffect(() => {
     getCustomers()
+    setFilteredDataSource(state)
   }, []);
 
   async function getCustomers() {
@@ -31,8 +33,10 @@ const Customers = ({ navigation }) => {
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data)
+        setstate(response.data)
+        setFilteredDataSource(response.data)
         setstate2(response.data)
-        //console.log(response.data);
+        console.log(response.data);
         return {
           response: response.data
         };
@@ -66,22 +70,45 @@ const Customers = ({ navigation }) => {
   //const [Data, setData] = useState(state.data)
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState(state1);
-  const [masterDataSource, setMasterDataSource] = useState([]);
-
-  const handleSearch = (value) => {
-    const filteredData = state1.filter(item => {
-      const formattedQuery = item.n.toUpperCase();
-      const textData = value.toUpperCase();
-      return formattedQuery.indexOf(textData) > -1;
-    })
-    setstate1(filteredData);
-    setSearch(value);
-    setQuery(value)
-    if (!value || value === '') {
-      setstate1(state2);
+  const [filteredDataSource, setFilteredDataSource] = useState(state);
+  // const [masterDataSource, setMasterDataSource] = useState([]);
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = state.filter(
+        function (item) {
+          const itemData = item.n
+            ? item.n.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(state);
+      // console.log(filteredDataSource);
+      setSearch(text);
     }
   };
+  // const handleSearch = (value) => {
+  //   const filteredData = state1.filter(item => {
+  //     const formattedQuery = item.n.toUpperCase();
+  //     const textData = value.toUpperCase();
+  //     return formattedQuery.indexOf(textData) > -1;
+  //   })
+  //   setstate1(filteredData);
+  //   setSearch(value);
+  //   setQuery(value)
+  //   if (!value || value === '') {
+  //     setstate1(state2);
+  //   }
+  // };
 
   // const searchFilterFunction = (text) => {
   //   // Check if searched text is not blank
@@ -106,9 +133,49 @@ const Customers = ({ navigation }) => {
   //   }
   // };
 
-  function RenderHeader() {
-    return (
-      <View
+  // function RenderHeader() {
+  //   return (
+  //     <View
+  //       style={styles.searchheader}>
+  //       <Icon
+  //         name={"search"}
+  //         color={COLORS.primary}
+  //         size={SIZES.icon}
+  //         config={icoMoonConfigSet}
+  //         style={{ opacity: .4, marginHorizontal: SIZES.ten }}
+  //       />
+  //       <TextInput
+  //         autoCapitalize='none'
+  //         autoCorrect={false}
+  //         onChangeText={(text) => searchFilterFunction(text)}
+  //         value={search}
+  //         returnKeyType={"next"}
+  //         autoFocus={false}
+  //         //showSoftInputOnFocus={false}
+  //         //onChangeText={(text) => searchFilterFunction(text)}
+  //         //onClear={(text) => searchFilterFunction('')}
+  //         //status='info'
+  //         placeholder='Search Customers'
+  //         style={{
+  //           fontFamily: Fonts.font_400,
+  //           fontSize: SIZES.medium,
+  //           width: '100%'
+  //         }}
+  //         textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
+  //       />
+  //     </View>
+  //   )
+  // }
+
+  return (
+    <View style={styles.container}>
+      <CustomHeaderTwo
+        heading={'Customers'}
+        onpress={() => navigation.goBack()}
+      />
+      {state1 !== '' ?
+        <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
+        <View
         style={styles.searchheader}>
         <Icon
           name={"search"}
@@ -120,7 +187,7 @@ const Customers = ({ navigation }) => {
         <TextInput
           autoCapitalize='none'
           autoCorrect={false}
-          onChangeText={(value) => handleSearch(value)}
+          onChangeText={(text) => searchFilterFunction(text)}
           value={search}
           returnKeyType={"next"}
           autoFocus={false}
@@ -137,20 +204,8 @@ const Customers = ({ navigation }) => {
           textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
         />
       </View>
-    )
-  }
-
-  return (
-    <View style={styles.container}>
-      <CustomHeaderTwo
-        heading={'Customers'}
-        onpress={() => navigation.goBack()}
-      />
-      {state1 !== '' ?
-        <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
-          <RenderHeader />
           <FlatList style={{ backgroundColor: 'white' }}
-            data={state1}
+            data={filteredDataSource}
             horizontal={false}
             scrollEnabled={true}
             //ListHeaderComponent={renderHeader}
