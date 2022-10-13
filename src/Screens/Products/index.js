@@ -32,7 +32,7 @@ const Products = ({ navigation }) => {
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data)
-        setstate1(response.data.filter((items) => items.pmCategory === 'New Medicines'))
+        setstate1(response.data.filter((items) => items.pmCategory === 'Choornam'))
         setstate2(response.data)
         console.log(state1);
         return {
@@ -75,7 +75,7 @@ const Products = ({ navigation }) => {
   const [Category, setCategory] = useState(state.data1)
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [active, setactive] = useState('New Medicines');
+  const [active, setactive] = useState('Choornam');
   const [filteredDataSource, setFilteredDataSource] = useState(state.data);
   const [masterDataSource, setMasterDataSource] = useState(state.data);
 
@@ -134,36 +134,6 @@ const Products = ({ navigation }) => {
       setstate1(state2.filter((items) => items.pmCategory === active));
     }
   };
-  function RenderHeader() {
-    return (
-      <View
-        style={styles.searchheader}>
-        <Icon
-          name={"search"}
-          color={COLORS.primary}
-          size={SIZES.icon}
-          config={icoMoonConfigSet}
-          style={{ opacity: .4, marginHorizontal: SIZES.ten }}
-        />
-        <TextInput
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={(value) => handleSearch(value)}
-          value={search}
-          returnKeyType={"next"}
-          autoFocus={true}
-          status='info'
-          placeholder='Search Products'
-          style={{
-            fontFamily: Fonts.font_400,
-            fontSize: SIZES.medium,
-            width: '100%'
-          }}
-          textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
-        />
-      </View>
-    )
-  }
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
