@@ -35,10 +35,32 @@ const SampleIssue = ({navigation, route}) => {
     setOpen(true)
     console.log(param.sc);
   }
+   async function getsamples() {
+    setloader(true);
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData);
+    let body = {
+      user_id: Data.Userid,
+    };
+    axios
+      .post(
+        `https://ayurwarecrm.com/demo/ajax/get_sample_stock`,
+        qs.stringify(body),
+      )
+      .then(async response => {
+        setloader(false);
+        await setstate(response.data.data);
+        console.log(response.data.data);
+        return {
+          response: response.data,
+        };
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   const PostSave = async () => {
     console.log('inside')
-    //const Route = await AsyncStorage.getItem('Routes');
-    //let route = JSON.parse(Route)
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     let posts = {
@@ -56,7 +78,7 @@ const SampleIssue = ({navigation, route}) => {
     axios
       .post(
         `https://ayurwarecrm.com/demo/ajax/issue_sample`,
-        qs.stringify(body),
+        qs.stringify(posts), 
       )
       (async (response) => {
         if (response.status == 200) {
@@ -83,31 +105,6 @@ const SampleIssue = ({navigation, route}) => {
       });
   
     }
-
-  async function getsamples() {
-    setloader(true);
-    const userData = await AsyncStorage.getItem('User_Data');
-    let Data = JSON.parse(userData);
-    let body = {
-      user_id: Data.Userid,
-    };
-    axios
-      .post(
-        `https://ayurwarecrm.com/demo/ajax/get_sample_stock`,
-        qs.stringify(body),
-      )
-      .then(async response => {
-        setloader(false);
-        await setstate(response.data.data);
-        console.log(response.data.data);
-        return {
-          response: response.data,
-        };
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
   return (
     <View style={styles.container}>
       <Modal
