@@ -64,7 +64,7 @@ const ItemWiseSales = ({navigation}) => {
           Authorization: 'Bearer ' + token,
         }
       };
-      axios.get(`${API_URL}/${GET_ITEM_SALES}?FromDate=${value2}&ToDate=${value1}&FSOCode=Z0001`,headers).then(async(response) => {
+      axios.get(`${API_URL}/${GET_ITEM_SALES}?FromDate=${value2}&ToDate=${value1}&FSOCode=E0250`,headers).then(async(response) => {
           setloader(false)
           await setstate(response.data.Data)
           setFilteredDataSource(response.data.Data)

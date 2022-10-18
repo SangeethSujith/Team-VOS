@@ -202,8 +202,7 @@ const SubLedger = ({navigation, route}) => {
               data={state}
               renderItem={item}
               keyExtractor={(item, index) => index}
-              style={{marginBottom: 70}}
-              //height={}}
+              style={{marginBottom: 120}}
               ListHeaderComponent={
                 <View style={{marginTop: 30}}>
                   <View

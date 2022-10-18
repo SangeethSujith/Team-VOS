@@ -115,7 +115,7 @@ const SalesByCustomer = ({navigation}) => {
       },
     };
     axios
-      .get(`${API_URL}/${GET_CUS_SALES}?&FSOCode=Z0001`, headers)
+      .get(`${API_URL}/${GET_CUS_SALES}?&FSOCode=E0250`, headers)
       .then(async response => {
         setloader(false);
         setstate(response.data.Data);
