@@ -1,14 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
-  Dimensions,
   StyleSheet,
-  FlatList,
-  Modal,
   Alert,
 } from 'react-native';
-import {Icon, icoMoonConfigSet} from '../../Styles/icons';
 import {COLORS, Fonts, SIZES} from '../../Styles/theme';
 import {CustomHeaderTwo} from '../../Components/CustomHeaderTwo';
 import {CustomButton} from '../../Components/CustomButton';
@@ -24,35 +20,19 @@ const Submit = ({navigation, route}) => {
   const [qty, setqty] = useState('');
   console.log('Customer ID', param);
   console.log('Item', item);
-  useEffect(() => {
-    getRoutes()
-  }, []);
-  async function getRoutes() {
-    setloader(true);
-    const userData = await AsyncStorage.getItem('User_Data');
-    let Data = JSON.parse(userData)
-    //console.log(Data.Userid);
-    let body = {
-      user_id: Data.Userid,
-    }
-  }
   const PostSave = async () => {
     console.log('inside');
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData);
-    console.log(item.user_id);
-    console.log(item.product_id);
+    const uid=Data.Userid
+    const pid=item.product_id
+    console.log(uid,pid)
     let posts = {
-      user_id: item.user_id,
-      product_id: item.product_id,
+      user_id: uid,
+      product_id: pid,
       customer_id: param,
       quantity: qty,
     };
-    console.log(product_id);
-    console.log(customer_id);
-    console.log(quantity);
-    console.log('upload');
-    console.log(posts);
     axios.post(`https://ayurwarecrm.com/demo/ajax/issue_sample`, qs.stringify(posts)).then(async(response)=> {
         if (response.status == 200) {
           Alert.alert("Saved Successfully ", ' ', 

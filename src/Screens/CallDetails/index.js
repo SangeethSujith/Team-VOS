@@ -286,7 +286,7 @@ const CallDetails = ({ navigation, route }) => {
               <CustomButtonTwo
                 title={'Sample Issue'}
                 width1={SIZES.image210}
-                onPress={() => navigation.navigate('SampleIssue2',{param:param.sc})}
+                onPress={() => navigation.navigate('SampleIssue',{param:param.i})}
               />
             </View>}
           <LoaderThree loader={loader} />
