@@ -202,7 +202,7 @@ const ItemsNCustomers = ({ navigation, route }) => {
               showsVerticalScrollIndicator={false}
               numColumns={1}
               keyExtractor={(item, index) => index}
-              renderItem={({ item }) => {
+              renderItem={({ item,index }) => {
                 return (
                   <TouchableOpacity
                   //onPress={() => InvoiceDetails(item)}
@@ -228,7 +228,10 @@ const ItemsNCustomers = ({ navigation, route }) => {
                             <Text style={styles.text2}>{'Item Name'}</Text>
                             <Text style={styles.text2}>{': '}</Text>
                           </View> */}
+                         <View style={{flexDirection:'row'}}>
+                        <Text style={styles.text}>{index+1} . </Text>
                         <Text style={styles.text2}>{item.ItemName}</Text>
+                        </View>
                         {/* </View> */}
                         {/* <View style={styles.textrow}>
                           <View style={styles.innerrow}>
