@@ -108,6 +108,7 @@ const SalesByCustomer = ({navigation}) => {
     const prior = new Date().setDate(current.getDate() - 30);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData);
+    const FSOCode=Data.UserCode;
     console.log(current.toISOString().split('T')[0]);
     let headers = {
       headers: {
@@ -115,7 +116,7 @@ const SalesByCustomer = ({navigation}) => {
       },
     };
     axios
-      .get(`${API_URL}/${GET_CUS_SALES}?&FSOCode=E0250`, headers)
+      .get(`${API_URL}/${GET_CUS_SALES}?&FSOCode=${FSOCode}`, headers)
       .then(async response => {
         setloader(false);
         setstate(response.data.Data);
