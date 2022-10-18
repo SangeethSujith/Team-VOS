@@ -37,7 +37,7 @@ const CustomerDetails = ({ navigation, route }) => {
     axios.get(`${API_URL}/${GET_AGING}?CustomerCode=${param.sc}`,
       headers).then(async (response) => {
         setloader(false)
-        console.log(param.sc);
+        console.log('customer code',param.sc);
         await setstate1(response.data.Data)
         console.log(state1);
         return {
@@ -112,7 +112,7 @@ const CustomerDetails = ({ navigation, route }) => {
             //width1 ={SIZES.image210}
             // onPress={() => navigation.navigate('ItemsNCustomers', { param: param.sc })}
             onPress={() =>
-              navigation.navigate('SampleIssue', {param: param.sc})
+              navigation.navigate('SampleIssue', {param: param.i})
             }
           />
           {/*<View style={styles.buttonrow}>

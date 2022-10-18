@@ -33,12 +33,13 @@ const SampleIssue = ({navigation, route}) => {
   const openModal=(item)=>{
     setstate1(item);
     setOpen(true)
-    console.log(param.sc);
+    console.log(param.i);
   }
    async function getsamples() {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData);
+    console.log(Data.Userid)
     let body = {
       user_id: Data.Userid,
     };
@@ -59,107 +60,9 @@ const SampleIssue = ({navigation, route}) => {
         console.log(err);
       });
   }
-  const PostSave = async () => {
-    console.log('inside')
-    const userData = await AsyncStorage.getItem('User_Data');
-    let Data = JSON.parse(userData)
-    let posts = {
-      user_id: Data.Userid,
-      product_id:state1.product_id,
-      customer_id:param.sc,
-      quantity:qty,
-    };
-    console.log(user_id);
-    console.log(product_id);
-    console.log(customer_id);
-    console.log(quantity);
-    console.log('upload');
-    console.log(posts)
-    axios
-      .post(
-        `https://ayurwarecrm.com/demo/ajax/issue_sample`,
-        qs.stringify(posts), 
-      )
-      (async (response) => {
-        if (response.status == 200) {
-          setloader(false);
-          Alert.alert(
-            "Saved Successfully ", ' ',
-            [
-              {
-                text: "Yes",
-                cancelable: true,
-                onPress: () => navigation.navigate('Home'),
-                style: "cancel",
-              }],
-          );
-        }
-        else {
-          setloader(false);
-          Alert.alert(
-            "Failed Save, Try Again")
-        }
-      }
-      ).catch((err) => {
-        console.log(err)
-      });
-  
-    }
+
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={open}
-        onBackdropPress={() => setOpen(false)}
-        backdropOpacity={0.5}
-        onRequestClose={() => {
-          setOpen(!open);
-        }}>
-        <View
-          style={[
-            styles.modalStyle,
-            {marginTop: Height / 10, paddingHorizontal: '5%'},
-          ]}>
-          <View style={{margin: 10}}>
-            <Text style={styles.heading}>Issue sample</Text>
-            <View style={styles.line} />
-          </View>
-          <Text style={styles.text3}>Available Stock :{state1.stock}</Text>
-          <CustomInput
-            type="text"
-            keyboardType="numeric"
-            label="Quantity"
-            labelBG="white"
-            width="80%"
-            // placeholderText=''
-            value={setqty}
-            //iconname='location'
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '50%',
-              alignSelf: 'center',
-            }}>
-            <CustomButton
-              style={{alignSelf: 'center'}}
-              width1={'150%'}
-              title={'Close'}
-              height1={'35%'}
-              onPress={() => setOpen(false)}
-            />
-            <CustomButton
-              style={{alignSelf: 'center'}}
-              width1={'120%'}
-              title={'Submit'}
-              height1={'35%'}
-              onPress={() => PostSave()}
-            />
-          </View>
-        </View>
-      </Modal>
       <CustomHeaderTwo
         heading={'Sample Issue'}
         onpress={() => navigation.goBack()}
@@ -199,7 +102,11 @@ const SampleIssue = ({navigation, route}) => {
                         width1={80}
                         height1={30}
                         title={'Issue'}
-                        onPress={() => openModal(item)}
+                        // onPress={() => openModal(item)}
+                        onPress={()=>navigation.navigate('Submit',{
+                          param:param,
+                          item:item
+                        })}
                       />
                     </View>
                   </View>

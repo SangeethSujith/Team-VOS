@@ -50,6 +50,7 @@ import ItemsNCustomers from '../Screens/ItemsNCustomers';
 import SalesByCustomer from '../Screens/SalesByCustomer';
 import ItemWiseSales from '../Screens/ItemWiseSales';
 import SampleIssue2 from '../Screens/SampleIssue2';
+import Submit from '../Screens/SampleIssue/Submit';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { useSelector } from 'react-redux';
@@ -452,6 +453,14 @@ function MainSectionStack({ navigation }) {
                     },
                 })} />
             <MainStackCreator.Screen name="SalesByCustomer" component={SalesByCustomer}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="Submit" component={Submit}
                 options={(props) => ({
                     header: () => null,
                     transitionSpec: {
