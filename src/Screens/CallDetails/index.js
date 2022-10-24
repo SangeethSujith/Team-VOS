@@ -258,7 +258,7 @@ const CallDetails = ({ navigation, route }) => {
             value={input.distance}
             onChangeText={(text) => {
               setinput({ ...input, distance: text })
-              setloginError({ ...loginError, distance: Validate('Distance', 'isEmpty', input.distance) })
+              setloginError({ ...loginError, distance: Validate('Distance', 'distance', input.distance) })
             }}
             errorMessage={loginError.distance}
           //iconname='location'

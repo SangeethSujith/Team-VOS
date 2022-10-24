@@ -4,6 +4,10 @@ export const Validate = (field_name, type, values) => {
             return validateNULL(field_name, values)
             break;
 
+        case "distance":                  
+            return validateDIS(field_name, values)
+            break;
+
         case "email":
             return validateEmail(field_name, values)
             break;
@@ -32,6 +36,16 @@ export const Validate = (field_name, type, values) => {
 const validateNULL = (field_name, values) => {
     let errors = {};
     if (!values) {
+        errors = field_name + ' is required.';
+    }
+    else {
+        errors = '';
+    }
+    return errors;
+};
+const validateDIS = (field_name, values) => {
+    let errors = {};
+    if (values<0) {
         errors = field_name + ' is required.';
     }
     else {
