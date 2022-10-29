@@ -14,7 +14,7 @@ import { BASE_URL, LEADS } from '../../Apis/SecondApi';
 
 const Leads = ({ navigation }) => {
   const [loader, setloader] = useState(false);
-  const [state1, setstate1] = useState('');
+  const [state1, setstate1] = useState('')
   useEffect(() => {
     getLeads()
   }, []);
@@ -22,16 +22,15 @@ const Leads = ({ navigation }) => {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-    //console.log(Data.Userid);
+    // console.log(Data.Userid);
     let body = {
-      user_id: Data.Userid
+      UserId: Data.Userid
     }
     axios.post(`${BASE_URL}/${LEADS}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
-        await setstate1(response.data.leads.new)
-        //setstate2(response.data)
-        console.log(response.data.leads.new);
+        await setstate1(response.data.customers)
+        // console.log(response.data.customers)
         return {
           response: response.data
         };
@@ -39,23 +38,6 @@ const Leads = ({ navigation }) => {
         console.log(err)
       });
   }
-  const [state, setstate] = useState({
-    data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 8, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 9, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 10, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 11, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 12, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 13, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 14, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 15, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true }]
-  })
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
@@ -71,9 +53,7 @@ const Leads = ({ navigation }) => {
             //ListFooterComponent={}
             showsVerticalScrollIndicator={false}
             numColumns={1}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
+            keyExtractor={(item, index) => index}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -88,9 +68,9 @@ const Leads = ({ navigation }) => {
                       style={{ marginTop: 5 }}
                     />
                     <View style={{ marginLeft: 10, width: '100%' }}>
-                      <Text style={styles.text}>{item.name}</Text>
-                      <Text style={styles.text3}>{item.phone}</Text>
-                      <Text style={styles.text3}>{item.date}</Text>
+                      <Text style={styles.text}>{item.smStoreName}</Text>
+                      <Text style={styles.text3}>{item.smPhone1}</Text>
+                      <Text style={styles.text3}>{item.smCreationDate}</Text>
                     </View>
                   </View>
                   <View style={styles.line}/>

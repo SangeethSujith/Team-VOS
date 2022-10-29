@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { SAVE_CALL, BASE_URL ,ROUTES} from '../../Apis/SecondApi';
+import { SAVE_CALL, BASE_URL ,GET_ROUTES} from '../../Apis/SecondApi';
 import { LoaderOne, LoaderThree, LoaderTwo } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
@@ -24,11 +24,8 @@ const CreateCall = ({ navigation,route}) => {
   const { param } = route.params;
   const [loader, setloader] = useState(false) 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'}
-  ]);
+  const [value, setValue] = useState('');
+  const [items, setItems] = useState('');
   const [state, setstate] = useState('');
   useEffect(() => {
     getRoutes()
@@ -37,20 +34,19 @@ const CreateCall = ({ navigation,route}) => {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-    //console.log(Data.Userid);
+    // console.log('routes',Data.Userid);
     let body = {
       user_id: Data.Userid,
-      assigned_date:moment().format("YYYY-MM-DD"),
     }
-    axios.post(`${BASE_URL}/${ROUTES}`,
+    axios.post(`${BASE_URL}/${GET_ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         // await setstate(response.data.routes)
-        console.log(response.data.routes);
+        // console.log(response.data.routes);
         // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
-          label: item.route_name,
-          value: item.route_id
+          label:item.route_name,
+          value: item.route_id,
         }))
         // console.log(dropdata);
         setstate(dropdata)
@@ -68,7 +64,7 @@ const CreateCall = ({ navigation,route}) => {
     phone: '',
     address: '',
     details: '',
-    informatn: '',
+    registration_number: '',
     email: '',
   });
   const [input, setinput] = useState({
@@ -77,12 +73,11 @@ const CreateCall = ({ navigation,route}) => {
     name: param.name || '',
     phone: param.phone || '',
     address: param.address || '',
-    details: param.details || '',
-    informatn: param.info || '',
+    city: param.details || '',
+    registration_number: param.info || '',
     email: param.email || '',
-    route_id:param.route_id
   })
-  console.log(input);
+  // console.log('input data',input);
   const PostSave = async () => {
     console.log('inside')
     //const Route = await AsyncStorage.getItem('Routes');
@@ -91,19 +86,18 @@ const CreateCall = ({ navigation,route}) => {
     let Data = JSON.parse(userData)
     let posts = {
       user_id: Data.Userid,
-      creation_date: '20-12-2022',
-      customer_name: input.name,
-      customer_details: input.details,
+      username:Data.Name,
+      name: input.name,
+      city : input.city,
       email: input.email,
       phone: input.phone,
       address: input.address,
-      customer_info: input.informatn,
-      route_id:value
+      registration_number: input.registration_number,
+      route_id:value,
     }
-    console.log('upload');
-    console.log(posts)
+    console.log('upload',posts)
     setloader(true);
-    axios.post(`https://ayurwarecrm.com/demo/ajax/save_lead`, qs.stringify(posts)).then(async (response) => {
+    axios.post(`https://ayurwarecrm.com/demo/ajax/save_customer_details`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
         setloader(false);
         Alert.alert(
@@ -135,16 +129,16 @@ const CreateCall = ({ navigation,route}) => {
     const nameError = Validate('Name', 'isEmpty', input.name)
     const phoneError = Validate('Phone Number', 'isEmpty', input.phone)
     const addressError = Validate('Address', 'isEmpty', input.address)
-    const detailsError = Validate('Details', 'isEmpty', input.details)
-    const informatnError = Validate('Information', 'isEmpty', input.informatn)
+    const detailsError = Validate('Details', 'isEmpty', input.city)
+    const informatnError = Validate('Information', 'isEmpty', input.registration_number)
     const emailError = Validate('Email', 'email', input.email)
     setloginError({
       ...loginError,
       name: nameError,
       phone: phoneError,
       address: addressError,
-      details: detailsError,
-      informatn: informatnError,
+      city: detailsError,
+      registration_number: informatnError,
       email: emailError
     })
     if (nameError === '' && phoneError === '' &&
@@ -205,7 +199,6 @@ const CreateCall = ({ navigation,route}) => {
                 setloginError({ ...loginError, phone: Validate('Phone Number', 'mobile', input.phone) })
               }}
               errorMessage={loginError.phone}
-
             />
             <CustomInput
               type='text'
@@ -219,33 +212,33 @@ const CreateCall = ({ navigation,route}) => {
                 setloginError({ ...loginError, address: Validate('Address', 'isEmpty', input.address) })
               }}
               errorMessage={loginError.address}
-
             />
             <CustomInput
               type='text'
-              label='Details'
+              label='City'
               labelBG='white'
               placeholderText='Enter Details'
               iconname='pen'
-              value={input.details}
+              value={input.city}
               onChangeText={(text) => {
-                setinput({ ...input, details: text })
-                setloginError({ ...loginError, details: Validate('Details', 'isEmpty', input.details) })
+                setinput({ ...input, city: text })
+                setloginError({ ...loginError, city: Validate('Details', 'isEmpty', input.city) })
               }}
-              errorMessage={loginError.details}
+              errorMessage={loginError.city}
             />
             <CustomInput
               type='text'
-              label='Information Conveyed'
+              label='Registration Number'
               labelBG='white'
-              placeholderText='Enter Information'
+              placeholderText='Enter Registration Number'
+              keyboardType='numeric'
               iconname='pen'
-              value={input.informatn}
+              value={input.registration_number}
               onChangeText={(text) => {
-                setinput({ ...input, informatn: text })
-                setloginError({ ...loginError, informatn: Validate('Informatn', 'isEmpty', input.informatn) })
+                setinput({ ...input, registration_number: text })
+                setloginError({ ...loginError, informatn: Validate('Informatn', 'isEmpty', input.registration_number) })
               }}
-              errorMessage={loginError.informatn}
+              errorMessage={loginError.registration_number}
 
             />
             <CustomInput
@@ -269,7 +262,7 @@ const CreateCall = ({ navigation,route}) => {
         </View>
           <DropDownPicker
       open={open}
-      value={param.route_id}
+      value={value}
       items={state}
       setOpen={setOpen}
       setValue={setValue}

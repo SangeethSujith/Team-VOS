@@ -109,7 +109,6 @@ const Expenses = ({ navigation, route }) => {
     let Data = JSON.parse(userData)
     let posts = {
       user_id: Data.Userid,
-      route_id: route[0].route_id,
       date: moment(date).format("YYYY-MM-DD"),
       expense_type: isSelected ? 'Route' : (isSelected ? 'Meeting' : 'Task'),
       // task_id: 0,
