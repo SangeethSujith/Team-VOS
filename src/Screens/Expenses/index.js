@@ -373,7 +373,7 @@ dropDownContainerStyle={{
                 keyboardType='numeric'
                 label={'Kilometer'}
                 labelBG='white'
-                placeholderText='0       '
+                placeholderText='0      '
                 value={input.kilomtr}
                 onChangeText={(text) => {
                   setinput({ ...input, kilomtr: text })
@@ -499,7 +499,7 @@ dropDownContainerStyle={{
           <Text>Loading ....</Text>
           </View>
         }
-        {state.length == 0 && loader == false &&
+        {state.length == 0 || loader == false ||
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={styles.text2}>{'Check Connection'}</Text>
         </View>
