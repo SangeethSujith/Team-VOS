@@ -38,7 +38,7 @@ const Submit = ({navigation, route}) => {
           Alert.alert("Saved Successfully ", ' ', 
           [
             {
-              text: "Yes",
+              text: "Ok",
               cancelable: true,
               onPress: () => navigation.navigate('Home'),
               style: 'cancel',
