@@ -92,7 +92,7 @@ export const CustomInput = (props) => {
                 maxLength={maxLength}
                 color={COLORS.heading_black}
                 underlineColorAndroid='transparent'
-                style={{ fontSize: SIZES.medium, fontFamily: Fonts.font_400, width: iconname ? (icon ? '75%' : '100%') : 'auto' }}
+                style={{ fontSize: SIZES.medium, fontFamily: Fonts.font_400, width: iconname ? (icon ? '75%' : '100%') : '100%' }}
                 placeholderTextColor={'grey'}
                 onFocus={() => setfocus(true)}
                 onBlur={() => setfocus(false)}
