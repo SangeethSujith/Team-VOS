@@ -53,7 +53,7 @@ const Tasks = ({ navigation }) => {
         onpress={() => navigation.goBack()}
       />
       {state !== '' ?
-        <FlatList style={{ backgroundColor: 'white', marginTop: 20 }}
+        <FlatList style={{ backgroundColor: 'white', marginTop: 10 }}
           data={state}
           horizontal={false}
           scrollEnabled={true}
@@ -69,7 +69,7 @@ const Tasks = ({ navigation }) => {
             return (
               <View>
                 <View style={styles.card}>
-                  <View style={{ margin: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <View style={{ margin: 10, flexDirection: 'row', alignItems: 'center',justifyContent:'space-between',width:'90%' }}>
                     <View>
                       <View style={styles.textrow}>
                         <View style={styles.innerrow}>
@@ -100,14 +100,16 @@ const Tasks = ({ navigation }) => {
                         <Text style={styles.text2}>{item.AchievementAmount}</Text>
                       </View>
                     </View>
+                    
                     <View style={{
                       width: 60, height: 60, borderColor: COLORS.primary, backgroundColor: COLORS.primary_light,
-                      borderRadius: 30, borderWidth: 1, alignItems: 'center', justifyContent: 'center'
+                      borderRadius: 30, borderWidth: 1, alignItems: 'center', justifyContent: 'center',alignSelf:'center'
                     }}>
                       <Text style={styles.text4}>
                         {parseFloat(item.AchievementAmount / item.TargetAmount * 100).toFixed(2)} %
                       </Text>
                     </View>
+                    
                   </View>
                 </View>
               </View>
@@ -205,11 +207,10 @@ const styles = StyleSheet.create({
   textrow: {
     flexDirection: 'row',
     alignItems: 'center',
-    //width:300
+    width:'95%'
   },
   innerrow: {
-    width: '55%',
-    alignItems: 'center',
+    width: '50%',
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
