@@ -243,7 +243,7 @@ const CallDetails = ({ navigation, route }) => {
             value={input.collection}
             onChangeText={(text) => {
               setinput({ ...input, collection: text })
-              setloginError({ ...loginError, collection: Validate('Collection', 'isEmpty', input.collection) })
+              setloginError({ ...loginError, collection: Validate('Collection', 'distance', input.collection) })
             }}
             errorMessage={loginError.collection}
           //iconname='location'

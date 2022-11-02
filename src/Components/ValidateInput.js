@@ -45,9 +45,12 @@ const validateNULL = (field_name, values) => {
 };
 const validateDIS = (field_name, values) => {
     let errors = {};
-    if (values<0) {
-        errors = field_name + ' is required.';
+    if (values.length<0) {
+        errors = field_name + ' is invalid.';
     }
+     else if (values<0) {
+    errors = field_name + ' is invalid.';
+     }
     else {
         errors = '';
     }
