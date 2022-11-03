@@ -13,7 +13,7 @@ import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { SAVE_EXP, BASE_URL } from '../../Apis/SecondApi';
+import { SAVE_EXP, BASE_URL,ROUTES } from '../../Apis/SecondApi';
 import { LoaderTwo, LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
@@ -38,6 +38,8 @@ const Expenses = ({ navigation, route }) => {
   }, []);
   const onChange = (event, value) => {
     setDate(value);
+    console.log(value,'inside onchange')
+    getRoutes();
     // const route = state.filter((item) => item.date == moment(date).format("YYYY-MM-DD"))
     // console.log(route)
     // if (route.length > 0) {
@@ -52,41 +54,34 @@ const Expenses = ({ navigation, route }) => {
     }
   };
   async function getRoutes() {
-    //uploadBusinessImage = async () => {
-      setloader(true);
+    
+    setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-      //console.log(Data.Userid);
-
-    const data = new FormData();
-    //data.append('logo', this.state.image);
-    data.append('user_id', Data.Userid);
-    var config = {
-      method: 'POST',
-      url: 'https://ayurwarecrm.com/demo/ajax/get_routes',
-      data: data,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(state);
+    // console.log(moment(date).format('DD-MM-YYYY'),'inside get routes')
+    let body = {
+      user_id: Data.Userid,
+      assigned_date:moment(date).format('YYYY-MM-DD'),
+    }
+    axios.post(`${BASE_URL}/${ROUTES}`,
+      qs.stringify(body)).then(async (response) => {
         setloader(false)
+        // await setstate(response.data.routes)
+        console.log(response.data.routes);
+        // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label: item.route_name,
           value: item.route_id
         }))
         // console.log(dropdata);
         setstate(dropdata)
-      })
-      .catch(function (error) {
-        console.log(error);
-        setLoader(false);
+        return {
+          response: response.data
+        };
+      }).catch((err) => {
+        console.log(err)
       });
-    };
+  }
   const [input, setinput] = useState({
     date: param !== '' ? param.date : '',
     route: '',
@@ -245,9 +240,8 @@ const Expenses = ({ navigation, route }) => {
           {isPickerShow && (
             <DateTimePicker
               value={date}
-              mode={'date'}
+              mode={"date"}
               display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              is24Hour={true}
               onChange={onChange}
               style={styles.datePicker}
             />
