@@ -8,11 +8,11 @@ import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
 import moment from 'moment'
-import { BASE_URL, ROUTES } from '../../Apis/SecondApi';
+import { BASE_URL, GET_ROUTES } from '../../Apis/SecondApi';
 //import {Cust}
 
 const Routes = ({ navigation }) => {
-  const [value1, setvalue1] = useState(moment().format('YYYY-MM-DD'));
+  
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
   useEffect(() => {
@@ -23,13 +23,10 @@ const Routes = ({ navigation }) => {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-    //console.log(Data.Userid);
-    let date=value1
     let body = {
       user_id: Data.Userid,
-      assigned_date:date
     }
-    axios.post(`${BASE_URL}/${ROUTES}`,
+    axios.post(`${BASE_URL}/${GET_ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data.routes)
@@ -44,23 +41,6 @@ const Routes = ({ navigation }) => {
       });
   }
 
-  // const [state, setstate] = useState({
-  //   data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut , hjfhkerh', visited: true },
-  //   { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut ,hkdfghgbved', visited: true },
-  //   { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 8, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 9, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 10, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 11, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 12, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 13, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 14, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 15, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true }]
-  // })
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
@@ -73,7 +53,6 @@ const Routes = ({ navigation }) => {
             data={state1}
             horizontal={false}
             scrollEnabled={true}
-            //ListFooterComponent={}
             showsVerticalScrollIndicator={false}
             numColumns={1}
             keyExtractor={(item) => {
@@ -93,7 +72,6 @@ const Routes = ({ navigation }) => {
                       <Text style={styles.text3}>{item.date}</Text>
                     </View>
                   </View>
-                  {/*<View style={styles.line}/>*/}
                 </TouchableOpacity>
               )
             }}
