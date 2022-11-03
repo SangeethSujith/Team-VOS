@@ -170,7 +170,7 @@ const CreateCall = ({ navigation,route}) => {
           />
           {state !== '' ?
           <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-            <Text style={styles.text}>Create New Lead</Text>
+            <Text style={styles.text}>Create New Doctor</Text>
             <CustomInput
               type='text'
               label='Name'

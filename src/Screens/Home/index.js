@@ -63,7 +63,7 @@ const Home = ({ navigation }) => {
               style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
               source={require('../../Assets/Images/homeicon4.png')}>
             </Image>
-            <Text style={styles.text}>Leads</Text>
+            <Text style={styles.text}>Doctors</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>

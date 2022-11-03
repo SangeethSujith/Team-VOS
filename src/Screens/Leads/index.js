@@ -41,7 +41,7 @@ const Leads = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
-        heading={'Leads'}
+        heading={'Doctors'}
         onpress={() => navigation.goBack()}
       />
       {state1 !== '' ?
