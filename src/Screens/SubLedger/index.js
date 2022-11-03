@@ -30,12 +30,12 @@ const SubLedger = ({navigation, route}) => {
             style={{
               borderRightWidth: 1,
               borderColor: '#d1d7db',
-              width: Width / 5,
+              width: Width / 3.7,
               paddingLeft: 6,
               height: 30,
               justifyContent: 'center',
             }}>
-            <Text style={{color: COLORS.primary, fontSize: 12}}>
+            <Text style={{color: COLORS.primary, fontSize: 14}}>
               {' '}
               {item.TransDate}
             </Text>
@@ -45,7 +45,7 @@ const SubLedger = ({navigation, route}) => {
             style={{
               borderRightWidth: 1,
               borderColor: '#d1d7db',
-              width: Width / 4.4,
+              width: Width / 4,
               height: 30,
               justifyContent: 'center',
               paddingLeft: 6,
@@ -195,7 +195,7 @@ const SubLedger = ({navigation, route}) => {
           PickerVisiblefalse={() => setPickerVisible(false)}
         />
         {state !== '' && state.length > 0 ? (
-          <View style={{marginHorizontal: 30}}>
+          <View style={{marginHorizontal: 10}}>
             <FlatList
               showsVerticalScrollIndicator={false}
               //inverted
@@ -204,7 +204,7 @@ const SubLedger = ({navigation, route}) => {
               keyExtractor={(item, index) => index}
               style={{marginBottom: 120}}
               ListHeaderComponent={
-                <View style={{marginTop: 30}}>
+                <View style={{marginTop: 10}}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -215,7 +215,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5,
+                        width: Width / 3.7,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -228,7 +228,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4.4,
+                        width: Width / 4,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -276,7 +276,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5,
+                        width: Width / 3.7,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -289,7 +289,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4.4,
+                        width: Width / 4,
                         alignItems: 'center',
                         height: 30,
                         justifyContent: 'center',
@@ -351,7 +351,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 5,
+                        width: Width / 3.7,
                         paddingLeft: 6,
                         height: 30,
                         justifyContent: 'center',
@@ -364,7 +364,7 @@ const SubLedger = ({navigation, route}) => {
                       style={{
                         borderRightWidth: 1,
                         borderColor: '#d1d7db',
-                        width: Width / 4.4,
+                        width: Width / 4,
                         alignItems: 'center',
                         height: 30,
                         justifyContent: 'center',
