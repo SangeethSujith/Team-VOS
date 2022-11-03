@@ -30,12 +30,6 @@ const Home = ({ navigation }) => {
 
       <View style={[styles.card, styles.elevation]}>
 
-        {/* <View style={styles.yellowbox}>
-          <View style={styles.row2}>
-            <Text style={styles.text2}>Target : 1567353</Text>
-            <Text style={styles.text2}>Achieved :7462</Text>
-          </View>
-        </View> */}
         <View style={styles.row}>
           <TouchableOpacity style={styles.box}
             onPress={() => navigation.navigate('TodayCalls')}>
