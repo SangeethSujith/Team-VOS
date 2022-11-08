@@ -84,12 +84,19 @@ const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.row2}>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Invoices', { param: false, param1: '' })}>
+          {/* <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Invoices', { param: false, param1: '' })}>
             <Image
               style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
               source={require('../../Assets/Images/homeicon8.png')}>
             </Image>
             <Text style={styles.text}>Invoices</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Expenseslist')}>
+            <Image
+              style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
+              source={require('../../Assets/Images/homeicon8.png')}>
+            </Image>
+            <Text style={styles.text}>Expenses</Text>
           </TouchableOpacity>
           <View style={styles.vertical} />
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Tasks')}>
