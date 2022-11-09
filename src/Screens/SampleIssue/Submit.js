@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -13,26 +12,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import qs from 'qs';
 import {LoaderTwo} from '../../Components/Loader';
+import React, {useState} from 'react';
 
 const Submit = ({navigation, route}) => {
   const {param, item} = route.params;
   console.log('param', param, 'item', item);
-  const [qty, setqty] = useState('');
+  const [qty, setqty] = useState();
   console.log('Customer ID', param);
   console.log('Item', item);
   const PostSave = async () => {
-    console.log('inside');
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData);
     const uid=Data.Userid
     const pid=item.product_id
-    console.log(uid,pid)
     let posts = {
       user_id: uid,
       product_id: pid,
-      customer_id: param,
       quantity: qty,
-    };
+      customer_id: param,
+    }
+    console.log('posts',posts)
     axios.post(`https://ayurwarecrm.com/demo/ajax/issue_sample`, qs.stringify(posts)).then(async(response)=> {
         if (response.status == 200) {
           Alert.alert("Saved Successfully ", ' ', 
@@ -66,12 +65,13 @@ const Submit = ({navigation, route}) => {
         </View>
         <Text style={styles.text3}>Available Stock:{item.stock}</Text>
         <CustomInput
-          type="text"
+          type='text'
           keyboardType="numeric"
           label="Quantity"
           labelBG="white"
           width="100%"
           value={setqty}
+          onChangeText={(text)=>setqty(text)}
         />
         <View
           style={{
