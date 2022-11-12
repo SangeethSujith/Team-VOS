@@ -58,11 +58,11 @@ const Expenses = ({ navigation, route }) => {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-    // console.log(moment(date).format('DD-MM-YYYY'),'inside get routes')
     let body = {
       user_id: Data.Userid,
       assigned_date:moment(date).format('YYYY-MM-DD'),
     }
+    console.log(body,'body')
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
@@ -473,7 +473,7 @@ dropDownContainerStyle={{
             label='Total'
             labelBG='white'
             placeholderText='250'
-            value={param !== '' ? param.total : JSON.stringify(parseInt(input.da, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+            value={param !== '' ? param.total : JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
               parseInt(input.bikeexp, 10) + parseInt(input.kilomtr * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
