@@ -74,12 +74,15 @@ const Success = ({ navigation, route }) => {
     const current = new Date();
     const prior = new Date().setDate(current.getDate() - 30);
     console.log(current.toISOString().split('T')[0]);
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+    console.log(Data.UserCode)
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
       }
     };
-    axios.get(`${API_URL}/${GET_ORDERS}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}`,
+    axios.get(`${API_URL}/${GET_ORDERS}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&FSOCode=${Data.UserCode}`,
       headers).then(async (response) => {
 
         await setstate(response.data.Data)

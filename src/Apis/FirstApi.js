@@ -5,7 +5,7 @@ module.exports = {
   //....................................//
 
   GET_TOKEN: 'Token',
-  GET_ORDERS: 'Sales/SalesAPI/GetSalesOrderListForAPI',
+  GET_ORDERS: 'Sales/SalesAPI/GetSalesOrderListByFSOForAPI',
   GET_ORDERS_DETAILS: 'Sales/SalesAPI/GetSalesOrderDetailsForAPI',
   GET_INVOICES: 'Sales/SalesAPI/GetSalesInvoiceListForAPI',
   GET_INVOICES_FSO: 'Sales/SalesAPI/GetSalesInvoiceListByFSOForAPI',
