@@ -134,9 +134,16 @@ const SelectCustomers = ({ navigation }) => {
     }
   };
 
-  function RenderHeader() {
-    return (
-      <View
+  return (
+    <View style={styles.container}>
+      <StatusBar backgroundColor={COLORS.white} />
+      <CustomHeaderTwo
+        heading={'Select Customers'}
+        onpress={() => navigation.goBack()}
+      />
+      {state1 !== '' ?
+        <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
+        <View
         style={styles.searchheader}>
         <Icon
           name={"search"}
@@ -160,19 +167,6 @@ const SelectCustomers = ({ navigation }) => {
           textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
         />
       </View>
-    )
-  }
-
-  return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.white} />
-      <CustomHeaderTwo
-        heading={'Select Customers'}
-        onpress={() => navigation.goBack()}
-      />
-      {state1 !== '' ?
-        <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
-          <RenderHeader />
           <FlatList style={{ backgroundColor: 'white' }}
             data={state1}
             horizontal={false}
