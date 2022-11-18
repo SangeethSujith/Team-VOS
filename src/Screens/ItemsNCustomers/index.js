@@ -21,6 +21,7 @@ const ItemsNCustomers = ({ navigation, route }) => {
   const [details, setdetails] = useState('')
   const [DetailsF, setDetailsF] = useState('')
   const [date, setDate] = useState(moment().subtract(30, 'days').format('DD-MM-YYYY'));
+  const [total,settotal]=useState('0')
 
   useEffect(() => {
     getItems()
@@ -192,17 +193,24 @@ const ItemsNCustomers = ({ navigation, route }) => {
               textStyle={{color: '#000', fontFamily: Fonts.font_400}}
             />
           </View>
-          <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 20 }}>
-            <FlatList style={{ backgroundColor: 'white', height: '97%' }}
+          <Text style={{alignSelf:'center',
+                        color: COLORS.primary_black,
+                        fontSize: SIZES.medium,
+                        fontFamily: Fonts.font_500,}}>
+          Total Items Not Purchased : {total}</Text>
+          <View style={{ marginHorizontal: 20, marginBottom: 20 }}>
+            <FlatList style={{ backgroundColor: 'white',height:'83%'  }}
               //contentContainerStyle={{marginBottom:170}}
               data={filteredDataSource}
               horizontal={false}
               scrollEnabled={true}
+              initialNumToRender={10000}
               //ListFooterComponent={}
               showsVerticalScrollIndicator={false}
               numColumns={1}
               keyExtractor={(item, index) => index}
               renderItem={({ item,index }) => {
+                settotal(index+1)
                 return (
                   <TouchableOpacity
                   //onPress={() => InvoiceDetails(item)}
@@ -287,7 +295,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    width: '100%'
+    width: '100%',
+    paddingBottom:50,
   },
   card: {
     backgroundColor: 'white',
