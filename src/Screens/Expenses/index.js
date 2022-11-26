@@ -482,10 +482,14 @@ dropDownContainerStyle={{
 
           />
           <LoaderThree loader={loader} />
+          
+        {param == ''?
           <CustomButton
             title={'Submit'}
             onPress={() => PostSave()}
-          />
+          />:
+          <></>
+        }
         </View>
         :
         <View>
