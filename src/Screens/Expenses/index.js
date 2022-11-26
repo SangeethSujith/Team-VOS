@@ -120,8 +120,8 @@ const Expenses = ({ navigation, route }) => {
       sundries: input.sundries,
       additional_km: input.addtnl,
       remarks: input.remarks,
-      total: JSON.stringify(parseInt(input.da, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-        parseInt(input.bikeexp, 10) + parseInt(input.kilomtr * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)),
+      total: JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+      parseInt(input.bikeexp, 10) + parseInt(input.kilomtr * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
@@ -367,7 +367,7 @@ dropDownContainerStyle={{
                 keyboardType='numeric'
                 label={'Kilometer'}
                 labelBG='white'
-                placeholderText='0      '
+                placeholderText='0'
                 value={input.kilomtr}
                 onChangeText={(text) => {
                   setinput({ ...input, kilomtr: text })
