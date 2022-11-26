@@ -244,6 +244,14 @@ const SalesByCustomer = ({navigation}) => {
                         </View>
                         <View style={styles.textrow}>
                           <View style={styles.innerrow}>
+                            <Text style={styles.text2}>{'Gross  Amount'}</Text>
+                            <Text style={styles.text2}>{': '}</Text>
+                          </View>
+                          <Text style={styles.text}>{state1.GrossAmount}</Text>
+                          {/* <Text style={styles.text}>{''}</Text> */}
+                        </View>
+                        <View style={styles.textrow}>
+                          <View style={styles.innerrow}>
                             <Text style={styles.text2}>{'Taxable Amount'}</Text>
                             <Text style={styles.text2}>{': '}</Text>
                           </View>
@@ -424,7 +432,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#b2b8b4',
   },
   modalStyle: {
-    height: '35%',
+    height: '45%',
     width: '90%',
     backgroundColor: COLORS.white,
     alignSelf: 'center',
