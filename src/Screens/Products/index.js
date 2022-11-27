@@ -31,10 +31,13 @@ const Products = ({ navigation }) => {
     axios.post(`http://ayurwarecrm.com/demo/ajax/products?userid=${Data.Userid}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
+        // console.log(response.data)
         await setstate1(response.data)
-        setstate1(response.data.filter((items) => items.pmCategory === 'Choornam'))
+        setstate1(response.data)
         setstate2(response.data)
+        // onPressHandler(state2.pmProductId, 'All')
         console.log(state1);
+
         return {
           response: response.data
         };
@@ -75,14 +78,21 @@ const Products = ({ navigation }) => {
   const [Category, setCategory] = useState(state.data1)
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [active, setactive] = useState('Choornam');
+  const [active, setactive] = useState('All');
   const [filteredDataSource, setFilteredDataSource] = useState(state.data);
   const [masterDataSource, setMasterDataSource] = useState(state.data);
 
   const onPressHandler = (id, pmCategory) => {
     //setstate1(state2)
+    if(pmCategory=='All')
+    {
     setactive(pmCategory);
-    setstate1(state2.filter((items) => items.pmCategory === pmCategory))
+    setstate1(state2);
+    }
+    else{
+      setactive(pmCategory);
+    setstate1(state2.filter((items) => items.pmCategory === pmCategory));
+  }
   }
 
   const searchFilterFunction = (text) => {
@@ -144,6 +154,20 @@ const Products = ({ navigation }) => {
         <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
           <Text style={styles.text}>{'Categories'}</Text>
           <View >
+          <TouchableOpacity style={[styles.logosecond,
+                  {
+                    backgroundColor: active == 'All' ?
+                      COLORS.primary : COLORS.background
+                  }]}
+                    onPress={() => onPressHandler(state2.pmProductId, 'All')}>
+                    <Text style={[styles.text2,
+                    {
+                      color: active == 'All' ?
+                        COLORS.white : COLORS.primary_black
+                    }]}>All
+                    </Text>
+
+                  </TouchableOpacity>
             <FlatList style={{ backgroundColor: 'white', height: SIZES.height70 }}
               data={state2.filter((v, i, a) => a.findIndex(v2 => (v2.pmCategory === v.pmCategory)) === i)}
               horizontal={true}
