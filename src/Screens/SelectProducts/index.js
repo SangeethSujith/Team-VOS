@@ -61,7 +61,7 @@ const SelectProducts = ({ navigation, route }) => {
   const [Quantity, setQuantity] = useState('')
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [active, setactive] = useState('New Medicines');
+  const [active, setactive] = useState('All');
   const [offer, setoffer] = useState('nill');
   const isFocused = useIsFocused();
   const [filteredDataSource, setFilteredDataSource] = useState(state.data);
@@ -87,7 +87,7 @@ const SelectProducts = ({ navigation, route }) => {
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data)
-        setstate1(response.data.filter((items) => items.pmCategory === 'New Medicines'))
+        setstate1(response.data)
         setstate2(response.data)
         let state3 = response.data
         return {
@@ -98,9 +98,15 @@ const SelectProducts = ({ navigation, route }) => {
       });
   }
   const onPressHandler = (id, pmCategory) => {
-    //setstate1(state2)
+    if(pmCategory=='All')
+    {
     setactive(pmCategory);
-    setstate1(state2.filter((items) => items.pmCategory === pmCategory))
+    setstate1(state2);
+    }
+    else{
+      setactive(pmCategory);
+    setstate1(state2.filter((items) => items.pmCategory === pmCategory));
+  }
   }
   async function getOffer(item) {
     const token = await AsyncStorage.getItem('userToken');
@@ -193,6 +199,20 @@ const SelectProducts = ({ navigation, route }) => {
   };
 
   const handleSearch = (value) => {
+    if(active=='All'){
+      const filteredData = state2.filter(item => {
+        const formattedQuery = item.pmProductName.toUpperCase();
+        const textData = value.toUpperCase();
+        return formattedQuery.indexOf(textData) > -1;
+      })
+      setstate1(filteredData);
+      setSearch(value);
+      setQuery(value)
+      if (!value || value === '') {
+        setstate1(state2);
+      } 
+    }
+    else{
     const filteredData = state2.filter((items) => items.pmCategory === active).filter(item => {
       const formattedQuery = item.pmProductName.toUpperCase();
       const textData = value.toUpperCase();
@@ -204,42 +224,11 @@ const SelectProducts = ({ navigation, route }) => {
     if (!value || value === '') {
       setstate1(state2.filter((items) => items.pmCategory === active));
     }
+  }
   };
   const txtHandler = (enteredName) => {
     setQuantity(enteredName);
   };
-
-
-  function RenderHeader() {
-    return (
-      <View
-        style={styles.searchheader}>
-        <Icon
-          name={"search"}
-          color={COLORS.primary}
-          size={SIZES.icon}
-          config={icoMoonConfigSet}
-          style={{ opacity: .4, marginHorizontal: SIZES.ten }}
-        />
-        <TextInput
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={(value) => handleSearch(value)}
-          value={search}
-          returnKeyType={"next"}
-          autoFocus={true}
-          status='info'
-          placeholder='Search Products'
-          style={{
-            fontFamily: Fonts.font_400,
-            fontSize: SIZES.medium,
-            width: '100%'
-          }}
-          textStyle={{ color: '#000', fontFamily: Fonts.font_400 }}
-        />
-      </View>
-    )
-  }
 
   return (
     <View style={styles.container}>
@@ -252,12 +241,37 @@ const SelectProducts = ({ navigation, route }) => {
           <View>
             <Text style={styles.text}>{'Categories'}</Text>
             <View >
+            <TouchableOpacity style={[{width: SIZES.image170,
+                                      height: SIZES.zindex40,
+                                      borderWidth: 1,
+                                      backgroundColor: COLORS.background,
+                                      borderColor: COLORS.primary,
+                                      borderRadius: 7,
+                                      marginTop:10,
+                                      marginBottom:10,
+                                      marginRight: 10,
+                                      justifyContent: 'center',
+                                      alignItems: 'center',},
+                  {
+                    backgroundColor: active == 'All' ?
+                      COLORS.primary : COLORS.background
+                  }]}
+                    onPress={() => onPressHandler(state2.pmProductId, 'All')}>
+                    <Text style={[styles.text2,
+                    {
+                      color: active == 'All' ?
+                        COLORS.white : COLORS.primary_black
+                    }]}>All
+                    </Text>
+
+                  </TouchableOpacity>
               <FlatList
                 style={{ backgroundColor: 'white', height: SIZES.height70 }}
                 data={state2.filter((v, i, a) => a.findIndex(v2 => (v2.pmCategory === v.pmCategory)) === i)}
                 horizontal={true}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => {
                   return item.pmProductId;
                 }}
@@ -549,7 +563,6 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     borderRadius: 7,
     marginBottom: SIZES.radius30,
-    marginTop: 10,
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center',

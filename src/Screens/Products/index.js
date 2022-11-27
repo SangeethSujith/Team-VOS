@@ -35,7 +35,6 @@ const Products = ({ navigation }) => {
         await setstate1(response.data)
         setstate1(response.data)
         setstate2(response.data)
-        // onPressHandler(state2.pmProductId, 'All')
         console.log(state1);
 
         return {
@@ -170,16 +169,16 @@ const Products = ({ navigation }) => {
           <Text style={styles.text}>{'Categories'}</Text>
           <View >
           <TouchableOpacity style={[{width: SIZES.image170,
-    height: SIZES.zindex40,
-    borderWidth: 1,
-    backgroundColor: COLORS.background,
-    borderColor: COLORS.primary,
-    borderRadius: 7,
-    marginTop:10,
-    marginBottom:10,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',},
+                                    height: SIZES.zindex40,
+                                    borderWidth: 1,
+                                    backgroundColor: COLORS.background,
+                                    borderColor: COLORS.primary,
+                                    borderRadius: 7,
+                                    marginTop:10,
+                                    marginBottom:10,
+                                    marginRight: 10,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',},
                   {
                     backgroundColor: active == 'All' ?
                       COLORS.primary : COLORS.background
@@ -199,6 +198,7 @@ const Products = ({ navigation }) => {
               scrollEnabled={true}
               //ListHeaderComponent={renderHeader}
               showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
               //numColumns={1}
               keyExtractor={(item) => {
                 return item.pmProductId;
