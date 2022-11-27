@@ -132,6 +132,20 @@ const Products = ({ navigation }) => {
   //   }
   // };
   const handleSearch = (value) => {
+    if(active=='All'){
+      const filteredData = state2.filter(item => {
+        const formattedQuery = item.pmProductName.toUpperCase();
+        const textData = value.toUpperCase();
+        return formattedQuery.indexOf(textData) > -1;
+      })
+      setstate1(filteredData);
+      setSearch(value);
+      setQuery(value)
+      if (!value || value === '') {
+        setstate1(state2);
+      } 
+    }
+    else{
     const filteredData = state2.filter((items) => items.pmCategory === active).filter(item => {
       const formattedQuery = item.pmProductName.toUpperCase();
       const textData = value.toUpperCase();
@@ -143,6 +157,7 @@ const Products = ({ navigation }) => {
     if (!value || value === '') {
       setstate1(state2.filter((items) => items.pmCategory === active));
     }
+  }
   };
   return (
     <View style={styles.container}>
@@ -154,7 +169,17 @@ const Products = ({ navigation }) => {
         <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
           <Text style={styles.text}>{'Categories'}</Text>
           <View >
-          <TouchableOpacity style={[styles.logosecond,
+          <TouchableOpacity style={[{width: SIZES.image170,
+    height: SIZES.zindex40,
+    borderWidth: 1,
+    backgroundColor: COLORS.background,
+    borderColor: COLORS.primary,
+    borderRadius: 7,
+    marginTop:10,
+    marginBottom:10,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',},
                   {
                     backgroundColor: active == 'All' ?
                       COLORS.primary : COLORS.background
@@ -399,8 +424,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     borderColor: COLORS.primary,
     borderRadius: 7,
-    marginBottom: SIZES.radius30,
-    marginTop: 10,
+    marginBottom: 5,
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center',
