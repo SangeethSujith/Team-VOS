@@ -15,8 +15,10 @@ import moment from 'moment';
 
 const SubLedger = ({navigation, route}) => {
   const [state1, setstate1] = useState('');
+  useEffect(() => {
+    getInvoices();
+  }, []);
   const item = ({item}) => {
-    const Width = Dimensions.get('window').width;
     const openModal = item => {
       setstate1(item);
       setModalVisible(true);
@@ -116,12 +118,12 @@ const SubLedger = ({navigation, route}) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [isPickerShow2, setIsPickerShow2] = useState(false);
   const [PickerVisible, setPickerVisible] = useState(false);
+  // const [sumcredit,setsumcredit]=useState('0');
+  // const [sumdebit,setsumdebit]=useState('0');
   const [date, setDate] = useState(
     moment().subtract(30, 'days').format('DD-MM-YYYY'),
   );
-  useEffect(() => {
-    getInvoices();
-  }, []);
+
   const onDateSelected1 = (event, value) => {
     setDate1(value);
     setvalue2(moment(date1).format('DD-MM-YYYY'));
@@ -157,15 +159,41 @@ const SubLedger = ({navigation, route}) => {
         headers,
       )
       .then(async response => {
-        await setstate(response.data.Data);
-        // let sum = response.data.Data.reduce((a, c) => { return a + c.Debit }, 0);
-        // console.log('sum: ', sum)
-        setloader(false);
-        console.log(response.data.Data);
-        return {
-          response: response.data,
-        };
-      })
+        setstate(response.data.Data);
+        // setsumdebit(parseFloat(
+        //   state.reduce((a, c) => {
+        //     return a + c.Debit;
+        //   }, 0),
+        //   ).toFixed(2))
+        //   setsumcredit(parseFloat(
+        //     state.reduce((a, c) => {
+        //       return a + c.Credit;
+        //     }, 0),
+        //     ).toFixed(2))
+        //     console.log('sdebit',sumdebit)
+        //     console.log('scredit',sumcredit)  
+            // let sum = response.data.Data.reduce((a, c) => { return a + c.Debit }, 0);
+            // console.log('sum: ', sum)
+            // console.log(response.data.Data);
+
+
+            // parseFloat(
+              //   state.reduce((a, c) => {
+                //     return a + c.Credit;
+                //   }, 0),
+                // ).toFixed(2) -
+                //   parseFloat(
+                  //     state.reduce((a, c) => {
+          //       return a + c.Debit;
+          //     }, 0),
+          //   ).toFixed(2)
+          
+          
+          setloader(false);
+          return {
+            response: response.data,
+          };
+        })
       .catch(err => {
         setloader(false);
         console.log(err);
@@ -316,7 +344,7 @@ const SubLedger = ({navigation, route}) => {
                           state.reduce((a, c) => {
                             return a + c.Debit;
                           }, 0),
-                        ).toFixed(2)}
+                        ).toFixed(1)}
                       </Text>
                     </View>
                     <View
@@ -337,7 +365,7 @@ const SubLedger = ({navigation, route}) => {
                           state.reduce((a, c) => {
                             return a + c.Credit;
                           }, 0),
-                        ).toFixed(2)}
+                        ).toFixed(1)}
                       </Text>
                     </View>
                   </View>
@@ -381,6 +409,25 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                       }}>
                       <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      {parseFloat(
+                          state.reduce((a, c) => {
+                            return a + c.Credit;
+                          }, 0),
+                        ).toFixed(1) < parseFloat(
+                          state.reduce((a, c) => {
+                            return a + c.Debit;
+                          }, 0),
+                        ).toFixed(1)?
+                          parseFloat(
+                          state.reduce((a, c) => {
+                            return a + c.Debit;
+                          }, 0),
+                        ).toFixed(2) -
+                          parseFloat(
+                            state.reduce((a, c) => {
+                              return a + c.Credit;
+                            }, 0),
+                          ).toFixed(2):' '}
                       </Text>
                     </View>
                     <View
@@ -393,6 +440,15 @@ const SubLedger = ({navigation, route}) => {
                       <Text style={{color: COLORS.primary, fontSize: 16,textAlign: 'right',}}>
                         {parseFloat(
                           state.reduce((a, c) => {
+                            return a + c.Debit;
+                          }, 0),
+                        ).toFixed(1) <= parseFloat(
+                          state.reduce((a, c) => {
+                            return a + c.Credit;
+                          }, 0),
+                        ).toFixed(1)?
+                          parseFloat(
+                          state.reduce((a, c) => {
                             return a + c.Credit;
                           }, 0),
                         ).toFixed(2) -
@@ -400,7 +456,7 @@ const SubLedger = ({navigation, route}) => {
                             state.reduce((a, c) => {
                               return a + c.Debit;
                             }, 0),
-                          ).toFixed(2)}
+                          ).toFixed(2):' '}
                       </Text>
                     </View>
                   </View>
