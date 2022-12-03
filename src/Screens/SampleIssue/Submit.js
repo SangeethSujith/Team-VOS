@@ -20,6 +20,36 @@ const Submit = ({navigation, route}) => {
   const [qty, setqty] = useState();
   console.log('Customer ID', param);
   console.log('Item', item);
+  function limitcheck(){
+    if(item.stock==='0')
+    {
+      Alert.alert("No stock available", ' ', 
+      [
+        {
+          text: "Ok",
+          cancelable: true,
+          style: 'cancel',
+        },
+      ]
+      );  
+    }
+    else if(item.stock<qty)
+    {
+      Alert.alert("Stock less than entered amount ", ' ', 
+      [
+        {
+          text: "Ok",
+          cancelable: true,
+          style: 'cancel',
+        },
+      ]
+      );
+    }
+    else
+    {
+      PostSave()
+    }
+  } 
   const PostSave = async () => {
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData);
@@ -92,7 +122,7 @@ const Submit = ({navigation, route}) => {
             width1={'120%'}
             title={'Submit'}
             height1={'28%'}
-            onPress={() => PostSave()}
+            onPress={() => limitcheck()}
           />
         </View>
       </View>
