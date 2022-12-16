@@ -28,7 +28,10 @@ const ItemsNCustomers = ({ navigation, route }) => {
     console.log("30 days before" + date)
     setFilteredDataSource(state);
   }, []);
-
+  const Counter=(content)=>{
+    let count=content.reduce((acc, cur) => acc + 1, 0);
+    settotal(count)
+  }
   const Height = Dimensions.get('window').height;
   const [modalVisible, setModalVisible] = useState(false);
   const [datePicker, setDatePicker] = useState(false);
@@ -60,11 +63,11 @@ const ItemsNCustomers = ({ navigation, route }) => {
   async function getItems() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
-    const current = new Date();
-    const prior = new Date().setDate(current.getDate() - 30);
-    const userData = await AsyncStorage.getItem('User_Data');
-    let Data = JSON.parse(userData)
-    console.log(current.toISOString().split('T')[0]);
+    // const current = new Date();
+    // const prior = new Date().setDate(current.getDate() - 30);
+    // const userData = await AsyncStorage.getItem('User_Data');
+    // let Data = JSON.parse(userData)
+    // console.log(current.toISOString().split('T')[0]);
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -73,9 +76,10 @@ const ItemsNCustomers = ({ navigation, route }) => {
     console.log(param)
     axios.get(`${API_URL}/${NOT_PURCHASED}?FromDate=${value2}&ToDate=${value1}&CustomerCode=${param}`,
       headers).then(async (response) => {
-        setloader(false)
         await setstate(response.data.Data)
         setFilteredDataSource(response.data.Data)
+        await Counter(response.data.Data);
+        setloader(false)
         return {
           response: response.data
         };
@@ -204,13 +208,12 @@ const ItemsNCustomers = ({ navigation, route }) => {
               data={filteredDataSource}
               horizontal={false}
               scrollEnabled={true}
-              initialNumToRender={10000}
+              // initialNumToRender={1000}
               //ListFooterComponent={}
               showsVerticalScrollIndicator={false}
               numColumns={1}
               keyExtractor={(item, index) => index}
               renderItem={({ item,index }) => {
-                settotal(index+1)
                 return (
                   <TouchableOpacity
                   //onPress={() => InvoiceDetails(item)}
