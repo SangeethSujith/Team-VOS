@@ -71,9 +71,13 @@ const SelectProducts = ({ navigation, route }) => {
       setarray(param2)
       setarraypost(param2)
       getProducts()
+      
     }
   }, [isFocused]);
-
+  async function resetsearch(){
+    handleSearch('')
+    setSearch('')
+  }
   async function getProducts() {
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
@@ -414,7 +418,7 @@ const SelectProducts = ({ navigation, route }) => {
                       width1={SIZES.windowwidth / 3}
                       title={'Ok'}
                       height1={'30%'}
-                      onPress={() => Quantity == 0 ? Alerts() : (Additem(), setoffer([]))}
+                      onPress={() => Quantity == 0 ? Alerts() : (Additem(), setoffer([]),resetsearch())}
                     />
                     <CustomButton
                       //style ={{alignSelf:'flex-end'}}
