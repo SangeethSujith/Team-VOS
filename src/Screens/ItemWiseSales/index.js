@@ -23,6 +23,9 @@ const ItemWiseSales = ({navigation}) => {
       console.log("30 days before" + date)
       setFilteredDataSource(state);
     }, []);
+    const sortnow=(content)=>{
+      setFilteredDataSource(content.sort((a,b)=>a.ItemName>b.ItemName?1:-1))
+    }
     const Height = Dimensions.get('window').height;
     const [modalVisible, setModalVisible] = useState(false);
     const [datePicker, setDatePicker] = useState(false);
@@ -52,7 +55,7 @@ const ItemWiseSales = ({navigation}) => {
       //setData
     }
     async function getItems() {
-      setloader(true);
+      setloader(true)
       const token = await AsyncStorage.getItem('userToken');
       const current = new Date();
       const prior = new Date().setDate(current.getDate() - 30);
@@ -66,10 +69,11 @@ const ItemWiseSales = ({navigation}) => {
         }
       };
       axios.get(`${API_URL}/${GET_ITEM_SALES}?FromDate=${value2}&ToDate=${value1}&FSOCode=${FSOCode}`,headers).then(async(response) => {
-          setloader(false)
-          await setstate(response.data.Data)
-          setFilteredDataSource(response.data.Data)
-          console.log(state);
+        await setstate(response.data.Data)
+        setFilteredDataSource(response.data.Data)
+        await sortnow(response.data.Data)
+        console.log(state);
+        setloader(false)
           return {
             response: response.data
           };
