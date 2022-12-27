@@ -30,7 +30,7 @@ const Reports = ({ navigation }) => {
               </TouchableOpacity> */}
               <TouchableOpacity onPress={() => navigation.navigate('SalesByCustomer')}>
                 <View style={styles.card}>
-                  <Text style={styles.text2}>Items Wise Sales By Customers</Text>
+                  <Text style={styles.text2}>Customer Wise Sales</Text>
                   <Icon
                     name={"navigate_next"}
                     color={'#319A2E'}
