@@ -13,7 +13,7 @@ import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { SAVE_EXP, BASE_URL,ROUTES } from '../../Apis/SecondApi';
+import { SAVE_EXP, BASE_URL,ROUTES,TOTAL_KM } from '../../Apis/SecondApi';
 import { LoaderTwo, LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
@@ -31,14 +31,14 @@ const Expenses = ({ navigation, route }) => {
   const [state, setstate] = useState('')
   const [date, setDate] = useState(param !== '' ? new Date(param.date) : new Date(Date.now()));
   const [isPickerShow, setIsPickerShow] = useState(false);
-  
+  const [datetotalkm,setdatetotalkm]=useState('')
   const [loader, setloader] = useState(false)
   useEffect(() => {
     getRoutes()
   }, []);
-  const onChange = (event, value) => {
-    setDate(value);
-    console.log(value,'inside onchange')
+  const onChange = async (event, value) => {
+    await setDate(value);
+    // console.log(value,'inside onchange')
     getRoutes();
     // const route = state.filter((item) => item.date == moment(date).format("YYYY-MM-DD"))
     // console.log(route)
@@ -54,7 +54,6 @@ const Expenses = ({ navigation, route }) => {
     }
   };
   async function getRoutes() {
-    
     setloader(true);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
@@ -62,19 +61,32 @@ const Expenses = ({ navigation, route }) => {
       user_id: Data.Userid,
       assigned_date:moment(date).format('YYYY-MM-DD'),
     }
-    console.log(body,'body')
+    let body2={
+      user_id: Data.Userid,
+      date:moment(date).format('YYYY-MM-DD'),
+    }
+    axios.post(`${BASE_URL}/${TOTAL_KM}`,
+      qs.stringify(body2)).then(async (response) => {
+        await setdatetotalkm(response.data.report.distance)
+        console.log(datetotalkm,'here')
+        return {
+          response: response.data
+        };
+      }).catch((err) => {
+        console.log(err)
+      });
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
-        setloader(false)
         // await setstate(response.data.routes)
-        console.log(response.data.routes);
+        // console.log(response.data.routes);
         // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label: item.route_name,
           value: item.route_id
         }))
-        // console.log(dropdata);
-        setstate(dropdata)
+        await setstate(dropdata)
+        console.log(dropdata,'routes');
+        setloader(false)
         return {
           response: response.data
         };
@@ -113,7 +125,7 @@ const Expenses = ({ navigation, route }) => {
       // //ta:100,
       ta_type: 'monthly',
       ta_bus: input.fare,
-      ta_bike_km: input.kilomtr,
+      ta_bike_km:datetotalkm==''?'0':datetotalkm,
       ta_bike_amount: input.bikeexp,
       lodge: input.lodge,
       courier: input.courier,
@@ -134,6 +146,7 @@ const Expenses = ({ navigation, route }) => {
       // zsm_comment:fine,is_approved_by_rsm:1,
       // rsm_comment:fine,
       // app_version:1
+      
     }
     console.log(posts)
     setloader(true);
@@ -364,13 +377,14 @@ dropDownContainerStyle={{
             <View>
               <CustomInput
                 type='text'
+                editable={false}
                 keyboardType='numeric'
                 label={'Kilometer'}
                 labelBG='white'
-                placeholderText='0'
-                value={input.kilomtr}
+                placeholderText={datetotalkm}
+                value={datetotalkm}
                 onChangeText={(text) => {
-                  setinput({ ...input, kilomtr: text })
+                  setdatetotalkm(text)
                 }}
               //iconname='location'
 

@@ -20,4 +20,5 @@ module.exports = {
     SAMPLEISSUE:'/ajax/issue_sample',
     SAMPLESTOCK:'/ajax/get_sample_stock',
     ALL_CALLS:'/ajax/get_all_calls',
+    TOTAL_KM:'ajax/get_total_kilometers',
 };
