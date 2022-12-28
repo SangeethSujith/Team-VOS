@@ -31,7 +31,7 @@ const Orders = ({ navigation }) => {
           activeTintColor: COLORS.primary,
           scrollEnabled: false,
           tabBarLabel: { color: COLORS.primary },
-          tabStyle: { width: Dimensions.get('window').width / 2 },
+          tabStyle: { width: Dimensions.get('window').width },
           labelStyle: { fontSize: SIZES.small, fontFamily: Fonts.font_600 },
           style: { backgroundColor: 'white', },
         }}
@@ -39,13 +39,13 @@ const Orders = ({ navigation }) => {
         <Tab.Screen
           name="Confirmed"
           component={Success}
-          options={{ tabBarLabel: "Confirmed" }}
+          options={{ tabBarLabel: "Confirmed Orders" }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Draft"
           component={Pending}
           options={{ tabBarLabel: "Draft" }}
-        />
+        /> */}
 
       </Tab.Navigator>
 

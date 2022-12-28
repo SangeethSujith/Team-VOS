@@ -377,15 +377,15 @@ const CreateOrder = ({ navigation, route }) => {
         <LoaderThree loader={loader} />
         <View style={styles.buttonrow}>
           <CustomButtonTwo
-            title={'Send'}
-            width1={SIZES.image210}
+            title={'  Send'}
+            width1={SIZES.windowwidth/1.19}
             onPress={() => Save()}
           />
-          <CustomButtonTwo
+          {/* <CustomButtonTwo
             title={'Draft'}
             width1={SIZES.image210}
             onPress={() => Draft()}
-          />
+          /> */}
         </View>
         <CustomButton
           title={'Add Items'}
@@ -523,8 +523,9 @@ const styles = StyleSheet.create({
   },
   buttonrow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5
+    justifyContent: 'center',
+    marginTop: 10,
+    paddingHorizontal:50
   },
   textrow: {
     flexDirection: 'row',
