@@ -33,7 +33,7 @@ const Expenseslist = ({ navigation }) => {
         setloader(false)
         //await setstate1(response.data.routes.new)
         //console.log(response.data.routes.new);
-        AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
+        // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
 
         return {
           response: response.data
