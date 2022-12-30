@@ -18,7 +18,6 @@ import { LoaderTwo, LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
 import DropDownPicker from 'react-native-dropdown-picker';
-//import {Cust}
 
 const Expenses = ({ navigation, route }) => {
   const { param } = route.params;
@@ -118,7 +117,6 @@ const Expenses = ({ navigation, route }) => {
       user_id: Data.Userid,
       date: moment(date).format("YYYY-MM-DD"),
       expense_type: isSelected ? 'Route' : (isSelected ? 'Meeting' : 'Task'),
-      // task_id: 0,
       route_id:value,
       town_visited: input.town,
       da: input.da,

@@ -248,7 +248,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     height: '100%',
     width: '90%',
-
   },
   dropdown: {
     flexDirection: 'row',

@@ -7,7 +7,6 @@ import {
     Button,
     StyleSheet,
     Text,
-    //AsyncStorage,
     Image,
     TouchableOpacity
 } from 'react-native';
@@ -34,6 +33,7 @@ export default function CustomDrawerContent(props) {
     const dispatch = useDispatch();
     const [name, setname] = useState('')
     const [loader, setloader] = useState(false);
+    const [manager,setmanager]=useState('');
     useEffect(() => {
         setloader(true)
         //const isLoggedIn = useSelector(setSignIn);
@@ -42,7 +42,7 @@ export default function CustomDrawerContent(props) {
             const userData = await AsyncStorage.getItem('User_Data');
             let Data = JSON.parse(userData)
             await setname(Data)
-            //console.log(name)
+            await setmanager(Data.isManager)
             setloader(false)
         }
         getName();
@@ -82,13 +82,16 @@ export default function CustomDrawerContent(props) {
             icon: require('../Assets/Images/ayurvedic.png'),
             stack: 'Products',
         },
-
-        {
+        manager=='0'?{
             label: 'Expenses',
             icon: require('../Assets/Images/budget.png'),
             stack: 'Expenseslist',
+        }:{
+            label: 'Route Report',
+            icon: require('../Assets/Images/homeicon6.png'),
+            //function: 'handleLogout',
+            stack: 'RouteReport'
         },
-
         {
             label: 'Tasks',
             icon: require('../Assets/Images/homeicon8.png'),
