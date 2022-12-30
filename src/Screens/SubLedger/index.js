@@ -124,17 +124,17 @@ const SubLedger = ({navigation, route}) => {
     moment().subtract(30, 'days').format('DD-MM-YYYY'),
   );
 
-  const onDateSelected1 = (event, value) => {
-    setDate1(value);
-    setvalue2(moment(date1).format('DD-MM-YYYY'));
+  const onDateSelected1 = async(event, value) => {
+    await setDate1(value);
+    await setvalue2(moment(date1).format('DD-MM-YYYY'));
     console.log(value2);
-    setIsPickerShow(false);
+    await setIsPickerShow(false);
   };
-  const onDateSelected2 = (event, value) => {
-    setDate2(value);
-    setvalue1(moment(date2).format('DD-MM-YYYY'));
+  const onDateSelected2 = async(event, value) => {
+     await setDate2(value);
+     await setvalue1(moment(date2).format('DD-MM-YYYY'));
     console.log(value1);
-    setIsPickerShow2(false);
+    await setIsPickerShow2(false);
   };
   function datefilter() {
     setstate('');
@@ -159,7 +159,7 @@ const SubLedger = ({navigation, route}) => {
         headers,
       )
       .then(async response => {
-        setstate(response.data.Data);
+        await setstate(response.data.Data);
         // setsumdebit(parseFloat(
         //   state.reduce((a, c) => {
         //     return a + c.Debit;
