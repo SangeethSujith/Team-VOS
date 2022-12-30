@@ -38,15 +38,15 @@ export default function CustomDrawerContent(props) {
         setloader(true)
         //const isLoggedIn = useSelector(setSignIn);
         //console.log(isLoggedIn)
-        const getName = async () => {
-            const userData = await AsyncStorage.getItem('User_Data');
-            let Data = JSON.parse(userData)
-            await setname(Data)
-            await setmanager(Data.isManager)
-            setloader(false)
-        }
         getName();
     }, []);
+    const getName = async () => {
+        const userData = await AsyncStorage.getItem('User_Data');
+        let Data = JSON.parse(userData)
+        await setname(Data.Name)
+        await setmanager(Data.isManager)
+        setloader(false)
+    }
     const handleLogout = async (navigation) => {
         const user = {
             Status: ''
@@ -147,8 +147,8 @@ export default function CustomDrawerContent(props) {
                         }}
                         source={{ uri: 'https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }}
                     />
-                    <Text style={styles.name}>{'sujaykr'}</Text>
-                    <Text style={styles.position}>{'Sales Representative'}</Text>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.position}>{manager!=="1"&&'Sales Representative'}</Text>
                 </View>
                 {/* :
                     <LoaderTwo loader={loader} />} */}
