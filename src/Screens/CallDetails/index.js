@@ -199,7 +199,7 @@ const CallDetails = ({ navigation, route }) => {
             value={input.orderAmount}
             onChangeText={(text) => {
               setinput({ ...input, orderAmount: text })
-              setloginError({ ...loginError, orderAmount: Validate('Amount', 'isEmpty', input.orderAmount) })
+              setloginError({ ...loginError, orderAmount: Validate('Amount', 'distance', input.orderAmount) })
             }}
             errorMessage={loginError.orderAmount}
           //iconname='location'
