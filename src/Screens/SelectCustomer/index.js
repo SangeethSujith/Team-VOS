@@ -63,9 +63,9 @@ const SelectCustomers = ({ navigation }) => {
     let Data = JSON.parse(userData)
     //console.log(Data.Userid);
     let body = {
-      userid: Data.Userid
+      user_id: Data.Userid
     }
-    axios.get(`${BASE_URL}/${CUSTOMERS}?userid=${Data.Userid}`,
+    axios.get(`${BASE_URL}/${CUSTOMERS}?user_id=${Data.Userid}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data)
