@@ -99,12 +99,12 @@ const Home = ({ navigation }) => {
             <Text style={styles.text}>Expenses</Text>
           </TouchableOpacity>
           <View style={styles.vertical} />
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Tasks')}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Products')}>
             <Image
               style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
-              source={require('../../Assets/Images/homeicon7.png')}>
+              source={require('../../Assets/Images/ayurvedic.png')}>
             </Image>
-            <Text style={styles.text}>Target</Text>
+            <Text style={styles.text}>Products</Text>
           </TouchableOpacity>
         </View>
         {/*<CustomInput
