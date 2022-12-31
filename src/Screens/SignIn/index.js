@@ -14,7 +14,6 @@ import { LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { setSignIn } from '../../redux/slices/authSlice';
-import Routes from '../Routes';
 
 const SignIn = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -86,40 +85,10 @@ const SignIn = ({ navigation }) => {
     //);
   };
 
-  async function getRoutes() {
-    //uploadBusinessImage = async () => {
-    const userData = await AsyncStorage.getItem('User_Data');
-    let Data = JSON.parse(userData)
-      //console.log(Data.Userid);
-
-    const data = new FormData();
-    //data.append('logo', this.state.image);
-    data.append('user_id', Data.Userid);
-    var config = {
-      method: 'POST',
-      url: `${BASE_URL}/${Routes}`,
-      data: data,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response));
-        
-      })
-      .catch(function (error) {
-        console.log(error);
-        setLoader(false);
-      });
-    //}
-    //);
-  };
+  
 
   const validateInputs = () => {
-    const emailError = Validate('UserName', 'name', loginData.email)
+    const emailError = Validate('UserName', 'isEmpty', loginData.email)
     const pswError = Validate('Password', 'isEmpty', loginData.password)
     setloginError({
       ...loginError,
@@ -166,7 +135,7 @@ const SignIn = ({ navigation }) => {
                 iconname='user-1'
                 onChangeText={(email) => {
                   setloginData({ ...loginData, email: email })
-                  setloginError({ ...loginError, email: Validate('UserName', 'name', email) })
+                  setloginError({ ...loginError, email: Validate('UserName', 'isEmpty', email) })
                 }}
                 value={loginData.email}
                 errorMessage={loginError.email}

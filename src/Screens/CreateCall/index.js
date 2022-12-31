@@ -97,7 +97,7 @@ const CreateCall = ({ navigation,route}) => {
     }
     console.log('upload',posts)
     setloader(true);
-    axios.post(`https://ayurwarecrm.com/demo/ajax/save_customer_details`, qs.stringify(posts)).then(async (response) => {
+    axios.post(`https://ayurwarecrm.com/demo/ajax/save_customer_for_approvals`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
         setloader(false);
         Alert.alert(
@@ -130,19 +130,19 @@ const CreateCall = ({ navigation,route}) => {
     const phoneError = Validate('Phone Number', 'isEmpty', input.phone)
     const addressError = Validate('Address', 'isEmpty', input.address)
     const detailsError = Validate('Details', 'isEmpty', input.city)
-    const informatnError = Validate('Information', 'isEmpty', input.registration_number)
-    const emailError = Validate('Email', 'email', input.email)
+    // const informatnError = Validate('Information', 'isEmpty', input.registration_number)
+    // const emailError = Validate('Email', 'email', input.email)
     setloginError({
       ...loginError,
       name: nameError,
       phone: phoneError,
       address: addressError,
       city: detailsError,
-      registration_number: informatnError,
-      email: emailError
+      // registration_number: informatnError,
+      // email: emailError
     })
     if (nameError === '' && phoneError === '' &&
-      addressError === '' && detailsError === '' && informatnError === '' && emailError === '') {
+      addressError === '' && detailsError === '') {
       return true
     } else {
       return false
@@ -150,19 +150,25 @@ const CreateCall = ({ navigation,route}) => {
   }
   const handleLogin = async () => {
     // console.log(validateInputs())
+    if(value===''){
+      Alert.alert(
+        "Select route")
+    }
+    else{
     if (validateInputs()) {
       //navigation.navigate('Home')
       //setloader(true);
       PostSave();
     }
   }
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      {/* <KeyboardAwareScrollView
+      <KeyboardAwareScrollView
         contentContainerStyle={{ flexGrow: 1, }}
         enableOnAndroid={Platform.OS === 'android'}
         enableAutomaticScroll={true}
-        nestedScrollEnabled={true}> */}
+        nestedScrollEnabled={true}>
         <View style={styles.container}>
           <CustomHeaderTwo
             heading={' '}
@@ -236,7 +242,7 @@ const CreateCall = ({ navigation,route}) => {
               value={input.registration_number}
               onChangeText={(text) => {
                 setinput({ ...input, registration_number: text })
-                setloginError({ ...loginError, informatn: Validate('Informatn', 'isEmpty', input.registration_number) })
+                // setloginError({ ...loginError, informatn: Validate('Informatn', 'isEmpty', input.registration_number) })
               }}
               errorMessage={loginError.registration_number}
 
@@ -298,7 +304,7 @@ dropDownContainerStyle={{
           <Text style={styles.text2}>{'Check Connection'}</Text>
         </View>
       }
-      {/* </KeyboardAwareScrollView> */}
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }

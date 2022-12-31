@@ -35,9 +35,9 @@ const Tasks = ({ navigation }) => {
     };
     axios.get(`${API_URL}/${GET_TARGET_FSO}?FSOCode=${Data.UserCode}`,
       headers).then(async (response) => {
-        setloader(false);
         await setstate(response.data.Data)
-        console.log('state' + JSON.stringify(response.data.Data));
+        console.log('RAW' , JSON.stringify(response.data.Data));
+        setloader(false);
         return {
           response: response.data
         };

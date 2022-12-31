@@ -87,7 +87,7 @@ const Success = ({ navigation, route }) => {
 
         await setstate(response.data.Data)
         setFilteredDataSource(response.data.Data)
-        console.log(state);
+        console.log(state,'the state');
         setloader(false);
         return {
           response: response.data

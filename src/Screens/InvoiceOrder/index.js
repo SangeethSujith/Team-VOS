@@ -53,6 +53,7 @@ const InvoiceOrder = ({ navigation, route }) => {
                 Authorization: 'Bearer ' + token,
             }
         };
+        console.log(value1,value2)
         axios.get(`${API_URL}/${GET_ORDERS}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&CustomerCode=${param}`,
             headers).then(async (response) => {
 
@@ -97,11 +98,11 @@ const InvoiceOrder = ({ navigation, route }) => {
                 value2={date2}
                 onPressdate1={() => setIsPickerShow(true)}
                 condition1={isPickerShow}
-                text1={moment(date1).format("YYYY-MM-DD")}
+                text1={value2}
                 onChangevalue1={onDateSelected1}
                 onPressdate2={() => setIsPickerShow2(true)}
                 condition2={isPickerShow2}
-                text2={moment(date2).format("YYYY-MM-DD")}
+                text2={value1}
                 onChangevalue2={onDateSelected2}
                 onPress={() => datefilter()}
                 PickerVisible={PickerVisible}

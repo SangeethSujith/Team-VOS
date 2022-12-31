@@ -35,7 +35,7 @@ export const Validate = (field_name, type, values) => {
 
 const validateNULL = (field_name, values) => {
     let errors = {};
-    if (!values) {
+    if (values.length==0) {
         errors = field_name + ' is required.';
     }
     else {
