@@ -32,8 +32,15 @@ const Expenses = ({ navigation, route }) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [datetotalkm,setdatetotalkm]=useState('')
   const [loader, setloader] = useState(false)
+  const [isksk,setisksk]=useState('')
   useEffect(() => {
     getRoutes()
+    isksk()
+    async function isksk(){
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+      setisksk(Data.IsISKOSK)
+    }
   }, []);
   const onChange = async (event, value) => {
     await setDate(value);
@@ -130,8 +137,9 @@ const Expenses = ({ navigation, route }) => {
       sundries: input.sundries,
       additional_km: input.addtnl,
       remarks: input.remarks,
-      total: JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)),
+      total: isksk=='ISK'?JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.7, 10) + parseInt(input.addtnl * 2.7, 10) + parseInt(input.Custmr_Hq * 2.7, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
@@ -485,8 +493,9 @@ dropDownContainerStyle={{
             label='Total'
             labelBG='white'
             placeholderText='250'
-            value={param !== '' ? param.total : JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-              parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10))}
+            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
+      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.7, 10) + parseInt(input.addtnl * 2.7, 10) + parseInt(input.Custmr_Hq * 2.7, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
           // }}
