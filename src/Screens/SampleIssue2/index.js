@@ -44,7 +44,7 @@ const SampleIssue2 = ({navigation, route}) => {
     };
     axios
       .post(
-        `https://ayurwarecrm.com/demo/ajax/get_sample_stock`,
+        `https://ayurwarecrm.com/teamvos/ajax/get_sample_stock`,
         qs.stringify(body),
       )
       .then(async response => {

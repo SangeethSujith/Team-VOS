@@ -32,7 +32,7 @@ const TodayCallsRoute = ({ navigation,route }) => {
       assigned_date:moment().format("YYYY-MM-DD"),
       route_id:param.route_id,
     }
-    axios.post(`https://ayurwarecrm.com/demo/ajax/get_calls_update_with_route`,
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/get_calls_update_with_route`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data.calls.new)

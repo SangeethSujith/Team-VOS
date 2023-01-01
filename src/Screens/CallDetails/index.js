@@ -108,7 +108,7 @@ const CallDetails = ({ navigation, route }) => {
     console.log(posts,'the data')
     setloader(true);
 
-    axios.post(`https://ayurwarecrm.com/demo/ajax/save_call`, qs.stringify(posts)).then(async (response) => {
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/save_call`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
         setloader(false);
         Alert.alert(

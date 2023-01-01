@@ -97,7 +97,7 @@ const CreateCall = ({ navigation,route}) => {
     }
     console.log('upload',posts)
     setloader(true);
-    axios.post(`https://ayurwarecrm.com/demo/ajax/save_customer_for_approvals`, qs.stringify(posts)).then(async (response) => {
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/save_customer_for_approvals`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
         setloader(false);
         Alert.alert(

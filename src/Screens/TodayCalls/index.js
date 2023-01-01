@@ -30,7 +30,7 @@ const TodayCalls = ({ navigation }) => {
       user_id: Data.Userid,
       date: moment().format("YYYY-MM-DD"),
     }
-    axios.post(`https://ayurwarecrm.com/demo/ajax/get_calls_update`,
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/get_calls_update`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data.calls.new)

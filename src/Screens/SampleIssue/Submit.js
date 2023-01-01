@@ -62,7 +62,7 @@ const Submit = ({navigation, route}) => {
       customer_id: param,
     }
     console.log('posts',posts)
-    axios.post(`https://ayurwarecrm.com/demo/ajax/issue_sample`, qs.stringify(posts)).then(async(response)=> {
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/issue_sample`, qs.stringify(posts)).then(async(response)=> {
         if (response.status == 200) {
           Alert.alert("Saved Successfully ", ' ', 
           [

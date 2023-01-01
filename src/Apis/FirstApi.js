@@ -1,7 +1,7 @@
 module.exports = {
 
   //...........Base_URL.................//
-  API_URL: 'http://13.234.214.32:7892',
+  API_URL: 'http://api.vosastra.com/',
   //....................................//
 
   GET_TOKEN: 'Token',
