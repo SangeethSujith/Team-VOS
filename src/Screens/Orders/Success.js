@@ -5,7 +5,7 @@ import axios from 'axios';
 import { SIZES, COLORS, Fonts } from '../../Styles/theme';
 import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_URL, GET_ORDERS } from '../../Apis/FirstApi';
+import { API_URL, GET_ORDERSMAIN } from '../../Apis/FirstApi';
 import { LoaderOne, LoaderTwo, LoaderThree } from '../../Components/Loader';
 import moment from 'moment'
 import { Icon, icoMoonConfigSet } from '../../Styles/icons';
@@ -76,13 +76,13 @@ const Success = ({ navigation, route }) => {
     console.log(current.toISOString().split('T')[0]);
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
-    console.log(Data.UserCode)
+    console.log(Data.UserCode,'fsocode')
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
       }
     };
-    axios.get(`${API_URL}/${GET_ORDERS}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&FSOCode=${Data.UserCode}`,
+    axios.get(`${API_URL}/${GET_ORDERSMAIN}?Offset=0&Limit=0&FromDate=${value2}&ToDate=${value1}&FSOCode=${Data.UserCode}`,
       headers).then(async (response) => {
 
         await setstate(response.data.Data)

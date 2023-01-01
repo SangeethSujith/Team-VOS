@@ -28,7 +28,7 @@ const Products = ({ navigation }) => {
       user_id: Data.Userid,
       //product_id: 5
     }
-    axios.post(`http://ayurwarecrm.com/demo/ajax/products?userid=${Data.Userid}`,
+    axios.post(`https://ayurwarecrm.com/teamvos/ajax/products?userid=${Data.Userid}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         // console.log(response.data)
