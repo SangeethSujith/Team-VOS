@@ -36,12 +36,170 @@ const Expenses = ({ navigation, route }) => {
   useEffect(() => {
     getRoutes()
     isksk()
+    OS()
     async function isksk(){
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
       setisksk(Data.IsISKOSK)
     }
   }, []);
+
+  const HQ = async()=>{
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = await JSON.parse(userData)
+    switch(Data.role){
+      case 'FSO':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '175' })
+        }
+        else{
+          setinput({ ...input, da: '175' })
+        }
+        break;
+      }
+      case 'ASM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '200' })
+        }
+        else{
+          setinput({ ...input, da: '200' })
+        }
+        break;
+      }
+      case 'ZSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '200' })
+        }
+        else{
+          setinput({ ...input, da: '200' })
+        }
+        break;
+      }
+      case 'RSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '225' })
+        }
+        else{
+          setinput({ ...input, da: '250' })
+        }
+        break;
+      }
+      case 'SM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '300' })
+        }
+        else{
+          setinput({ ...input, da: '300' })
+        }
+        break;
+      }
+    }
+  }
+  const EX = async()=>{
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = await JSON.parse(userData)
+    switch(Data.role){
+      case 'FSO':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '200' })
+        }
+        else{
+          setinput({ ...input, da: '225' })
+        }
+        break;
+      }
+      case 'ASM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '225' })
+        }
+        else{
+          setinput({ ...input, da: '250' })
+        }
+        break;
+      }
+      case 'ZSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '225' })
+        }
+        else{
+          setinput({ ...input, da: '250' })
+        }
+        break;
+      }
+      case 'RSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '275' })
+        }
+        else{
+          setinput({ ...input, da: '300' })
+        }
+        break;
+      }
+      case 'SM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '350' })
+        }
+        else{
+          setinput({ ...input, da: '350' })
+        }
+        break;
+      }
+    }
+  }
+  const OS = async()=>{
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = await JSON.parse(userData)
+    switch(Data.role){
+      case 'FSO':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '250' })
+        }
+        else{
+          setinput({ ...input, da: '275' })
+        }
+        break;
+      }
+      case 'ASM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '325' })
+        }
+        else{
+          setinput({ ...input, da: '300' })
+        }
+        break;
+      }
+      case 'ZSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '325' })
+        }
+        else{
+          setinput({ ...input, da: '300' })
+        }
+        break;
+      }
+      case 'RSM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '375' })
+        }
+        else{
+          setinput({ ...input, da: '350' })
+        }
+        break;
+      }
+      case 'SM':{
+        if(isksk=='ISK'){
+          setinput({ ...input, da: '400' })
+        }
+        else{
+          setinput({ ...input, da: '400' })
+        }
+        break;
+      }
+    }
+  }
+
+
+
   const onChange = async (event, value) => {
     await setDate(value);
     // console.log(value,'inside onchange')
@@ -249,7 +407,6 @@ const Expenses = ({ navigation, route }) => {
             type='calender'
             label='Date'
             labelBG='white'
-            placeholderText='22/04/2022'
             onPressdate={() => setIsPickerShow(true)}
             value={moment(date).format("YYYY-MM-DD")}
           //datePicker={true}
@@ -315,7 +472,7 @@ dropDownContainerStyle={{
               <CheckBox
                 value={isSelected4}
                 onValueChange={() => (setSelection4(true), setSelection5(false),
-                  setSelection6(false), setinput({ ...input, da: '250' }))}
+                  setSelection6(false), OS())}
                 style={styles.checkbox}
               />
               <Text style={styles.text3}>OS</Text>
@@ -324,7 +481,7 @@ dropDownContainerStyle={{
               <CheckBox
                 value={isSelected5}
                 onValueChange={() => (setSelection4(false), setSelection5(true),
-                  setSelection6(false), setinput({ ...input, da: '175' }))}
+                  setSelection6(false),HQ())}
                 style={styles.checkbox}
               />
               <Text style={styles.text3}>HQ</Text>
@@ -333,7 +490,7 @@ dropDownContainerStyle={{
               <CheckBox
                 value={isSelected6}
                 onValueChange={() => (setSelection4(false), setSelection5(false),
-                  setSelection6(true), setinput({ ...input, da: '200' }))}
+                  setSelection6(true), EX())}
                 style={styles.checkbox}
               />
               <Text style={styles.text3}>EX-HQ</Text>
