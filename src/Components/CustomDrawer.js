@@ -124,7 +124,7 @@ export default function CustomDrawerContent(props) {
             //stack: 'SignIn'
         },
         {
-            label:'Version 1.0.1',
+            label:'Version 1.1.0',
             icon: require('../Assets/Images/index.jpg'),
             stack:'Home',
         }
