@@ -1,7 +1,7 @@
 module.exports = {
 
     //...........Base_URL.................//
-    BASE_URL: 'https://ayurwarecrm.com/teamvos',
+    BASE_URL: 'https://ayurwarecrm.com/teamvos-new',
     //....................................//
 
     LOGIN: 'ajax/do_login',
