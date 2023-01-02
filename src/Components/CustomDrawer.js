@@ -42,7 +42,7 @@ export default function CustomDrawerContent(props) {
     }, []);
     const getName = async () => {
         const userData = await AsyncStorage.getItem('User_Data');
-        let Data = JSON.parse(userData)
+        let Data = await JSON.parse(userData)
         await setname(Data.Name)
         await setmanager(Data.isManager)
         setloader(false)
