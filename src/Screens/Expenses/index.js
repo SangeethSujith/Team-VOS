@@ -219,6 +219,7 @@ const Expenses = ({ navigation, route }) => {
   };
   async function getRoutes() {
     setloader(true);
+    OS();
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     let body = {
