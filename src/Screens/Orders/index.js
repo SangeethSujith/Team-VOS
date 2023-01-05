@@ -27,13 +27,14 @@ const Orders = ({ navigation }) => {
       </LinearGradient>
       <Tab.Navigator
         initialRouteName="Pending"
-        tabBarOptions={{
-          activeTintColor: COLORS.primary,
+        screenOptions={{
+          tabBarActiveTintColorTintColor: COLORS.primary,
           scrollEnabled: false,
-          tabBarLabel: { color: COLORS.primary },
-          tabStyle: { width: Dimensions.get('window').width },
+          tabBarLabelStyle: { color: COLORS.primary },
+          tabBarStyle: { width: Dimensions.get('window').width },
           labelStyle: { fontSize: SIZES.small, fontFamily: Fonts.font_600 },
           style: { backgroundColor: 'white', },
+          swipeEnabled:true,
         }}
       >
         <Tab.Screen

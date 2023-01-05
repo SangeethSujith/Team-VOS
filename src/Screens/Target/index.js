@@ -23,13 +23,13 @@ const Target = ({navigation}) => {
             </LinearGradient>
             <Tab.Navigator
                 initialRouteName="Pending"
-                tabBarOptions={{
-                    activeTintColor: COLORS.primary,
+                screenOptions={{
+                    tabBarActiveTintColor: COLORS.primary,
                     scrollEnabled: false,
                     tabBarLabel:{color: COLORS.primary},
-                    tabStyle: { width: Dimensions.get('window').width /2 },
-                    labelStyle: { fontSize: SIZES.small, fontFamily: Fonts.font_600 },
-                    style: { backgroundColor: 'white' ,},
+                    tabBarStyle: { width: Dimensions.get('window').width },
+                    tabBarLabelStyle: { fontSize: SIZES.small, fontFamily: Fonts.font_600 },
+                    swipeEnabled:true,
                 }}
             >
                 <Tab.Screen
