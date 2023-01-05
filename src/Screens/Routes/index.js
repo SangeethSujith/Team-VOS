@@ -68,8 +68,8 @@ const Routes = ({ navigation }) => {
                     </Image>
                     <View style={{ marginLeft: 10, width: 'auto' }}>
                       <Text style={styles.text}>{item.route_name}</Text>
-                      <Text style={styles.text2}>Created By : {item.created_by}</Text>
-                      <Text style={styles.text3}>{item.date}</Text>
+                      <Text style={styles.text2}>{item.date}</Text>
+                      <Text style={styles.text2}></Text>
                     </View>
                   </View>
                 </TouchableOpacity>
