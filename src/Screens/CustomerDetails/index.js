@@ -57,6 +57,7 @@ const CustomerDetails = ({ navigation, route }) => {
       {state1 !== '' && state1.length > 0 ?
         <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
           <Text style={styles.text}>{param.n}</Text>
+          <Text style={styles.text3}>{param.sc}</Text>
           <Text style={styles.text3}>{param.c}</Text>
           <Text style={styles.text1}>{'Outstanding'}</Text>
           <View style={styles.line} />
