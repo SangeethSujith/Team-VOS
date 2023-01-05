@@ -35,12 +35,13 @@ const Expenses = ({ navigation, route }) => {
   const [isksk,setisksk]=useState('')
   useEffect(() => {
     getRoutes()
-    isksk()
+    fisksk()
     OS()
-    async function isksk(){
+    async function fisksk(){
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
       setisksk(Data.IsISKOSK)
+      console.log(isksk)
     }
   }, []);
 
@@ -94,6 +95,7 @@ const Expenses = ({ navigation, route }) => {
         break;
       }
     }
+    console.log((datetotalkm*2.95)+parseFloat(input.da),'here');
   }
   const EX = async()=>{
     const userData = await AsyncStorage.getItem('User_Data');
@@ -232,7 +234,7 @@ const Expenses = ({ navigation, route }) => {
     axios.post(`${BASE_URL}/${TOTAL_KM}`,
       qs.stringify(body2)).then(async (response) => {
         await setdatetotalkm(response.data.report.distance)
-        console.log(datetotalkm,'here')
+        // console.log(datetotalkm,'here')
         return {
           response: response.data
         };
@@ -242,7 +244,7 @@ const Expenses = ({ navigation, route }) => {
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         // await setstate(response.data.routes)
-        // console.log(response.data.routes);
+        
         // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label: item.route_name,
@@ -258,19 +260,22 @@ const Expenses = ({ navigation, route }) => {
         console.log(err)
       });
   }
-  const [input, setinput] = useState({
-    date: param !== '' ? param.date : '',
+ const [input, setinput] = useState({
+    date: param !== '' ? param.date : ' ',
     route: '',
-    town: param !== '' ? param.town_visited : '',
-    da: param !== '' ? param.da : '250',
-    kilomtr: param !== '' ? param.tabike_km : '0', type: '',
+    town: param !== '' ? param.town_visited : ' ',
+    da: param !== '' ? param.da : ' ',
+    kilomtr: param !== '' ? param.tabike_km : '0',
+    type: ' ',
     fare: param !== '' ? param.ta_bus : '0',
     bikeexp: param !== '' ? param.ta_bike_amount : '0',
     addtnl: param !== '' ? param.additional_km : '0',
-    lodge: param !== '' ? param.lodge : '0', courier: param !== '' ? param.courier : '0',
+    lodge: param !== '' ? param.lodge : '0',
+    courier: param !== '' ? param.courier : '0',
     sundries: param !== '' ? param.sundries : '0',
     remarks: param !== '' ? param.remarks : '',
-    total: '0', Custmr_Hq: param !== '' ? param.km_customer_to_hq : '0'
+    total: '', 
+    Custmr_Hq: param !== '' ? param.km_customer_to_hq : '0'
   })
   const PostSave = async () => {
     console.log('inside')
@@ -295,24 +300,17 @@ const Expenses = ({ navigation, route }) => {
       sundries: input.sundries,
       additional_km: input.addtnl,
       remarks: input.remarks,
-      total: isksk=='ISK'?JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.7, 10) + parseInt(input.addtnl * 2.7, 10) + parseInt(input.Custmr_Hq * 2.7, 10)),
+      total: isksk=='ISK'?JSON.stringify(parseFloat(input.da) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
+      parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
+      parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.7, 10) + parseFloat(input.addtnl * 2.7, 10) + parseFloat(input.Custmr_Hq * 2.7, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
       km_customer_to_hq: input.Custmr_Hq,
-      // is_approved_by_asm:1,
-      // asm_comment:fine,
-      // is_approved_by_sm:1,
-      // sm_comment:Fine,
-      // is_approved_by_zsm:1,
-      // zsm_comment:fine,is_approved_by_rsm:1,
-      // rsm_comment:fine,
-      // app_version:1
+
       
     }
-    console.log(posts)
+    console.log('posts',posts)
     setloader(true);
     axios.post(`${BASE_URL}/${SAVE_EXP}`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
@@ -339,24 +337,6 @@ const Expenses = ({ navigation, route }) => {
     });
 
   }
-
-  // const [state, setstate] = useState({
-  //   data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '26/08/2022', address: 'Hospital_Cr', place: 'Calicut , hjfhkerh', visited: true },
-  //   { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut ,hkdfghgbved', visited: true },
-  //   { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 8, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 9, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 10, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 11, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 12, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 13, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 14, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-  //   { id: 15, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true }]
-  // })
   const [isSelected, setSelection] = useState(true);
   const [isSelected2, setSelection2] = useState(false);
   const [isSelected3, setSelection3] = useState(false);
@@ -649,10 +629,8 @@ dropDownContainerStyle={{
             type='text'
             label='Total'
             labelBG='white'
-            placeholderText='250'
-            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.9, 10) + parseInt(input.addtnl * 2.9, 10) + parseInt(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseInt(input.da, 10) + parseInt(input.fare, 10) + parseInt(input.courier, 10) + parseInt(input.lodge, 10) + parseInt(input.sundries, 10) +
-      parseInt(input.bikeexp, 10) + parseInt(datetotalkm * 2.7, 10) + parseInt(input.addtnl * 2.7, 10) + parseInt(input.Custmr_Hq * 2.7, 10))}
+            placeholderText=' '
+            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.7, 10) + parseFloat(input.addtnl * 2.7, 10) + parseFloat(input.Custmr_Hq * 2.7, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
           // }}
