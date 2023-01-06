@@ -28,9 +28,9 @@ const Pending = () => {
     }
     axios.post(`${BASE_URL}/${GET_TASKS}`,
       qs.stringify(body)).then(async (response) => {
-        setloader(false)
         await setstate1(response.data.tasks.new)
-        console.log(response.data.tasks.new);
+        console.log('data',response.data.tasks.new);
+        setloader(false)
         return {
           response: response.data
         };
@@ -98,7 +98,7 @@ const Pending = () => {
                         <Text style={styles.text2}>{'Assigned By'}</Text>
                         <Text style={styles.text2}>{': '}</Text>
                       </View>
-                      <Text style={styles.text2}>{'name'}</Text>
+                      <Text style={styles.text2}>{item.created_by}</Text>
                     </View>
                     <View style={styles.textrow}>
                       <View style={styles.innerrow}>
