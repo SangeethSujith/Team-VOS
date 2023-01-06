@@ -199,9 +199,6 @@ const Expenses = ({ navigation, route }) => {
       }
     }
   }
-
-
-
   const onChange = async (event, value) => {
     await setDate(value);
     // console.log(value,'inside onchange')
@@ -302,7 +299,7 @@ const Expenses = ({ navigation, route }) => {
       remarks: input.remarks,
       total: isksk=='ISK'?JSON.stringify(parseFloat(input.da) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
       parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
-      parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.7, 10) + parseFloat(input.addtnl * 2.7, 10) + parseFloat(input.Custmr_Hq * 2.7, 10)),
+      parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.75, 10) + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
@@ -493,6 +490,7 @@ dropDownContainerStyle={{
             placeholderText='Bus'
             label1='Bus'
             label2='Bike'
+            label3='Train'
             selectedvalue={input.type}
             ValueChange={(itemValue, itemIndex) =>
               setinput({ ...input, type: itemValue })
@@ -574,7 +572,7 @@ dropDownContainerStyle={{
             </View>}
           <CustomInput
             type='text'
-            label='Lodge(max 1000)'
+            label='Lodge'
             keyboardType='numeric'
             labelBG='white'
             placeholderText='0.0       '
@@ -630,7 +628,7 @@ dropDownContainerStyle={{
             label='Total'
             labelBG='white'
             placeholderText=' '
-            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.7, 10) + parseFloat(input.addtnl * 2.7, 10) + parseFloat(input.Custmr_Hq * 2.7, 10))}
+            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.75, 10) + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
           // }}
