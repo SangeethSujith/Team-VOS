@@ -14,6 +14,7 @@ export const CustomInput = (props) => {
     label,
     label1,
     label2,
+    label3,
     type,
     placeholderText,
     onChangeText,
@@ -148,6 +149,7 @@ export const CustomInput = (props) => {
             >
               <Picker.Item label={label1} value="java" />
               <Picker.Item label={label2} value="js" />
+              <Picker.Item label={label3} value="rn" />
             </Picker>
           </View>
 
