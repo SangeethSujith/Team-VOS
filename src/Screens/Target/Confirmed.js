@@ -9,6 +9,7 @@ import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
 import { BASE_URL, GET_TASKS } from '../../Apis/SecondApi';
+import moment from 'moment';
 
 const Completed = () => {
   const [loader, setloader] = useState(false);
@@ -29,7 +30,7 @@ const Completed = () => {
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data.tasks.new)
-        //console.log(state1);
+        console.log(state1);
         return {
           response: response.data
         };
@@ -37,16 +38,6 @@ const Completed = () => {
         console.log(err)
       });
   }
-  const [state, setstate] = useState({
-    data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    ]
-  })
   return (
     <View style={styles.container}>
       {state1 !== '' ?
@@ -79,7 +70,7 @@ const Completed = () => {
                         <Text style={styles.text2}>{'Assigned By'}</Text>
                         <Text style={styles.text2}>{': '}</Text>
                       </View>
-                      <Text style={styles.text2}>{'name'}</Text>
+                      <Text style={styles.text2}>{item.created_by}</Text>
                     </View>
                     <View style={styles.textrow}>
                       <View style={styles.innerrow}>
@@ -100,7 +91,7 @@ const Completed = () => {
                         <Text style={styles.text2}>{'Completed On'}</Text>
                         <Text style={styles.text2}>{': '}</Text>
                       </View>
-                      <Text style={styles.text2}>{item.done_date}</Text>
+                      <Text style={styles.text2}>{moment(item.done_date).format("YYYY-MM-DD")}</Text>
                     </View>
 
 

@@ -9,9 +9,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
-import { BASE_URL, GET_TASKS } from '../../Apis/SecondApi';
+import { BASE_URL, GET_TASKS,SET_TASK_STATUS } from '../../Apis/SecondApi';
 
-const Pending = () => {
+const Pending = ({navigation}) => {
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
   useEffect(() => {
@@ -38,17 +38,8 @@ const Pending = () => {
         console.log(err)
       });
   }
-  const [state, setstate] = useState({
-    data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    ]
-  })
-  const showAlert = () =>
+
+  const showAlert = async(task_id) =>
     Alert.alert(
       "Do you want to mark as completed ?",
       " ",
@@ -61,15 +52,50 @@ const Pending = () => {
         {
           text: "Ok",
           cancelable: true,
-          //onPress: () => Alert.alert("Cancel Pressed"),
+          onPress: () => PostSave(task_id),
           style: "cancel",
         },
       ],
-    );
+    )
+  const PostSave = async(taskid) =>{
+    const userData = await AsyncStorage.getItem('User_Data');
+    let Data = JSON.parse(userData)
+    let posts = {
+      user_id: Data.Userid,
+      task_id:taskid,
+    }
+    console.log(posts)
+    setloader(true);
+    axios.post(`${BASE_URL}/${SET_TASK_STATUS}`, qs.stringify(posts)).then(async (response) => {
+      if (response.status == 200) {
+        setloader(false);
+        Alert.alert(
+          "Saved Successfully ", '',
+          [
+            {
+              text: "Yes",
+              cancelable: true,
+              onPress: () => navigation.navigate('Home'),
+              style: "cancel",
+            }],
+        );
+      }
+      else {
+        setloader(false);
+        Alert.alert(
+          "Failed Saving Expenses, Try Again")
+      }
+    }
+    ).catch((err) => {
+      console.log(err)
+    });
+    }
+  
   return (
     <View style={styles.container}>
       {state1 !== '' ?
-        <FlatList style={{ backgroundColor: 'white' }}
+        <FlatList 
+          style={{ backgroundColor: 'white' }}
           data={state1.filter((item) => item.is_done == 0)}
           horizontal={false}
           scrollEnabled={true}
@@ -128,7 +154,7 @@ const Pending = () => {
                       //width1 ={'auto'}
                       style={{ alignSelf: 'center' }}
                       height1={SIZES.radius25}
-                      onPress={showAlert}
+                      onPress={()=>showAlert(item.task_id)}
                     />
                   </View>
                 </View>
