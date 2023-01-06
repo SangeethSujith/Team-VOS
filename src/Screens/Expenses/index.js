@@ -33,6 +33,7 @@ const Expenses = ({ navigation, route }) => {
   const [datetotalkm,setdatetotalkm]=useState('')
   const [loader, setloader] = useState(false)
   const [isksk,setisksk]=useState('')
+  const [maxlodge,setmaxlodge]=useState('')
   useEffect(() => {
     getRoutes()
     fisksk()
@@ -52,45 +53,55 @@ const Expenses = ({ navigation, route }) => {
       case 'FSO':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '175' })
+          setmaxlodge('Lodge (max 1000)')
         }
         else{
           setinput({ ...input, da: '175' })
+          setmaxlodge('Lodge (max 1000)')
         }
         break;
       }
       case 'ASM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '200' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '200' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'ZSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '200' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '200' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'RSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '225' })
+          setmaxlodge('Lodge (max 1500)')
         }
         else{
           setinput({ ...input, da: '250' })
+          setmaxlodge('Lodge (max 1750)')
         }
         break;
       }
       case 'SM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '300' })
+          setmaxlodge('Lodge (max 2000)')
         }
         else{
           setinput({ ...input, da: '300' })
+          setmaxlodge('Lodge (max 2000)')
         }
         break;
       }
@@ -104,45 +115,55 @@ const Expenses = ({ navigation, route }) => {
       case 'FSO':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '200' })
+          setmaxlodge('Lodge (max 1000)')
         }
         else{
           setinput({ ...input, da: '225' })
+          setmaxlodge('Lodge (max 1000)')
         }
         break;
       }
       case 'ASM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '225' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '250' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'ZSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '225' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '250' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'RSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '275' })
+          setmaxlodge('Lodge (max 1500)')
         }
         else{
           setinput({ ...input, da: '300' })
+          setmaxlodge('Lodge (max 1750')
         }
         break;
       }
       case 'SM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '350' })
+          setmaxlodge('Lodge (max 2000)')
         }
         else{
           setinput({ ...input, da: '350' })
+          setmaxlodge('Lodge (max 2000)')
         }
         break;
       }
@@ -155,45 +176,55 @@ const Expenses = ({ navigation, route }) => {
       case 'FSO':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '250' })
+          setmaxlodge('Lodge (max 1000)')
         }
         else{
           setinput({ ...input, da: '275' })
+          setmaxlodge('Lodge (max 1000)')
         }
         break;
       }
       case 'ASM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '325' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '300' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'ZSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '325' })
+          setmaxlodge('Lodge (max 1250)')
         }
         else{
           setinput({ ...input, da: '300' })
+          setmaxlodge('Lodge (max 1250)')
         }
         break;
       }
       case 'RSM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '375' })
+          setmaxlodge('Lodge (max 1500)')
         }
         else{
           setinput({ ...input, da: '350' })
+          setmaxlodge('Lodge (max 1750)')
         }
         break;
       }
       case 'SM':{
         if(isksk=='ISK'){
           setinput({ ...input, da: '400' })
+          setmaxlodge('Lodge (max 2000)')
         }
         else{
           setinput({ ...input, da: '400' })
+          setmaxlodge('Lodge (max 2000)')
         }
         break;
       }
@@ -232,7 +263,6 @@ const Expenses = ({ navigation, route }) => {
     axios.post(`${BASE_URL}/${TOTAL_KM}`,
       qs.stringify(body2)).then(async (response) => {
         await setdatetotalkm(response.data.report.distance)
-        // console.log(datetotalkm,'here')
         return {
           response: response.data
         };
@@ -242,7 +272,6 @@ const Expenses = ({ navigation, route }) => {
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         // await setstate(response.data.routes)
-        
         // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label: item.route_name,
@@ -264,7 +293,7 @@ const Expenses = ({ navigation, route }) => {
     town: param !== '' ? param.town_visited : ' ',
     da: param !== '' ? param.da : ' ',
     kilomtr: param !== '' ? param.tabike_km : '0',
-    type: ' ',
+    type: 'Bus',
     fare: param !== '' ? param.ta_bus : '0',
     bikeexp: param !== '' ? param.ta_bike_amount : '0',
     addtnl: param !== '' ? param.additional_km : '0',
@@ -276,9 +305,7 @@ const Expenses = ({ navigation, route }) => {
     Custmr_Hq: param !== '' ? param.km_customer_to_hq : '0'
   })
   const PostSave = async () => {
-    console.log('inside')
-    const Route = await AsyncStorage.getItem('Routes');
-    let route = JSON.parse(Route)
+    setloader(true)
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     let posts = {
@@ -288,10 +315,10 @@ const Expenses = ({ navigation, route }) => {
       route_id:value,
       town_visited: input.town,
       da: input.da,
-      // //ta:100,
       ta_type: 'monthly',
+      travel_type:input.type,
       ta_bus: input.fare,
-      ta_bike_km:datetotalkm==''?'0':datetotalkm,
+      ta_bike_km:datetotalkm==''&&input.type=='js'?'0':datetotalkm,
       ta_bike_amount: input.bikeexp,
       lodge: input.lodge,
       courier: input.courier,
@@ -299,8 +326,8 @@ const Expenses = ({ navigation, route }) => {
       additional_km: input.addtnl,
       remarks: input.remarks,
       total: isksk=='ISK'?JSON.stringify(parseFloat(input.da) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
-      parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
-      parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.75, 10) + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10)),
+      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
+      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
@@ -309,7 +336,6 @@ const Expenses = ({ navigation, route }) => {
       
     }
     console.log('posts',posts)
-    setloader(true);
     axios.post(`${BASE_URL}/${SAVE_EXP}`, qs.stringify(posts)).then(async (response) => {
       if (response.status == 200) {
         setloader(false);
@@ -488,12 +514,12 @@ dropDownContainerStyle={{
             type='dropdown'
             label='Select Travel Type'
             labelBG='white'
-            placeholderText='Bus'
+            placeholderText=' '
             label1='Bus'
             label2='Bike'
             label3='Train'
             selectedvalue={input.type}
-            ValueChange={(itemValue, itemIndex) =>
+            ValueChange={(itemValue, itemIndex) => 
               setinput({ ...input, type: itemValue })
             }
             keyboardType='numeric'
@@ -535,7 +561,7 @@ dropDownContainerStyle={{
                 type='text'
                 label='Bike Expenses'
                 labelBG='white'
-                placeholderText='0.0     '
+                placeholderText='0.0'
                 value={input.bikeexp}
                 onChangeText={(text) => {
                   setinput({ ...input, bikeexp: text })
@@ -573,10 +599,10 @@ dropDownContainerStyle={{
             </View>}
           <CustomInput
             type='text'
-            label='Lodge'
+            label={maxlodge}
             keyboardType='numeric'
             labelBG='white'
-            placeholderText='0.0       '
+            placeholderText='0'
             value={input.lodge}
             onChangeText={(text) => {
               setinput({ ...input, lodge: text })
@@ -629,7 +655,7 @@ dropDownContainerStyle={{
             label='Total'
             labelBG='white'
             placeholderText=' '
-            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + (datetotalkm * 2.9) + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(datetotalkm * 2.75, 10) + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10))}
+            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
           // }}
