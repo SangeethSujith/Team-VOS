@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
-import moment from 'moment'
 import { BASE_URL, GET_ROUTES } from '../../Apis/SecondApi';
 //import {Cust}
 
@@ -31,8 +30,6 @@ const Routes = ({ navigation }) => {
         setloader(false)
         await setstate1(response.data.routes)
         console.log(response.data.routes);
-        AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
-
         return {
           response: response.data
         };
