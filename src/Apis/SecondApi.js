@@ -23,4 +23,5 @@ module.exports = {
     TOTAL_KM:'ajax/get_total_kilometers',
     SAVE_ROUTE_REPORT:'ajax/save_route_report',
     GET_FSO:'ajax/get_fso_list',
+    SET_TASK_STATUS:'ajax/set_task_status',
 };
