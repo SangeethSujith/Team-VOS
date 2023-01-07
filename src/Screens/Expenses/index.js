@@ -45,7 +45,6 @@ const Expenses = ({ navigation, route }) => {
       console.log(isksk)
     }
   }, []);
-
   const HQ = async()=>{
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = await JSON.parse(userData)
@@ -290,7 +289,7 @@ const Expenses = ({ navigation, route }) => {
  const [input, setinput] = useState({
     date: param !== '' ? param.date : ' ',
     route: '',
-    town: param !== '' ? param.town_visited : ' ',
+    town: param !== '' ? param.town_visited : '',
     da: param !== '' ? param.da : ' ',
     kilomtr: param !== '' ? param.tabike_km : '0',
     type: 'Bus',
@@ -359,8 +358,8 @@ const Expenses = ({ navigation, route }) => {
     ).catch((err) => {
       console.log(err)
     });
-
   }
+  
   const [isSelected, setSelection] = useState(true);
   const [isSelected2, setSelection2] = useState(false);
   const [isSelected3, setSelection3] = useState(false);
@@ -445,7 +444,7 @@ const Expenses = ({ navigation, route }) => {
   animationType: "fade",
 }}
       placeholderStyle={{
-  color: "grey", fontSize: SIZES.medium, fontFamily: Fonts.font_400,
+  color: "#ff0000", fontSize: SIZES.medium, fontFamily: Fonts.font_400,
 }}
 
 dropDownContainerStyle={{
@@ -463,6 +462,7 @@ dropDownContainerStyle={{
             label='Town Visited'
             labelBG='white'
             placeholderText='Enter Town Visited'
+            placeholderTextColor='#ff0000'
             value={input.town}
             onChangeText={(text) => {
               setinput({ ...input, town: text })
@@ -506,6 +506,7 @@ dropDownContainerStyle={{
             labelBG='white'
             placeholderText='250.00            '
             value={input.da}
+            editable={false}
 
           //iconname='location'
 
@@ -533,7 +534,8 @@ dropDownContainerStyle={{
               keyboardType='numeric'
               label={'Fare'}
               labelBG='white'
-              placeholderText='0       '
+              placeholderText='Enter 0 if No Value'
+              placeholderTextColor='#ff0000'
               value={input.fare}
               onChangeText={(text) => {
                 setinput({ ...input, fare: text })
@@ -561,7 +563,8 @@ dropDownContainerStyle={{
                 type='text'
                 label='Bike Expenses'
                 labelBG='white'
-                placeholderText='0.0'
+                placeholderText='Enter 0 if No Value'
+                placeholderTextColor='#ff0000'
                 value={input.bikeexp}
                 onChangeText={(text) => {
                   setinput({ ...input, bikeexp: text })
@@ -575,7 +578,8 @@ dropDownContainerStyle={{
                 keyboardType='numeric'
                 label='Additional KM'
                 labelBG='white'
-                placeholderText='0.0    '
+                placeholderText='Enter 0 if No Value'
+                placeholderTextColor='#ff0000'
                 value={input.addtnl}
                 onChangeText={(text) => {
                   setinput({ ...input, addtnl: text })
@@ -588,7 +592,8 @@ dropDownContainerStyle={{
                 keyboardType='numeric'
                 label='KM from last Customer to HQ'
                 labelBG='white'
-                placeholderText='0.0    '
+                placeholderText='Enter 0 if No Value'
+                placeholderTextColor='#ff0000'
                 value={input.Custmr_Hq}
                 onChangeText={(text) => {
                   setinput({ ...input, Custmr_Hq: text })
@@ -602,7 +607,8 @@ dropDownContainerStyle={{
             label={maxlodge}
             keyboardType='numeric'
             labelBG='white'
-            placeholderText='0'
+            placeholderText='Enter 0 if No Value'
+            placeholderTextColor='#ff0000'
             value={input.lodge}
             onChangeText={(text) => {
               setinput({ ...input, lodge: text })
@@ -615,7 +621,8 @@ dropDownContainerStyle={{
             label='Courier'
             labelBG='white'
             keyboardType='numeric'
-            placeholderText='0.0               '
+            placeholderText='Enter 0 if No Value'
+            placeholderTextColor='#ff0000'
             value={input.courier}
             onChangeText={(text) => {
               setinput({ ...input, courier: text })
@@ -628,7 +635,8 @@ dropDownContainerStyle={{
             label='Sundries'
             labelBG='white'
             keyboardType='numeric'
-            placeholderText='0.0                       '
+            placeholderText='Enter 0 if No Value'
+            placeholderTextColor='#ff0000'
             value={input.sundries}
             onChangeText={(text) => {
               setinput({ ...input, sundries: text })
