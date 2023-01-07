@@ -318,7 +318,7 @@ const Expenses = ({ navigation, route }) => {
       ta_type: 'monthly',
       travel_type:input.type,
       ta_bus: input.fare,
-      ta_bike_km:datetotalkm==''&&input.type=='js'?'0':datetotalkm,
+      ta_bike_km:datetotalkm==''&&input.type=='Bike'?'0':datetotalkm,
       ta_bike_amount: input.bikeexp,
       lodge: input.lodge,
       courier: input.courier,
@@ -326,8 +326,8 @@ const Expenses = ({ navigation, route }) => {
       additional_km: input.addtnl,
       remarks: input.remarks,
       total: isksk=='ISK'?JSON.stringify(parseFloat(input.da) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
-      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
-      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10)),
+      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='Bike'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) +
+      parseFloat(input.bikeexp, 10) + parseFloat(input.type=='Bike'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10)),
       created_date: moment().format("YYYY-MM-DD"),
       modified_date: moment().format("YYYY-MM-DD"),
       status: 'Saved',
@@ -655,7 +655,7 @@ dropDownContainerStyle={{
             label='Total'
             labelBG='white'
             placeholderText=' '
-            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='js'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10))}
+            value={param !== '' ? param.total : isksk=='ISK'?JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='Bike'?datetotalkm:'0')* 2.9 + parseFloat(input.addtnl * 2.9, 10) + parseFloat(input.Custmr_Hq * 2.9, 10)):JSON.stringify(parseFloat(input.da, 10) + parseFloat(input.fare, 10) + parseFloat(input.courier, 10) + parseFloat(input.lodge, 10) + parseFloat(input.sundries, 10) + parseFloat(input.bikeexp, 10) + parseFloat(input.type=='Bike'?datetotalkm:'0')* 2.75 + parseFloat(input.addtnl * 2.75, 10) + parseFloat(input.Custmr_Hq * 2.75, 10))}
           // onChangeText={(text) => {
           //   setinput({ ...input, total: text })
           // }}
