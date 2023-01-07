@@ -17,6 +17,7 @@ export const CustomInput = (props) => {
     label3,
     type,
     placeholderText,
+    placeholderTextColor,
     onChangeText,
     value,
     errorMessage,
@@ -94,7 +95,7 @@ export const CustomInput = (props) => {
                 color={COLORS.heading_black}
                 underlineColorAndroid='transparent'
                 style={{ fontSize: SIZES.medium, fontFamily: Fonts.font_400, width: iconname ? (icon ? '75%' : '100%') : '100%' }}
-                placeholderTextColor={'grey'}
+                placeholderTextColor={placeholderTextColor}
                 onFocus={() => setfocus(true)}
                 onBlur={() => setfocus(false)}
               />
