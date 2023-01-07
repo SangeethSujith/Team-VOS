@@ -527,7 +527,7 @@ dropDownContainerStyle={{
           //iconname='location'
 
           />
-          {input.type !== 'js' &&
+          {input.type !== 'Bike' &&
             <CustomInput
               type='text'
               keyboardType='numeric'
@@ -541,7 +541,7 @@ dropDownContainerStyle={{
             //iconname='location'
 
             />}
-          {input.type == 'js' &&
+          {input.type == 'Bike' &&
             <View>
               <CustomInput
                 type='text'
