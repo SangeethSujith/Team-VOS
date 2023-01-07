@@ -41,14 +41,10 @@ const CreateCall = ({ navigation,route}) => {
     axios.post(`${BASE_URL}/${GET_ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
-        // await setstate(response.data.routes)
-        // console.log(response.data.routes);
-        // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
         const dropdata = response.data.routes.map(item => ({
           label:item.route_name,
           value: item.route_id,
         }))
-        // console.log(dropdata);
         setstate(dropdata)
         return {
           response: response.data
@@ -77,7 +73,6 @@ const CreateCall = ({ navigation,route}) => {
     registration_number: param.info || '',
     email: param.email || '',
   })
-  // console.log('input data',input);
   const PostSave = async () => {
     console.log('inside')
     //const Route = await AsyncStorage.getItem('Routes');
