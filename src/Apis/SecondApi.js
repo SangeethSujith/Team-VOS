@@ -24,4 +24,6 @@ module.exports = {
     SAVE_ROUTE_REPORT:'ajax/save_route_report',
     GET_FSO:'ajax/get_fso_list',
     SET_TASK_STATUS:'ajax/set_task_status',
+    GET_ROUTE_REPORT:'ajax/route_report_list',
+    ROUTE_REPORT_DETAILS:'ajax/get_route_report_details',
 };
