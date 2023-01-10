@@ -109,7 +109,6 @@ const Expenses = ({navigation, route}) => {
         break;
       }
     }
-    console.log(datetotalkm * 2.95 + parseFloat(input.da), 'here');
   };
   const EX = async () => {
     const userData = await AsyncStorage.getItem('User_Data');
@@ -256,7 +255,13 @@ const Expenses = ({navigation, route}) => {
     axios
       .post(`${BASE_URL}/${TOTAL_KM}`, qs.stringify(body2))
       .then(async response => {
+        if(response.data.report.distance==null){
+          setdatetotalkm('0')
+          console.log(datetotalkm,'inside if')
+        }
+        else{
         await setdatetotalkm(response.data.report.distance);
+        }
         return {
           response: response.data,
         };
@@ -454,6 +459,7 @@ const Expenses = ({navigation, route}) => {
               />
             )}
             {isSelected == true ? (
+              <>
               <View style={styles.custom}>
                 <View
                   style={[styles.labelContainer, {backgroundColor: '#fff'}]}>
@@ -490,12 +496,8 @@ const Expenses = ({navigation, route}) => {
                   style={{borderColor: '#fff'}}
                 />
               </View>
-            ) : (
-              <></>
-            )}
-            <CustomInput
+              <CustomInput
               type="text"
-              //keyboardType='numeric'
               label="Town Visited"
               labelBG="white"
               placeholderText="Enter Town Visited"
@@ -504,8 +506,12 @@ const Expenses = ({navigation, route}) => {
               onChangeText={text => {
                 setinput({...input, town: text});
               }}
-              //iconname='location'
             />
+            </>
+            ) : (
+              <></>
+            )}
+            
             <Text style={styles.text2}>{'DA'}</Text>
             <View style={styles.checkboxrow}>
               <View style={styles.row}>
@@ -712,8 +718,7 @@ const Expenses = ({navigation, route}) => {
                         parseFloat(input.lodge, 10) +
                         parseFloat(input.sundries, 10) +
                         parseFloat(input.bikeexp, 10) +
-                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') *
-                          2.9 +
+                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
                         parseFloat(input.addtnl * 2.9, 10) +
                         parseFloat(input.Custmr_Hq * 2.9, 10),
                     )
@@ -724,8 +729,7 @@ const Expenses = ({navigation, route}) => {
                         parseFloat(input.lodge, 10) +
                         parseFloat(input.sundries, 10) +
                         parseFloat(input.bikeexp, 10) +
-                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') *
-                          2.75 +
+                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
                         parseFloat(input.addtnl * 2.75, 10) +
                         parseFloat(input.Custmr_Hq * 2.75, 10),
                     )
