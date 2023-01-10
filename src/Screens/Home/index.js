@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 import { COLORS, Fonts, SIZES } from '../../Styles/theme';
-import { CustomInput } from '../../Components/CustomInput';
 import { CustomHeader } from '../../Components/CustomHeader';
 import { DrawerActions } from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
 import { CustomPlusbutton } from '../../Components/CustomPlusbutton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -84,13 +81,6 @@ const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.row2}>
-          {/* <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Invoices', { param: false, param1: '' })}>
-            <Image
-              style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
-              source={require('../../Assets/Images/homeicon8.png')}>
-            </Image>
-            <Text style={styles.text}>Invoices</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Expenseslist')}>
             <Image
               style={{ width: '30%', height: '30%', resizeMode: 'contain', alignSelf: 'center' }}
