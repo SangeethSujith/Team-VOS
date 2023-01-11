@@ -52,6 +52,8 @@ import ItemWiseSales from '../Screens/ItemWiseSales';
 import SampleIssue2 from '../Screens/SampleIssue2';
 import Submit from '../Screens/SampleIssue/Submit';
 import RouteReport from '../Screens/RouteReport';
+import RouteReportList from '../Screens/RouteReportList';
+import RouteReportDetails from '../Screens/RouteReportDetails';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { useSelector } from 'react-redux';
@@ -477,7 +479,22 @@ function MainSectionStack({ navigation }) {
                         close: config,
                     },
                 })} />
-                
+                <MainStackCreator.Screen name="RouteReportList" component={RouteReportList}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+                <MainStackCreator.Screen name="RouteReportDetails" component={RouteReportDetails}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
 
 
         </MainStackCreator.Navigator>
