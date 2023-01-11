@@ -33,20 +33,19 @@ export default function CustomDrawerContent(props) {
     const dispatch = useDispatch();
     const [name, setname] = useState('')
     const [loader, setloader] = useState(false);
-    const [manager,setmanager]=useState('');
+    const [manager,setmanager]=useState('1');
     useEffect(() => {
-        setloader(true)
-        //const isLoggedIn = useSelector(setSignIn);
-        //console.log(isLoggedIn)
+        const getName = async () => {
+            setloader(true)
+            const userData = await AsyncStorage.getItem('User_Data');
+            let Data = await JSON.parse(userData)
+            console.log('data from drawer',Data)
+            await setname(Data.Name)
+            await setmanager(Data.isManager)
+            setloader(false)
+        }
         getName();
     }, []);
-    const getName = async () => {
-        const userData = await AsyncStorage.getItem('User_Data');
-        let Data = await JSON.parse(userData)
-        await setname(Data.Name)
-        await setmanager(Data.isManager)
-        setloader(false)
-    }
     const handleLogout = async (navigation) => {
         const user = {
             Status: ''
@@ -89,13 +88,11 @@ export default function CustomDrawerContent(props) {
         }:{
             label: 'Route Report',
             icon: require('../Assets/Images/homeicon6.png'),
-            //function: 'handleLogout',
-            stack: 'RouteReport'
+            stack: 'RouteReportList'
         },
         {
             label: 'Tasks',
             icon: require('../Assets/Images/homeicon8.png'),
-            //function: 'handleLogout',
             stack: 'Target'
         },
         {
@@ -118,13 +115,12 @@ export default function CustomDrawerContent(props) {
         },
         {
             label: 'Logout',
-            //function: 'handleLogout',
             icon: require('../Assets/Images/logout.png'),
             function: 'handleLogout',
-            //stack: 'SignIn'
+            stack:'SignIn',
         },
         {
-            label:'Version 1.1.3a',
+            label:'Version 1.2.0',
             icon: require('../Assets/Images/index.jpg'),
             stack:'Home',
         }
@@ -135,15 +131,6 @@ export default function CustomDrawerContent(props) {
 
             <View style={{ width: '100%', height: SIZES.sixty, backgroundColor: COLORS.primary }} />
             <View style={[styles.drawerWrapper]}>
-                {/* <Icon
-                    name={'user-1'}
-                    size={SIZES.profile}
-                    color={COLORS.primary}
-                    config={icoMoonConfigSet}
-                    style={{ alignSelf: 'center', marginTop: 20, opacity: .5 }}
-                /> */}
-                {/* {name ? */}
-
                 <View>
                     <Image
                         style={{
@@ -155,8 +142,7 @@ export default function CustomDrawerContent(props) {
                     <Text style={styles.name}>{name}</Text>
                     <Text style={styles.position}>{manager!=="1"&&'Sales Representative'}</Text>
                 </View>
-                {/* :
-                    <LoaderTwo loader={loader} />} */}
+                    <LoaderTwo loader={loader} />
                 <View style={styles.line}></View>
                 {
                     stackArray.map((item, index) => {
