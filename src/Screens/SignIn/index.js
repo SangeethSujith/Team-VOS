@@ -54,16 +54,16 @@ const SignIn = ({ navigation }) => {
     };
 
     axios(config)
-      .then(function (response) {
+      .then(async function (response) {
         console.log(JSON.stringify(response));
         if (response.data.Status == 1) {
+          await AsyncStorage.setItem('User_Data', JSON.stringify(response.data));
           console.log(response.data.Userid);
-          AsyncStorage.setItem('User_Data', JSON.stringify(response.data));
           const user = {
             isLoggedIn: true,
             userData: response.data
           };
-          dispatch(setSignIn(user));
+          await dispatch(setSignIn(user));
           setLoader(false);
           navigation.navigate('Home')
         }
