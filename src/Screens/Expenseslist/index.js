@@ -31,10 +31,6 @@ const Expenseslist = ({ navigation }) => {
     axios.post(`${BASE_URL}/${ROUTES}`,
       qs.stringify(body)).then(async (response) => {
         setloader(false)
-        //await setstate1(response.data.routes.new)
-        //console.log(response.data.routes.new);
-        // AsyncStorage.setItem('Routes', JSON.stringify(response.data.routes.new));
-
         return {
           response: response.data
         };
@@ -64,31 +60,7 @@ const Expenseslist = ({ navigation }) => {
         console.log(err)
       });
   }
-  const [state, setstate] = useState({
-    data: [{ id: 1, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut , hjfhkerh', visited: true },
-    { id: 2, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 3, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut ,hkdfghgbved', visited: true },
-    { id: 4, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 5, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 6, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 7, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 8, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 9, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 10, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 11, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 12, name: 'Kalpetta ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 13, name: 'Kannur ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 14, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true },
-    { id: 15, name: 'Elaj ayrvedic clinic', date: '12/20/2022', address: 'Hospital_Cr', place: 'Calicut', visited: true }]
-  })
-  // const ListFooter = () => {
-  //   //View to set in Footer
-  //   return (
-  //     <View >
-  //       <Text style={styles.textStyle}>This is Footer</Text>
-  //     </View>
-  //   );
-  // };
+ 
   return (
     <View style={styles.container}>
       <CustomHeaderTwo
@@ -116,13 +88,10 @@ const Expenseslist = ({ navigation }) => {
                       source={require('../../Assets/Images/accounting.png')}>
                     </Image>
                     <View style={{ width: '75%' }}>
-                      {/* <Text style={styles.text}>{'Work with ASN kalpetta'}</Text> */}
                       <Text style={styles.text3}>{item.date}</Text>
                       <Text style={styles.text2}>{item.total}</Text>
                     </View>
-                    {/* <Text style={styles.text4}>{'Synced'}</Text> */}
                   </View>
-                  {/*<View style={styles.line}/>*/}
                 </TouchableOpacity>
               )
             }}
