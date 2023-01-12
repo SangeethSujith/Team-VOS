@@ -84,8 +84,6 @@ const CallDetails = ({ navigation, route }) => {
 
   const PostSave = async () => {
     console.log('inside')
-    const Route = await AsyncStorage.getItem('Routes');
-    let route = JSON.parse(Route)
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     let posts = {
@@ -97,7 +95,7 @@ const CallDetails = ({ navigation, route }) => {
       products_prescribed: input.pProdct,
       order_booked: input.orderAmount,
       // Now defaulted today's date but need to fix this in the api
-      date:moment().format("YYYY-MM-DD"),
+      date:param==''?moment().format("YYYY-MM-DD"):param.route_date,
       complaints: input.complaints,
       information_conveyed: input.informtn,
       collection: input.collection,
@@ -105,7 +103,7 @@ const CallDetails = ({ navigation, route }) => {
       remarks: input.remarks
 
     }
-    console.log(posts,'the data')
+    console.log('the data',posts)
     setloader(true);
 
     axios.post(`https://ayurwarecrm.com/teamvos-new/ajax/save_call`, qs.stringify(posts)).then(async (response) => {

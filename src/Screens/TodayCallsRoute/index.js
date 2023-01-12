@@ -36,7 +36,7 @@ const TodayCallsRoute = ({ navigation,route }) => {
     axios.post(`https://ayurwarecrm.com/teamvos-new/ajax/get_calls_update_with_route`,
       qs.stringify(body)).then(async (response) => {
         await setstate1(response.data.calls.new)
-        console.log(response.data,'data');
+        console.log(response.data.calls.new,'data');
         setloader(false)
         return {
           response: response.data
