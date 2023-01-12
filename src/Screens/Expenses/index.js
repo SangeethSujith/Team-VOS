@@ -321,7 +321,7 @@ const Expenses = ({navigation, route}) => {
       travel_type: input.type,
       ta_bus: input.fare,
       ta_bike_km: datetotalkm == '' && input.type == 'Bike' ? '0' : datetotalkm,
-      ta_bike_amount: input.bikeexp,
+      ta_bike_amount: '00',
       lodge: input.lodge,
       courier: input.courier,
       sundries: input.sundries,
@@ -335,7 +335,6 @@ const Expenses = ({navigation, route}) => {
                 parseFloat(input.courier, 10) +
                 parseFloat(input.lodge, 10) +
                 parseFloat(input.sundries, 10) +
-                parseFloat(input.bikeexp, 10) +
                 parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
                 parseFloat(input.addtnl * 2.9) +
                 parseFloat(input.Custmr_Hq * 2.9, 10),
@@ -346,7 +345,6 @@ const Expenses = ({navigation, route}) => {
                 parseFloat(input.courier, 10) +
                 parseFloat(input.lodge, 10) +
                 parseFloat(input.sundries, 10) +
-                parseFloat(input.bikeexp, 10) +
                 parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
                 parseFloat(input.addtnl * 2.75, 10) +
                 parseFloat(input.Custmr_Hq * 2.75, 10),
@@ -612,19 +610,6 @@ const Expenses = ({navigation, route}) => {
                 />
                 <CustomInput
                   type="text"
-                  label="Bike Expenses"
-                  labelBG="white"
-                  placeholderText="Enter 0 if No Value"
-                  placeholderTextColor="#ff0000"
-                  value={input.bikeexp}
-                  onChangeText={text => {
-                    setinput({...input, bikeexp: text});
-                  }}
-                  keyboardType="numeric"
-                  //iconname='location'
-                />
-                <CustomInput
-                  type="text"
                   keyboardType="numeric"
                   label="Additional KM"
                   labelBG="white"
@@ -647,6 +632,29 @@ const Expenses = ({navigation, route}) => {
                   onChangeText={text => {
                     setinput({...input, Custmr_Hq: text});
                   }}
+                  //iconname='location'
+                />
+                <CustomInput
+                  type="text"
+                  label="Bike Expenses"
+                  labelBG="white"
+                  editable={false}
+                  placeholderText="Enter 0 if No Value"
+                  placeholderTextColor="#ff0000"
+                  value={
+                    isksk == 'ISK'
+                  ? JSON.stringify(
+                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
+                        parseFloat(input.addtnl * 2.9, 10) +
+                        parseFloat(input.Custmr_Hq * 2.9, 10),
+                    )
+                  : JSON.stringify(
+                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
+                        parseFloat(input.addtnl * 2.75, 10) +
+                        parseFloat(input.Custmr_Hq * 2.75, 10),
+                    )
+                  }
+                  keyboardType="numeric"
                   //iconname='location'
                 />
               </View>
@@ -717,7 +725,6 @@ const Expenses = ({navigation, route}) => {
                         parseFloat(input.courier, 10) +
                         parseFloat(input.lodge, 10) +
                         parseFloat(input.sundries, 10) +
-                        parseFloat(input.bikeexp, 10) +
                         parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
                         parseFloat(input.addtnl * 2.9, 10) +
                         parseFloat(input.Custmr_Hq * 2.9, 10),
@@ -728,7 +735,6 @@ const Expenses = ({navigation, route}) => {
                         parseFloat(input.courier, 10) +
                         parseFloat(input.lodge, 10) +
                         parseFloat(input.sundries, 10) +
-                        parseFloat(input.bikeexp, 10) +
                         parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
                         parseFloat(input.addtnl * 2.75, 10) +
                         parseFloat(input.Custmr_Hq * 2.75, 10),
