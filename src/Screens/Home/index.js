@@ -5,6 +5,7 @@ import { CustomHeader } from '../../Components/CustomHeader';
 import { DrawerActions } from '@react-navigation/native';
 import { CustomPlusbutton } from '../../Components/CustomPlusbutton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomDrawerContent from '../../Components/CustomDrawer';
 
 const Home = ({ navigation }) => {
   const [name, setname] = useState('......')

@@ -111,6 +111,15 @@ function MainSectionStack({ navigation }) {
                         close: config,
                     },
                 })} />}
+ <MainStackCreator.Screen name="SignInNew" component={SignIn}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
+
             <MainStackCreator.Screen name="Home" component={Home}
                 options={(props) => ({
                     header: () => null,

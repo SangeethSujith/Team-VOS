@@ -8,6 +8,7 @@ import {
     StyleSheet,
     Text,
     Image,
+    Alert,
     TouchableOpacity
 } from 'react-native';
 import {
@@ -28,24 +29,38 @@ import { LOGIN } from '../Apis/SecondApi';
 import { setSignIn, setSignOut } from '../redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { DrawerActions } from '@react-navigation/native';
 
 export default function CustomDrawerContent(props) {
     const dispatch = useDispatch();
     const [name, setname] = useState('')
     const [loader, setloader] = useState(false);
     const [manager,setmanager]=useState('1');
-    useEffect(() => {
-        const getName = async () => {
-            setloader(true)
-            const userData = await AsyncStorage.getItem('User_Data');
-            let Data = await JSON.parse(userData)
-            console.log('data from drawer',Data)
-            await setname(Data.Name)
-            await setmanager(Data.isManager)
-            setloader(false)
-        }
+    useEffect(() =>  {
         getName();
-    }, []);
+    }, [props]);
+
+    const getName = async () => {
+        const userData = await AsyncStorage.getItem('User_Data');
+        if(userData){
+        // setloader(true)
+        let Data = await JSON.parse(userData)
+        console.log('data from drawer',Data)
+        await setname(Data.Name)
+        await setmanager(Data.isManager)
+        // setloader(false)
+        }
+    }
+     const LogoutClear = async() => {
+        await AsyncStorage.clear()
+        props.navigation.dispatch(DrawerActions.closeDrawer())
+        // props.navigation.navigate('SignInNew')
+        props.navigation.reset({
+            index: 0,
+            routes: [{name: 'SignInNew'}],
+          });
+     }
+    
     const handleLogout = async (navigation) => {
         const user = {
             Status: ''
@@ -188,14 +203,16 @@ export default function CustomDrawerContent(props) {
                                         <Text style={[styles.drawerLabel, { color: COLORS.gray_200 }]}>{item.label}</Text>
                                     }
                                     onPress={() =>
-                                        item.function ? handleLogout() && props.navigation.navigate(item.stack,
-                                            item.screen && {
-                                                screen: item.screen,
-                                                params: {
-                                                    statusBarIdenti: item.params ? item.params : ''
-                                                }
-                                            }
-                                        ) : null
+                                      
+                                        LogoutClear()
+                                        // item.function ? handleLogout() && props.navigation.navigate(item.stack,
+                                        //     item.screen && {
+                                        //         screen: item.screen,
+                                        //         params: {
+                                        //             statusBarIdenti: item.params ? item.params : ''
+                                        //         }
+                                        //     }
+                                        // ) : null
                                     }
                                     // onPress={() =>
                                     //     item.function ? LogOut() : null
