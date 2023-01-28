@@ -43,14 +43,14 @@ const ItemsNCustomers = ({ navigation, route }) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [isPickerShow2, setIsPickerShow2] = useState(false);
   const [PickerVisible, setPickerVisible] = useState(false);
-  const onDateSelected1 = (event, value) => {
-    setDate1(value);
-    setvalue2(moment(date1).format('DD-MM-YYYY'))
+  const onDateSelected1 = async(event, value) => {
+    await setDate1(value);
+    await setvalue2(moment(date1).format('DD-MM-YYYY'))
     setIsPickerShow(false)
   };
-  function onDateSelected2(event, value) {
-    setDate2(value);
-    setvalue1(moment(date2).format('DD-MM-YYYY'))
+  async function onDateSelected2(event, value) {
+    await setDate2(value);
+    await setvalue1(moment(date2).format('DD-MM-YYYY'))
     setIsPickerShow2(false)
   };
   function datefilter() {
@@ -77,7 +77,7 @@ const ItemsNCustomers = ({ navigation, route }) => {
     axios.get(`${API_URL}/${NOT_PURCHASED}?FromDate=${value2}&ToDate=${value1}&CustomerCode=${param}`,
       headers).then(async (response) => {
         await setstate(response.data.Data)
-        setFilteredDataSource(response.data.Data)
+        await setFilteredDataSource(response.data.Data)
         await Counter(response.data.Data);
         setloader(false)
         return {
@@ -90,7 +90,7 @@ const ItemsNCustomers = ({ navigation, route }) => {
   const [search,setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState('');
   // const [masterDataSource, setMasterDataSource] = useState(state);
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = async(text) => {
     // Check if searched text is not blank
     if (text) {
       // Inserted text is not blank
@@ -104,14 +104,14 @@ const ItemsNCustomers = ({ navigation, route }) => {
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
       });
-      setFilteredDataSource(newData);
-      setSearch(text);
+      await setFilteredDataSource(newData);
+      await setSearch(text);
     } else {
       // Inserted text is blank
       // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(state);
+      await setFilteredDataSource(state);
       // console.log(filteredDataSource);
-      setSearch(text);
+      await setSearch(text);
     }
   };
   //   async function InvoiceDetails(item) {

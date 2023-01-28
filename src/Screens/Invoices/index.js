@@ -40,17 +40,17 @@ const Invoices = ({ navigation, route }) => {
   //   setvalue1(value);
   //   setDatePicker(false);
   // };
-  const onDateSelected1 = (event, value) => {
-    setDate1(value);
-    setvalue2(moment(date1).format('DD-MM-YYYY'))
+  const onDateSelected1 = async(event, value) => {
+    await setDate1(value);
+    await setvalue2(moment(date1).format('DD-MM-YYYY'))
     setIsPickerShow(false)
   };
-  function onDateSelected2(event, value) {
-    setDate2(value);
-    setvalue1(moment(date2).format('DD-MM-YYYY'))
+  async function onDateSelected2(event, value) {
+    await setDate2(value);
+    await setvalue1(moment(date2).format('DD-MM-YYYY'))
     setIsPickerShow2(false)
   };
-  function datefilter() {
+  async function datefilter() {
     setstate('')
     getInvoices()
     // console.log("30 days before" + date)
@@ -106,7 +106,7 @@ const Invoices = ({ navigation, route }) => {
       headers).then(async (response) => {
         setloader(false)
         await setstate(response.data.Data)
-        setFilteredDataSource(response.data.Data);
+        await setFilteredDataSource(response.data.Data);
         console.log(response.data.Data);
         return {
           response: response.data
