@@ -148,8 +148,8 @@ export const CustomInput = (props) => {
               itemStyle={{ color: COLORS.primary_black, fontSize: SIZES.medium }}
               onValueChange={ValueChange}
             >
-              <Picker.Item label={label1} value="Bus" />
-              <Picker.Item label={label2} value="Bike" />
+              <Picker.Item label={label1} value="Bike" />
+              <Picker.Item label={label2} value="Bus" />
               <Picker.Item label={label3} value="Train" />
             </Picker>
           </View>

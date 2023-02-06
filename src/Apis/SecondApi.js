@@ -26,4 +26,5 @@ module.exports = {
     SET_TASK_STATUS:'ajax/set_task_status',
     GET_ROUTE_REPORT:'ajax/route_report_list',
     ROUTE_REPORT_DETAILS:'ajax/get_route_report_details',
+    MANAGER_KM:'ajax/get_total_kilometers_for_manager',
 };

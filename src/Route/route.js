@@ -54,6 +54,7 @@ import Submit from '../Screens/SampleIssue/Submit';
 import RouteReport from '../Screens/RouteReport';
 import RouteReportList from '../Screens/RouteReportList';
 import RouteReportDetails from '../Screens/RouteReportDetails';
+import ExpenseDetails from '../Screens/ExpenseDetails';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { useSelector } from 'react-redux';
@@ -504,7 +505,14 @@ function MainSectionStack({ navigation }) {
                         close: config,
                     },
                 })} />
-
+                <MainStackCreator.Screen name="ExpenseDetails" component={ExpenseDetails}
+                options={(props) => ({
+                    header: () => null,
+                    transitionSpec: {
+                        open: config,
+                        close: config,
+                    },
+                })} />
 
         </MainStackCreator.Navigator>
     )

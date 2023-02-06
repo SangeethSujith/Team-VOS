@@ -29,7 +29,7 @@ const Routes = ({ navigation }) => {
       qs.stringify(body)).then(async (response) => {
         setloader(false)
         await setstate1(response.data.routes)
-        console.log(response.data.routes);
+        // console.log(response.data.routes);
         return {
           response: response.data
         };

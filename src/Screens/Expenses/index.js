@@ -20,7 +20,7 @@ import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import {SAVE_EXP, BASE_URL, ROUTES, TOTAL_KM} from '../../Apis/SecondApi';
+import {SAVE_EXP, BASE_URL, ROUTES, TOTAL_KM,MANAGER_KM} from '../../Apis/SecondApi';
 import {LoaderTwo, LoaderThree} from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
@@ -42,6 +42,7 @@ const Expenses = ({navigation, route}) => {
   const [datetotalkm, setdatetotalkm] = useState('');
   const [loader, setloader] = useState(false);
   const [isksk, setisksk] = useState('');
+  const [isManager, setisManager] = useState('0')
   const [maxlodge, setmaxlodge] = useState('');
   useEffect(() => {
     getRoutes();
@@ -51,7 +52,7 @@ const Expenses = ({navigation, route}) => {
       const userData = await AsyncStorage.getItem('User_Data');
       let Data = JSON.parse(userData);
       setisksk(Data.IsISKOSK);
-      console.log(isksk);
+      setisManager(Data.isManager)
     }
   }, []);
   const HQ = async () => {
@@ -239,6 +240,33 @@ const Expenses = ({navigation, route}) => {
       setIsPickerShow(false);
     }
   };
+  async function getKM(){
+      let body3={
+        route_id: value,
+        date: moment(date).format('YYYY-MM-DD'),
+      }
+    
+    if(isManager==="1"){
+      console.log('ismanager is now 1')
+      axios
+      .post(`${BASE_URL}/${MANAGER_KM}`, qs.stringify(body3))
+      .then(async response => {
+        if(response.data.report.distance==null){
+          setdatetotalkm('0')
+        }
+        else{
+        await setdatetotalkm(response.data.report.distance);
+        console.log('datetotalkm for manager', datetotalkm)
+        }
+        return {
+          response: response.data,
+        };
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+  }
   async function getRoutes() {
     setloader(true);
     OS();
@@ -252,15 +280,19 @@ const Expenses = ({navigation, route}) => {
       user_id: Data.Userid,
       date: moment(date).format('YYYY-MM-DD'),
     };
+    
+    if(isManager=="0")
+      {
+        console.log('ismanager is now 0')
     axios
       .post(`${BASE_URL}/${TOTAL_KM}`, qs.stringify(body2))
       .then(async response => {
         if(response.data.report.distance==null){
           setdatetotalkm('0')
-          console.log(datetotalkm,'inside if')
         }
         else{
         await setdatetotalkm(response.data.report.distance);
+        console.log('datetotalkm for not manager', datetotalkm)
         }
         return {
           response: response.data,
@@ -269,6 +301,7 @@ const Expenses = ({navigation, route}) => {
       .catch(err => {
         console.log(err);
       });
+    }
     axios
       .post(`${BASE_URL}/${ROUTES}`, qs.stringify(body))
       .then(async response => {
@@ -295,7 +328,7 @@ const Expenses = ({navigation, route}) => {
     town: param !== '' ? param.town_visited : '',
     da: param !== '' ? param.da : ' ',
     kilomtr: param !== '' ? param.tabike_km : '0',
-    type: 'Bus',
+    type: 'Bike',
     fare: param !== '' ? param.ta_bus : '0',
     bikeexp: param !== '' ? param.ta_bike_amount : '0',
     addtnl: param !== '' ? param.additional_km : '0',
@@ -313,7 +346,7 @@ const Expenses = ({navigation, route}) => {
     let posts = {
       user_id: Data.Userid,
       date: moment(date).format('YYYY-MM-DD'),
-      expense_type: isSelected ? 'Route' : isSelected ? 'Meeting' : 'Task',
+      expense_type: isSelected ? 'Route' : isSelected2 ? 'Meeting' : 'Task',
       route_id: value,
       town_visited: input.town,
       da: input.da,
@@ -478,6 +511,8 @@ const Expenses = ({navigation, route}) => {
                   setOpen={setOpen}
                   setValue={setValue}
                   setItems={setItems}
+                  onChangeValue={()=>getKM()}
+                  onSelectItem={()=>getKM()}
                   listMode="MODAL"
                   modalProps={{
                     animationType: 'fade',
@@ -567,8 +602,8 @@ const Expenses = ({navigation, route}) => {
               label="Select Travel Type"
               labelBG="white"
               placeholderText=" "
-              label1="Bus"
-              label2="Bike"
+              label1="Bike"
+              label2="Bus"
               label3="Train"
               selectedvalue={input.type}
               ValueChange={(itemValue, itemIndex) =>

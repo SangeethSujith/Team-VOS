@@ -81,7 +81,7 @@ const Expenseslist = ({ navigation }) => {
             }}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate('Expenses', { param: item })}>
+                <TouchableOpacity onPress={() => navigation.navigate('ExpenseDetails', { param: item })}>
                   <View style={styles.card}>
                     <Image
                       style={{ width: '15%', height: '100%', resizeMode: 'contain', alignSelf: 'center', opacity: .5, borderColor: COLORS.primary, borderWidth: 1 }}

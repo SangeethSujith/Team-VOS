@@ -115,7 +115,7 @@ const CallDetails = ({ navigation, route }) => {
             {
               text: "Ok",
               cancelable: true,
-              onPress: () => navigation.navigate('Home'),
+              onPress: () => navigation.navigate('Routes'),
               style: "cancel",
             }],
         );

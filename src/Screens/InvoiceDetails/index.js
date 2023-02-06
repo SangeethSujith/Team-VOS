@@ -20,7 +20,7 @@ const InvoiceDetails = ({ navigation, route }) => {
   async function InvoiceDetails() {
     const token = await AsyncStorage.getItem('userToken');
     setloader(true)
-    // console.log(id.ID)
+    
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -31,7 +31,7 @@ const InvoiceDetails = ({ navigation, route }) => {
         await setdetails(response.data.Data)
         await setDetailsF(response.data.Data.SalesInvoiceTrans)
         // console.log(response.data.Data);
-        console.log(details.SalesInvoiceTrans[0]);
+        // console.log(details.SalesInvoiceTrans[0]);
         setloader(false)
         //console.log(JSON.stringify(id));
         return {

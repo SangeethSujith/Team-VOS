@@ -6,6 +6,7 @@ import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import { CustomPlusbutton } from '../../Components/CustomPlusbutton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoaderOne, LoaderTwo } from '../../Components/Loader';
+import { useIsFocused } from "@react-navigation/native";
 import qs from 'qs';
 import axios from 'axios';
 import { BASE_URL, CALLS } from '../../Apis/SecondApi';
@@ -16,10 +17,14 @@ const TodayCallsRoute = ({ navigation,route }) => {
 
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
+  const isFocused = useIsFocused();
   const { param } = route.params;
   useEffect(() => {
     getCalls()
-  }, []);
+    if(isFocused){ 
+      getCalls();
+  }
+  }, [isFocused]);
 
   async function getCalls() {
     setloader(true);
@@ -62,7 +67,7 @@ const TodayCallsRoute = ({ navigation,route }) => {
             keyExtractor={(item,index) => index }
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate('CallDetails', { param: item })}>
+                <TouchableOpacity onPress={() => navigation.navigate('CallDetails', { param: item, param2:param })}>
                   <View style={styles.card}>
                     <Icon
                       name={"phone"}
