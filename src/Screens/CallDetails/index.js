@@ -18,7 +18,7 @@ import qs from 'qs';
 import { Validate } from '../../Components/ValidateInput';
 
 const CallDetails = ({ navigation, route }) => {
-  const { param } = route.params;
+  const { param, param2 } = route.params;
   const [state, setstate] = useState('')
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
@@ -115,7 +115,7 @@ const CallDetails = ({ navigation, route }) => {
             {
               text: "Ok",
               cancelable: true,
-              onPress: () => navigation.navigate('Routes'),
+              onPress: () => navigation.navigate('TodayCallsRoute',{param:param2}),
               style: "cancel",
             }],
         );
