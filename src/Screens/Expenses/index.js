@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,31 +8,31 @@ import {
   Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {Icon, icoMoonConfigSet} from '../../Styles/icons';
-import {COLORS, Fonts, SIZES} from '../../Styles/theme';
-import {CustomHeaderTwo} from '../../Components/CustomHeaderTwo';
-import {CustomInput} from '../../Components/CustomInput';
-import {CustomButton} from '../../Components/CustomButton';
-import {CustomButtonTwo} from '../../Components/CustomButtonTwo';
+import { Icon, icoMoonConfigSet } from '../../Styles/icons';
+import { COLORS, Fonts, SIZES } from '../../Styles/theme';
+import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
+import { CustomInput } from '../../Components/CustomInput';
+import { CustomButton } from '../../Components/CustomButton';
+import { CustomButtonTwo } from '../../Components/CustomButtonTwo';
 import LinearGradient from 'react-native-linear-gradient';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import {SAVE_EXP, BASE_URL, ROUTES, TOTAL_KM,MANAGER_KM} from '../../Apis/SecondApi';
-import {LoaderTwo, LoaderThree} from '../../Components/Loader';
+import { SAVE_EXP, BASE_URL, ROUTES, TOTAL_KM, MANAGER_KM } from '../../Apis/SecondApi';
+import { LoaderTwo, LoaderThree } from '../../Components/Loader';
 import axios from 'axios';
 import qs from 'qs';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const Expenses = ({navigation, route}) => {
-  const {param} = route.params;
+const Expenses = ({ navigation, route }) => {
+  const { param } = route.params;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
   ]);
   const [state, setstate] = useState('');
   const [date, setDate] = useState(
@@ -61,50 +61,50 @@ const Expenses = ({navigation, route}) => {
     switch (Data.role) {
       case 'FSO': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '175'});
+          setinput({ ...input, da: '175' });
           setmaxlodge('Lodge (max 1000)');
         } else {
-          setinput({...input, da: '175'});
+          setinput({ ...input, da: '175' });
           setmaxlodge('Lodge (max 1000)');
         }
         break;
       }
       case 'ASM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '200'});
+          setinput({ ...input, da: '200' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '200'});
+          setinput({ ...input, da: '200' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'ZSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '200'});
+          setinput({ ...input, da: '200' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '200'});
+          setinput({ ...input, da: '200' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'RSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '225'});
+          setinput({ ...input, da: '225' });
           setmaxlodge('Lodge (max 1500)');
         } else {
-          setinput({...input, da: '250'});
+          setinput({ ...input, da: '250' });
           setmaxlodge('Lodge (max 1750)');
         }
         break;
       }
       case 'SM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '300'});
+          setinput({ ...input, da: '300' });
           setmaxlodge('Lodge (max 2000)');
         } else {
-          setinput({...input, da: '300'});
+          setinput({ ...input, da: '300' });
           setmaxlodge('Lodge (max 2000)');
         }
         break;
@@ -117,50 +117,50 @@ const Expenses = ({navigation, route}) => {
     switch (Data.role) {
       case 'FSO': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '200'});
+          setinput({ ...input, da: '200' });
           setmaxlodge('Lodge (max 1000)');
         } else {
-          setinput({...input, da: '225'});
+          setinput({ ...input, da: '225' });
           setmaxlodge('Lodge (max 1000)');
         }
         break;
       }
       case 'ASM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '225'});
+          setinput({ ...input, da: '225' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '250'});
+          setinput({ ...input, da: '250' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'ZSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '225'});
+          setinput({ ...input, da: '225' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '250'});
+          setinput({ ...input, da: '250' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'RSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '275'});
+          setinput({ ...input, da: '275' });
           setmaxlodge('Lodge (max 1500)');
         } else {
-          setinput({...input, da: '300'});
+          setinput({ ...input, da: '300' });
           setmaxlodge('Lodge (max 1750');
         }
         break;
       }
       case 'SM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '350'});
+          setinput({ ...input, da: '350' });
           setmaxlodge('Lodge (max 2000)');
         } else {
-          setinput({...input, da: '350'});
+          setinput({ ...input, da: '350' });
           setmaxlodge('Lodge (max 2000)');
         }
         break;
@@ -173,50 +173,50 @@ const Expenses = ({navigation, route}) => {
     switch (Data.role) {
       case 'FSO': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '250'});
+          setinput({ ...input, da: '250' });
           setmaxlodge('Lodge (max 1000)');
         } else {
-          setinput({...input, da: '275'});
+          setinput({ ...input, da: '275' });
           setmaxlodge('Lodge (max 1000)');
         }
         break;
       }
       case 'ASM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '325'});
+          setinput({ ...input, da: '325' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '300'});
+          setinput({ ...input, da: '300' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'ZSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '325'});
+          setinput({ ...input, da: '325' });
           setmaxlodge('Lodge (max 1250)');
         } else {
-          setinput({...input, da: '300'});
+          setinput({ ...input, da: '300' });
           setmaxlodge('Lodge (max 1250)');
         }
         break;
       }
       case 'RSM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '375'});
+          setinput({ ...input, da: '375' });
           setmaxlodge('Lodge (max 1500)');
         } else {
-          setinput({...input, da: '350'});
+          setinput({ ...input, da: '350' });
           setmaxlodge('Lodge (max 1750)');
         }
         break;
       }
       case 'SM': {
         if (isksk == 'ISK') {
-          setinput({...input, da: '400'});
+          setinput({ ...input, da: '400' });
           setmaxlodge('Lodge (max 2000)');
         } else {
-          setinput({...input, da: '400'});
+          setinput({ ...input, da: '400' });
           setmaxlodge('Lodge (max 2000)');
         }
         break;
@@ -240,31 +240,31 @@ const Expenses = ({navigation, route}) => {
       setIsPickerShow(false);
     }
   };
-  async function getKM(){
-      let body3={
-        route_id: value,
-        date: moment(date).format('YYYY-MM-DD'),
-      }
-    
-    if(isManager==="1"){
+  async function getKM() {
+    let body3 = {
+      route_id: value,
+      date: moment(date).format('YYYY-MM-DD'),
+    }
+
+    if (isManager === "1") {
       console.log('ismanager is now 1')
       axios
-      .post(`${BASE_URL}/${MANAGER_KM}`, qs.stringify(body3))
-      .then(async response => {
-        if(response.data.report.distance==null){
-          setdatetotalkm('0')
-        }
-        else{
-        await setdatetotalkm(response.data.report.distance);
-        console.log('datetotalkm for manager', datetotalkm)
-        }
-        return {
-          response: response.data,
-        };
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        .post(`${BASE_URL}/${MANAGER_KM}`, qs.stringify(body3))
+        .then(async response => {
+          if (response.data.report.distance == null) {
+            setdatetotalkm('0')
+          }
+          else {
+            await setdatetotalkm(response.data.report.distance);
+            console.log('datetotalkm for manager', datetotalkm)
+          }
+          return {
+            response: response.data,
+          };
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
   async function getRoutes() {
@@ -280,27 +280,26 @@ const Expenses = ({navigation, route}) => {
       user_id: Data.Userid,
       date: moment(date).format('YYYY-MM-DD'),
     };
-    
-    if(isManager=="0")
-      {
-        console.log('ismanager is now 0')
-    axios
-      .post(`${BASE_URL}/${TOTAL_KM}`, qs.stringify(body2))
-      .then(async response => {
-        if(response.data.report.distance==null){
-          setdatetotalkm('0')
-        }
-        else{
-        await setdatetotalkm(response.data.report.distance);
-        console.log('datetotalkm for not manager', datetotalkm)
-        }
-        return {
-          response: response.data,
-        };
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+    if (isManager == "0") {
+      console.log('ismanager is now 0')
+      axios
+        .post(`${BASE_URL}/${TOTAL_KM}`, qs.stringify(body2))
+        .then(async response => {
+          if (response.data.report.distance == null) {
+            setdatetotalkm('0')
+          }
+          else {
+            await setdatetotalkm(response.data.report.distance);
+            console.log('datetotalkm for not manager', datetotalkm)
+          }
+          return {
+            response: response.data,
+          };
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     axios
       .post(`${BASE_URL}/${ROUTES}`, qs.stringify(body))
@@ -354,7 +353,17 @@ const Expenses = ({navigation, route}) => {
       travel_type: input.type,
       ta_bus: input.fare,
       ta_bike_km: datetotalkm == '' && input.type == 'Bike' ? '0' : datetotalkm,
-      ta_bike_amount: '00',
+      ta_bike_amount: isksk == 'ISK'
+        ? JSON.stringify(
+          parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
+          parseFloat(input.addtnl * 2.9, 10) +
+          parseFloat(input.Custmr_Hq * 2.9, 10),
+        )
+        : JSON.stringify(
+          parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
+          parseFloat(input.addtnl * 2.75, 10) +
+          parseFloat(input.Custmr_Hq * 2.75, 10),
+        ),
       lodge: input.lodge,
       courier: input.courier,
       sundries: input.sundries,
@@ -363,25 +372,25 @@ const Expenses = ({navigation, route}) => {
       total:
         isksk == 'ISK'
           ? JSON.stringify(
-              parseFloat(input.da) +
-                parseFloat(input.fare, 10) +
-                parseFloat(input.courier, 10) +
-                parseFloat(input.lodge, 10) +
-                parseFloat(input.sundries, 10) +
-                parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
-                parseFloat(input.addtnl * 2.9) +
-                parseFloat(input.Custmr_Hq * 2.9, 10),
-            )
+            parseFloat(input.da) +
+            parseFloat(input.fare, 10) +
+            parseFloat(input.courier, 10) +
+            parseFloat(input.lodge, 10) +
+            parseFloat(input.sundries, 10) +
+            parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
+            parseFloat(input.addtnl * 2.9) +
+            parseFloat(input.Custmr_Hq * 2.9, 10),
+          )
           : JSON.stringify(
-              parseFloat(input.da, 10) +
-                parseFloat(input.fare, 10) +
-                parseFloat(input.courier, 10) +
-                parseFloat(input.lodge, 10) +
-                parseFloat(input.sundries, 10) +
-                parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
-                parseFloat(input.addtnl * 2.75, 10) +
-                parseFloat(input.Custmr_Hq * 2.75, 10),
-            ),
+            parseFloat(input.da, 10) +
+            parseFloat(input.fare, 10) +
+            parseFloat(input.courier, 10) +
+            parseFloat(input.lodge, 10) +
+            parseFloat(input.sundries, 10) +
+            parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
+            parseFloat(input.addtnl * 2.75, 10) +
+            parseFloat(input.Custmr_Hq * 2.75, 10),
+          ),
       created_date: moment().format('YYYY-MM-DD'),
       modified_date: moment().format('YYYY-MM-DD'),
       status: 'Saved',
@@ -422,7 +431,7 @@ const Expenses = ({navigation, route}) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         behavior={'position'}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         enableOnAndroid={Platform.OS === 'android'}
         enableAutomaticScroll={true}>
         <CustomHeaderTwo
@@ -430,7 +439,7 @@ const Expenses = ({navigation, route}) => {
           onpress={() => navigation.goBack()}
         />
         {state !== '' ? (
-          <View style={{marginHorizontal: 25, marginTop: 20, marginBottom: 60}}>
+          <View style={{ marginHorizontal: 25, marginTop: 20, marginBottom: 60 }}>
             <Text style={styles.text2}>{'Expense Type'}</Text>
             <View style={styles.checkboxrow}>
               <View style={styles.row}>
@@ -476,9 +485,9 @@ const Expenses = ({navigation, route}) => {
               labelBG="white"
               onPressdate={() => setIsPickerShow(true)}
               value={moment(date).format('YYYY-MM-DD')}
-              //datePicker={true}
-              //icon={true}
-              //iconname='location'
+            //datePicker={true}
+            //icon={true}
+            //iconname='location'
             />
             {isPickerShow && (
               <DateTimePicker
@@ -491,60 +500,60 @@ const Expenses = ({navigation, route}) => {
             )}
             {isSelected == true ? (
               <>
-              <View style={styles.custom}>
-                <View
-                  style={[styles.labelContainer, {backgroundColor: '#fff'}]}>
-                  <Text
-                    style={[
-                      styles.label,
-                      {
-                        color: COLORS.primary,
-                      },
-                    ]}>
-                    Routes
-                  </Text>
+                <View style={styles.custom}>
+                  <View
+                    style={[styles.labelContainer, { backgroundColor: '#fff' }]}>
+                    <Text
+                      style={[
+                        styles.label,
+                        {
+                          color: COLORS.primary,
+                        },
+                      ]}>
+                      Routes
+                    </Text>
+                  </View>
+                  <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={state}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    onChangeValue={() => getKM()}
+                    onSelectItem={() => getKM()}
+                    listMode="MODAL"
+                    modalProps={{
+                      animationType: 'fade',
+                    }}
+                    placeholderStyle={{
+                      color: '#ff0000',
+                      fontSize: SIZES.medium,
+                      fontFamily: Fonts.font_400,
+                    }}
+                    dropDownContainerStyle={{
+                      backgroundColor: '#fff',
+                      borderColor: '#fff',
+                    }}
+                    style={{ borderColor: '#fff' }}
+                  />
                 </View>
-                <DropDownPicker
-                  open={open}
-                  value={value}
-                  items={state}
-                  setOpen={setOpen}
-                  setValue={setValue}
-                  setItems={setItems}
-                  onChangeValue={()=>getKM()}
-                  onSelectItem={()=>getKM()}
-                  listMode="MODAL"
-                  modalProps={{
-                    animationType: 'fade',
+                <CustomInput
+                  type="text"
+                  label="Town Visited"
+                  labelBG="white"
+                  placeholderText="Enter Town Visited"
+                  placeholderTextColor="#ff0000"
+                  value={input.town}
+                  onChangeText={text => {
+                    setinput({ ...input, town: text });
                   }}
-                  placeholderStyle={{
-                    color: '#ff0000',
-                    fontSize: SIZES.medium,
-                    fontFamily: Fonts.font_400,
-                  }}
-                  dropDownContainerStyle={{
-                    backgroundColor: '#fff',
-                    borderColor: '#fff',
-                  }}
-                  style={{borderColor: '#fff'}}
                 />
-              </View>
-              <CustomInput
-              type="text"
-              label="Town Visited"
-              labelBG="white"
-              placeholderText="Enter Town Visited"
-              placeholderTextColor="#ff0000"
-              value={input.town}
-              onChangeText={text => {
-                setinput({...input, town: text});
-              }}
-            />
-            </>
+              </>
             ) : (
               <></>
             )}
-            
+
             <Text style={styles.text2}>{'DA'}</Text>
             <View style={styles.checkboxrow}>
               <View style={styles.row}>
@@ -595,7 +604,7 @@ const Expenses = ({navigation, route}) => {
               value={input.da}
               editable={false}
 
-              //iconname='location'
+            //iconname='location'
             />
             <CustomInput
               type="dropdown"
@@ -607,11 +616,11 @@ const Expenses = ({navigation, route}) => {
               label3="Train"
               selectedvalue={input.type}
               ValueChange={(itemValue, itemIndex) =>
-                setinput({...input, type: itemValue})
+                setinput({ ...input, type: itemValue })
               }
               keyboardType="numeric"
-              //icon={true}
-              //iconname='location'
+            //icon={true}
+            //iconname='location'
             />
             {input.type !== 'Bike' && (
               <CustomInput
@@ -623,9 +632,9 @@ const Expenses = ({navigation, route}) => {
                 placeholderTextColor="#ff0000"
                 value={input.fare}
                 onChangeText={text => {
-                  setinput({...input, fare: text});
+                  setinput({ ...input, fare: text });
                 }}
-                //iconname='location'
+              //iconname='location'
               />
             )}
             {input.type == 'Bike' && (
@@ -641,7 +650,7 @@ const Expenses = ({navigation, route}) => {
                   onChangeText={text => {
                     setdatetotalkm(text);
                   }}
-                  //iconname='location'
+                //iconname='location'
                 />
                 <CustomInput
                   type="text"
@@ -652,9 +661,9 @@ const Expenses = ({navigation, route}) => {
                   placeholderTextColor="#ff0000"
                   value={input.addtnl}
                   onChangeText={text => {
-                    setinput({...input, addtnl: text});
+                    setinput({ ...input, addtnl: text });
                   }}
-                  //iconname='location'
+                //iconname='location'
                 />
                 <CustomInput
                   type="text"
@@ -665,9 +674,9 @@ const Expenses = ({navigation, route}) => {
                   placeholderTextColor="#ff0000"
                   value={input.Custmr_Hq}
                   onChangeText={text => {
-                    setinput({...input, Custmr_Hq: text});
+                    setinput({ ...input, Custmr_Hq: text });
                   }}
-                  //iconname='location'
+                //iconname='location'
                 />
                 <CustomInput
                   type="text"
@@ -678,19 +687,19 @@ const Expenses = ({navigation, route}) => {
                   placeholderTextColor="#ff0000"
                   value={
                     isksk == 'ISK'
-                  ? JSON.stringify(
+                      ? JSON.stringify(
                         parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
                         parseFloat(input.addtnl * 2.9, 10) +
                         parseFloat(input.Custmr_Hq * 2.9, 10),
-                    )
-                  : JSON.stringify(
+                      )
+                      : JSON.stringify(
                         parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
                         parseFloat(input.addtnl * 2.75, 10) +
                         parseFloat(input.Custmr_Hq * 2.75, 10),
-                    )
+                      )
                   }
                   keyboardType="numeric"
-                  //iconname='location'
+                //iconname='location'
                 />
               </View>
             )}
@@ -703,9 +712,9 @@ const Expenses = ({navigation, route}) => {
               placeholderTextColor="#ff0000"
               value={input.lodge}
               onChangeText={text => {
-                setinput({...input, lodge: text});
+                setinput({ ...input, lodge: text });
               }}
-              //iconname='location'
+            //iconname='location'
             />
             <CustomInput
               type="text"
@@ -716,9 +725,9 @@ const Expenses = ({navigation, route}) => {
               placeholderTextColor="#ff0000"
               value={input.courier}
               onChangeText={text => {
-                setinput({...input, courier: text});
+                setinput({ ...input, courier: text });
               }}
-              //iconname='location'
+            //iconname='location'
             />
             <CustomInput
               type="text"
@@ -729,9 +738,9 @@ const Expenses = ({navigation, route}) => {
               placeholderTextColor="#ff0000"
               value={input.sundries}
               onChangeText={text => {
-                setinput({...input, sundries: text});
+                setinput({ ...input, sundries: text });
               }}
-              //iconname='location'
+            //iconname='location'
             />
             <CustomInput
               type="text"
@@ -740,10 +749,10 @@ const Expenses = ({navigation, route}) => {
               placeholderText="Enter Remarks                       "
               value={input.remarks}
               onChangeText={text => {
-                setinput({...input, remarks: text});
+                setinput({ ...input, remarks: text });
               }}
 
-              //iconname='location'
+            //iconname='location'
             />
             <CustomInput
               type="text"
@@ -754,31 +763,31 @@ const Expenses = ({navigation, route}) => {
                 param !== ''
                   ? param.total
                   : isksk == 'ISK'
-                  ? JSON.stringify(
+                    ? JSON.stringify(
                       parseFloat(input.da, 10) +
-                        parseFloat(input.fare, 10) +
-                        parseFloat(input.courier, 10) +
-                        parseFloat(input.lodge, 10) +
-                        parseFloat(input.sundries, 10) +
-                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
-                        parseFloat(input.addtnl * 2.9, 10) +
-                        parseFloat(input.Custmr_Hq * 2.9, 10),
+                      parseFloat(input.fare, 10) +
+                      parseFloat(input.courier, 10) +
+                      parseFloat(input.lodge, 10) +
+                      parseFloat(input.sundries, 10) +
+                      parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.9 +
+                      parseFloat(input.addtnl * 2.9, 10) +
+                      parseFloat(input.Custmr_Hq * 2.9, 10),
                     )
-                  : JSON.stringify(
+                    : JSON.stringify(
                       parseFloat(input.da, 10) +
-                        parseFloat(input.fare, 10) +
-                        parseFloat(input.courier, 10) +
-                        parseFloat(input.lodge, 10) +
-                        parseFloat(input.sundries, 10) +
-                        parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
-                        parseFloat(input.addtnl * 2.75, 10) +
-                        parseFloat(input.Custmr_Hq * 2.75, 10),
+                      parseFloat(input.fare, 10) +
+                      parseFloat(input.courier, 10) +
+                      parseFloat(input.lodge, 10) +
+                      parseFloat(input.sundries, 10) +
+                      parseFloat(input.type == 'Bike' ? datetotalkm : '0') * 2.75 +
+                      parseFloat(input.addtnl * 2.75, 10) +
+                      parseFloat(input.Custmr_Hq * 2.75, 10),
                     )
               }
-              // onChangeText={(text) => {
-              //   setinput({ ...input, total: text })
-              // }}
-              //iconname='location'
+            // onChangeText={(text) => {
+            //   setinput({ ...input, total: text })
+            // }}
+            //iconname='location'
             />
             <LoaderThree loader={loader} />
 
@@ -795,7 +804,7 @@ const Expenses = ({navigation, route}) => {
           </View>
         )}
         {state.length == 0 || loader == false || (
-          <View style={{flex: 1, justifyContent: 'center'}}>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={styles.text2}>{'Check Connection'}</Text>
           </View>
         )}
