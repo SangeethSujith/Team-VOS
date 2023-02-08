@@ -1,24 +1,24 @@
-import {StyleSheet, View, FlatList, Text, Dimensions,TouchableOpacity,Modal} from 'react-native';
-import {CustomHeaderTwo} from '../../Components/CustomHeaderTwo';
-import {COLORS, Fonts, SIZES} from '../../Styles/theme';
+import { StyleSheet, View, FlatList, Text, Dimensions, TouchableOpacity, Modal } from 'react-native';
+import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
+import { COLORS, Fonts, SIZES } from '../../Styles/theme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {API_URL, GET_LEDGER} from '../../Apis/FirstApi';
-import React, {useState, useEffect} from 'react';
-import {LoaderOne, LoaderTwo} from '../../Components/Loader';
-import {CustomFilter} from '../../Components/CustomFilter';
-import {Icon, icoMoonConfigSet} from '../../Styles/icons';
-import {CustomButton} from '../../Components/CustomButton';
+import { API_URL, GET_LEDGER } from '../../Apis/FirstApi';
+import React, { useState, useEffect } from 'react';
+import { LoaderOne, LoaderTwo } from '../../Components/Loader';
+import { CustomFilter } from '../../Components/CustomFilter';
+import { Icon, icoMoonConfigSet } from '../../Styles/icons';
+import { CustomButton } from '../../Components/CustomButton';
 import moment from 'moment';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const SubLedger = ({navigation, route}) => {
+const SubLedger = ({ navigation, route }) => {
   const [state1, setstate1] = useState('');
   useEffect(() => {
     getInvoices();
   }, []);
-  const item = ({item}) => {
+  const item = ({ item }) => {
     const openModal = item => {
       setstate1(item);
       setModalVisible(true);
@@ -27,7 +27,7 @@ const SubLedger = ({navigation, route}) => {
     return (
       <>
         <View
-          style={{flexDirection: 'row', borderWidth: 1, borderColor: '#d1d7db'}}>
+          style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#d1d7db' }}>
           <View
             style={{
               borderRightWidth: 1,
@@ -37,31 +37,31 @@ const SubLedger = ({navigation, route}) => {
               height: 30,
               justifyContent: 'center',
             }}>
-            <Text style={{color: COLORS.primary, fontSize: 14}}>
+            <Text style={{ color: COLORS.primary, fontSize: 14 }}>
               {' '}
               {item.TransDate}
             </Text>
           </View>
           <TouchableOpacity onPress={() => openModal(item)}>
-          <View
-            style={{
-              borderRightWidth: 1,
-              borderColor: '#d1d7db',
-              width: Width / 4,
-              height: 30,
-              justifyContent: 'center',
-              paddingLeft: 6,
-            }}>
-            <Text
+            <View
               style={{
-                color: COLORS.primary,
-                fontSize: 16,
-                textAlign: 'right',
-                marginRight: 5,
+                borderRightWidth: 1,
+                borderColor: '#d1d7db',
+                width: Width / 4,
+                height: 30,
+                justifyContent: 'center',
+                paddingLeft: 6,
               }}>
-              {item.TransNo}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  color: COLORS.primary,
+                  fontSize: 16,
+                  textAlign: 'right',
+                  marginRight: 5,
+                }}>
+                {item.TransNo}
+              </Text>
+            </View>
           </TouchableOpacity>
           <View
             style={{
@@ -103,7 +103,7 @@ const SubLedger = ({navigation, route}) => {
       </>
     );
   };
-  const {param} = route.params;
+  const { param } = route.params;
   const [loader, setloader] = useState(false);
   const [state, setstate] = useState('');
   const Width = Dimensions.get('window').width;
@@ -124,15 +124,15 @@ const SubLedger = ({navigation, route}) => {
     moment().subtract(30, 'days').format('DD-MM-YYYY'),
   );
 
-  const onDateSelected1 = async(event, value) => {
+  const onDateSelected1 = async (event, value) => {
     await setDate1(value);
     await setvalue2(moment(date1).format('DD-MM-YYYY'));
     console.log(value2);
     await setIsPickerShow(false);
   };
-  const onDateSelected2 = async(event, value) => {
-     await setDate2(value);
-     await setvalue1(moment(date2).format('DD-MM-YYYY'));
+  const onDateSelected2 = async (event, value) => {
+    await setDate2(value);
+    await setvalue1(moment(date2).format('DD-MM-YYYY'));
     console.log(value1);
     await setIsPickerShow2(false);
   };
@@ -142,7 +142,7 @@ const SubLedger = ({navigation, route}) => {
     // console.log('30 days before' + date);
     setPickerVisible(false);
   }
-  async function getInvoices(){
+  async function getInvoices() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
     // console.log('Invoices function');
@@ -172,28 +172,36 @@ const SubLedger = ({navigation, route}) => {
         //     ).toFixed(2))
         //     console.log('sdebit',sumdebit)
         //     console.log('scredit',sumcredit)  
-            // let sum = response.data.Data.reduce((a, c) => { return a + c.Debit }, 0);
-            // console.log('sum: ', sum)
-            // console.log(response.data.Data);
+        // let sum = response.data.Data.reduce((a, c) => { return a + c.Debit }, 0);
+        // console.log('sum: ', sum)
+        // console.log(response.data.Data);
 
 
-            // parseFloat(
-              //   state.reduce((a, c) => {
-                //     return a + c.Credit;
-                //   }, 0),
-                // ).toFixed(2) -
-                //   parseFloat(
-                  //     state.reduce((a, c) => {
-          //       return a + c.Debit;
-          //     }, 0),
-          //   ).toFixed(2)
-          
-          
-          setloader(false);
-          return {
-            response: response.data,
-          };
-        })
+        // parseFloat(
+        //   state.reduce((a, c) => {
+        //     return a + c.Credit;
+        //   }, 0),
+        // ).toFixed(2) -
+        //   parseFloat(
+        //     state.reduce((a, c) => {
+        //       return a + c.Debit;
+        //     }, 0),
+        //   ).toFixed(2)
+        console.log('credit', parseFloat(
+          state.reduce((a, c) => {
+            return a + c.Credit;
+          }, 0),
+        ).toFixed(1))
+        console.log('debit', parseFloat(
+          state.reduce((a, c) => {
+            return a + c.Debit;
+          }, 0),
+        ).toFixed(1))
+        setloader(false);
+        return {
+          response: response.data,
+        };
+      })
       .catch(err => {
         setloader(false);
         console.log(err);
@@ -223,16 +231,16 @@ const SubLedger = ({navigation, route}) => {
           PickerVisiblefalse={() => setPickerVisible(false)}
         />
         {state !== '' && state.length > 0 ? (
-          <View style={{marginHorizontal: 10}}>
+          <View style={{ marginHorizontal: 10 }}>
             <FlatList
               showsVerticalScrollIndicator={false}
               //inverted
               data={state}
               renderItem={item}
               keyExtractor={(item, index) => index}
-              style={{marginBottom: 120}}
+              style={{ marginBottom: 120 }}
               ListHeaderComponent={
-                <View style={{marginTop: 10}}>
+                <View style={{ marginTop: 10 }}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -248,7 +256,7 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
                         Date
                       </Text>
                     </View>
@@ -261,7 +269,7 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
                         Trans Type
                       </Text>
                     </View>
@@ -274,7 +282,7 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                         paddingLeft: 6,
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16,}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16, }}>
                         Debit
                       </Text>
                     </View>
@@ -285,7 +293,7 @@ const SubLedger = ({navigation, route}) => {
                         justifyContent: 'center',
                         paddingLeft: 6,
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
                         Credit
                       </Text>
                     </View>
@@ -309,7 +317,7 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
                         Total
                       </Text>
                     </View>
@@ -359,7 +367,7 @@ const SubLedger = ({navigation, route}) => {
                           color: COLORS.primary,
                           fontSize: 16,
                           textAlign: 'right',
-                          
+
                         }}>
                         {parseFloat(
                           state.reduce((a, c) => {
@@ -384,7 +392,7 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
                         Balance
                       </Text>
                     </View>
@@ -408,26 +416,26 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16}}>
-                      {parseFloat(
+                      <Text style={{ color: COLORS.primary, fontSize: 16 }}>
+                        {parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Credit;
                           }, 0),
-                        ).toFixed(1) < parseFloat(
+                        ).toFixed(1) > parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Debit;
                           }, 0),
-                        ).toFixed(1)?
+                        ).toFixed(1) ?
                           parseFloat(
-                          state.reduce((a, c) => {
-                            return a + c.Debit;
-                          }, 0),
-                        ).toFixed(2) -
+                            state.reduce((a, c) => {
+                              return a + c.Debit;
+                            }, 0),
+                          ).toFixed(1) -
                           parseFloat(
                             state.reduce((a, c) => {
                               return a + c.Credit;
                             }, 0),
-                          ).toFixed(2):' '}
+                          ).toFixed(1) : ' '}
                       </Text>
                     </View>
                     <View
@@ -437,26 +445,26 @@ const SubLedger = ({navigation, route}) => {
                         height: 30,
                         justifyContent: 'center',
                       }}>
-                      <Text style={{color: COLORS.primary, fontSize: 16,textAlign: 'right',}}>
+                      <Text style={{ color: COLORS.primary, fontSize: 16, textAlign: 'right', }}>
                         {parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Debit;
                           }, 0),
-                        ).toFixed(1) <= parseFloat(
+                        ).toFixed(1) >= parseFloat(
                           state.reduce((a, c) => {
                             return a + c.Credit;
                           }, 0),
-                        ).toFixed(1)?
+                        ).toFixed(1) ?
                           parseFloat(
-                          state.reduce((a, c) => {
-                            return a + c.Credit;
-                          }, 0),
-                        ).toFixed(2) -
+                            state.reduce((a, c) => {
+                              return a + c.Credit;
+                            }, 0),
+                          ).toFixed(2) -
                           parseFloat(
                             state.reduce((a, c) => {
                               return a + c.Debit;
                             }, 0),
-                          ).toFixed(2):' '}
+                          ).toFixed(2) : ' '}
                       </Text>
                     </View>
                   </View>
@@ -473,23 +481,23 @@ const SubLedger = ({navigation, route}) => {
                 //Alert.alert("Modal has been closed.");
                 setModalVisible(!modalVisible);
               }}>
-              <View style={[styles.modalStyle, {marginTop: Height / 10}]}>
-                <View style={{margin: 10}}>
+              <View style={[styles.modalStyle, { marginTop: Height / 10 }]}>
+                <View style={{ margin: 10 }}>
                   <Text style={styles.heading}>Invoice Details</Text>
                   <View style={styles.line} />
                   <View>
-                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
                       <Icon
                         name={'file-text1'}
                         color={'#319A2E'}
                         size={SIZES.radius15}
                         config={icoMoonConfigSet}
-                        style={{marginTop: 5}}
+                        style={{ marginTop: 5 }}
                       />
                       <View
                         style={{
                           marginLeft: 10,
-                          width: Width/2.7,
+                          width: Width / 2.7,
                         }}>
                         {/* <View style={styles.textrow}>
                           <View style={styles.innerrow}>
@@ -505,7 +513,7 @@ const SubLedger = ({navigation, route}) => {
                             <Text style={styles.text2}>{': '}</Text>
                           </View>
                           <Text style={styles.text}>{state1.TransNo}</Text>
-                          
+
                         </View>
                         <View style={styles.textrow}>
                           <View style={styles.innerrow}>
@@ -533,7 +541,7 @@ const SubLedger = ({navigation, route}) => {
                     />
                      </View> */}
                     <CustomButton
-                      style={{alignSelf: 'flex-end'}}
+                      style={{ alignSelf: 'flex-end' }}
                       width1={'30%'}
                       title={'Close'}
                       height1={'35%'}
@@ -551,7 +559,7 @@ const SubLedger = ({navigation, route}) => {
           </View>
         )}
         {state.length == 0 && loader == false && (
-          <View style={{marginTop: '90%', alignSelf: 'center'}}>
+          <View style={{ marginTop: '90%', alignSelf: 'center' }}>
             <Text>No Sub Ledger</Text>
           </View>
         )}
