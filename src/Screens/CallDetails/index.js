@@ -23,6 +23,7 @@ const CallDetails = ({ navigation, route }) => {
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
   const [loader, setloader] = useState(false)
+  const [statusText,setStatusText]=useState('')
   useEffect(() => {
     //();
     console.log('param', param)
@@ -84,6 +85,7 @@ const CallDetails = ({ navigation, route }) => {
 
   const PostSave = async () => {
     console.log('inside')
+    setStatusText('Preparing Data')
     const userData = await AsyncStorage.getItem('User_Data');
     let Data = JSON.parse(userData)
     let posts = {
@@ -101,13 +103,15 @@ const CallDetails = ({ navigation, route }) => {
       collection: input.collection,
       distance: input.distance,
       remarks: input.remarks
-
     }
     console.log('the data',posts)
     setloader(true);
 
+    setStatusText('Sending Request')
     axios.post(`https://ayurwarecrm.com/teamvos-new/ajax/save_call`, qs.stringify(posts)).then(async (response) => {
+      setStatusText('Sending Successful')
       if (response.status == 200) {
+        setStatusText('Recieved Response Successfully')
         setloader(false);
         Alert.alert(
           "Saved Successfully ", ' ',
@@ -121,12 +125,16 @@ const CallDetails = ({ navigation, route }) => {
         );
       }
       else {
+        setStatusText('Request Failed')
         setloader(false);
         Alert.alert(
           "Failed Saving Call Details, Try Again")
       }
     }
     ).catch((err) => {
+      setStatusText(err)
+      setloader(false);
+      Alert.alert("Failed Saving Call Details, Try Again")
       console.log(err)
     });
 
@@ -272,8 +280,8 @@ const CallDetails = ({ navigation, route }) => {
               setinput({ ...input, remarks: text })
             }}
           //iconname='location'
-
           />
+          <Text style={styles.text2}>{statusText}</Text>
           {param.status !== 'Visited' &&
             <View style={styles.buttonrow}>
               <CustomButton
