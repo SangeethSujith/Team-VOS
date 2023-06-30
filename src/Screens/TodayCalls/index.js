@@ -93,9 +93,8 @@ const TodayCalls = ({ navigation }) => {
                   />*/}
         </View>
         :
-        <View>
+        <View style={{justifyContent:'center',flex:1}}>
           <LoaderTwo loader={loader} />
-          <Text>Loading...............</Text>
         </View>
         }
       {state1.length == 0 && loader == false &&

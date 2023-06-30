@@ -23,7 +23,7 @@ const CallDetails = ({ navigation, route }) => {
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
   const [loader, setloader] = useState(false)
-  const [statusText,setStatusText]=useState('')
+  const [statusText, setStatusText] = useState('')
   useEffect(() => {
     //();
     console.log('param', param)
@@ -97,14 +97,14 @@ const CallDetails = ({ navigation, route }) => {
       products_prescribed: input.pProdct,
       order_booked: input.orderAmount,
       // Now defaulted today's date but need to fix this in the api
-      date:param.route_date===null?moment().format("YYYY-MM-DD"):param.route_date,
+      date: param.route_date === null ? moment().format("YYYY-MM-DD") : param.route_date,
       complaints: input.complaints,
       information_conveyed: input.informtn,
       collection: input.collection,
       distance: input.distance,
       remarks: input.remarks
     }
-    console.log('the data',posts)
+    console.log('the data', posts)
     setloader(true);
 
     setStatusText('Sending Request')
@@ -119,7 +119,7 @@ const CallDetails = ({ navigation, route }) => {
             {
               text: "Ok",
               cancelable: true,
-              onPress: () => navigation.navigate('TodayCallsRoute',{param:param2}),
+              onPress: () => navigation.navigate('TodayCallsRoute', { param: param2 }),
               style: "cancel",
             }],
         );
@@ -292,10 +292,10 @@ const CallDetails = ({ navigation, route }) => {
               <CustomButtonTwo
                 title={'Sample Issue'}
                 width1={SIZES.image210}
-                onPress={() => navigation.navigate('SampleIssue',{param:param.customer_id})}
+                onPress={() => navigation.navigate('SampleIssue', { param: param.customer_id })}
               />
             </View>}
-          <LoaderThree loader={loader} />
+          {loader && <LoaderThree loader={loader} />}
         </View>
       </KeyboardAwareScrollView>
     </View>

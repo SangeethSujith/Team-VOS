@@ -35,7 +35,7 @@ const LoaderTwo = (props) => {
     const { style, loader } = props;
 
     return (
-        <ActivityIndicator size="small"
+        <ActivityIndicator size="large"
             color={COLORS.primary}
             style={{ flex: 1, alignSelf: "center" }}
             animating={loader}
@@ -47,9 +47,9 @@ const LoaderThree = (props) => {
     const { style, loader } = props;
 
     return (
-        <ActivityIndicator size="small"
+        <ActivityIndicator size="large"
             color={COLORS.primary}
-            style={{ backgroundColor: 'transparent', alignSelf: 'center', marginTop: -30 }}
+            style={{ backgroundColor: 'transparent', alignSelf: 'center', zIndex:1}}
             animating={loader}
         />
     )

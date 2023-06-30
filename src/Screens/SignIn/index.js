@@ -154,12 +154,12 @@ const SignIn = ({ navigation }) => {
                 value={loginData.password}
                 errorMessage={loginError.password}
               />
+              {Loader&&<LoaderThree loader={Loader}/>}
               <CustomButton
-                title={'Sign In'}
+                title={Loader?'Loading...':'Sign In'}
                 onPress={() => handleLogin()}
               // onPress={() => navigation.navigate('Home')}
               />
-              <LoaderThree loader={Loader} />
               <Text style={styles.text}>
                 Forgot your Password??
               </Text>
