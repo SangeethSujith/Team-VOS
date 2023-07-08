@@ -106,7 +106,6 @@ const CallDetails = ({ navigation, route }) => {
     }
     console.log('the data', posts)
     setloader(true);
-
     setStatusText('Sending Request')
     axios.post(`https://ayurwarecrm.com/teamvos-new/ajax/save_call`, qs.stringify(posts)).then(async (response) => {
       setStatusText('Sending Successful')
@@ -132,7 +131,7 @@ const CallDetails = ({ navigation, route }) => {
       }
     }
     ).catch((err) => {
-      setStatusText(err)
+      setStatusText('Request Failed')
       setloader(false);
       Alert.alert("Failed Saving Call Details, Try Again")
       console.log(err)
