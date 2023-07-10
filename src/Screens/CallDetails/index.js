@@ -97,7 +97,7 @@ const CallDetails = ({ navigation, route }) => {
       products_prescribed: input.pProdct,
       order_booked: input.orderAmount,
       // Now defaulted today's date but need to fix this in the api
-      date: param.route_date === null ? moment().format("YYYY-MM-DD") : param.route_date,
+      date: param.route_date === undefined ? moment().format("YYYY-MM-DD") : param.route_date,
       complaints: input.complaints,
       information_conveyed: input.informtn,
       collection: input.collection,
@@ -118,7 +118,7 @@ const CallDetails = ({ navigation, route }) => {
             {
               text: "Ok",
               cancelable: true,
-              onPress: () => navigation.navigate('TodayCallsRoute', { param: param2 }),
+              onPress: () => param.route_date==undefined? navigation.navigate('TodayCalls'):navigation.navigate('TodayCallsRoute', { param: param2 }),
               style: "cancel",
             }],
         );
