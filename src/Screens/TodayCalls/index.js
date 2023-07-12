@@ -9,6 +9,7 @@ import { LoaderOne, LoaderTwo } from '../../Components/Loader';
 import qs from 'qs';
 import axios from 'axios';
 import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 //import {Cust}
 
 const TodayCalls = ({ navigation }) => {
@@ -16,9 +17,13 @@ const TodayCalls = ({ navigation }) => {
   const [loader, setloader] = useState(false);
   const [state1, setstate1] = useState('');
   // const { param } = route.params;
+  const isFocused = useIsFocused();
   useEffect(() => {
     getCalls()
-  }, []);
+    if(isFocused){ 
+      getCalls();
+  }
+  }, [isFocused]);
 
   async function getCalls() {
     setloader(true);

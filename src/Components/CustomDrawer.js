@@ -35,32 +35,32 @@ export default function CustomDrawerContent(props) {
     const dispatch = useDispatch();
     const [name, setname] = useState('')
     const [loader, setloader] = useState(false);
-    const [manager,setmanager]=useState('1');
-    useEffect(() =>  {
+    const [manager, setmanager] = useState('1');
+    useEffect(() => {
         getName();
     }, [props]);
 
     const getName = async () => {
         const userData = await AsyncStorage.getItem('User_Data');
-        if(userData){
-        // setloader(true)
-        let Data = await JSON.parse(userData)
-        console.log('data from drawer',Data)
-        await setname(Data.Name)
-        await setmanager(Data.isManager)
-        // setloader(false)
+        if (userData) {
+            // setloader(true)
+            let Data = await JSON.parse(userData)
+            console.log('data from drawer', Data)
+            await setname(Data.Name)
+            await setmanager(Data.isManager)
+            // setloader(false)
         }
     }
-     const LogoutClear = async() => {
+    const LogoutClear = async () => {
         await AsyncStorage.clear()
         props.navigation.dispatch(DrawerActions.closeDrawer())
         // props.navigation.navigate('SignInNew')
         props.navigation.reset({
             index: 0,
-            routes: [{name: 'SignInNew'}],
-          });
-     }
-    
+            routes: [{ name: 'SignInNew' }],
+        });
+    }
+
     const handleLogout = async (navigation) => {
         const user = {
             Status: ''
@@ -96,11 +96,11 @@ export default function CustomDrawerContent(props) {
             icon: require('../Assets/Images/ayurvedic.png'),
             stack: 'Products',
         },
-        manager=='0'?{
+        manager == '0' ? {
             label: 'Expenses',
             icon: require('../Assets/Images/budget.png'),
             stack: 'Expenseslist',
-        }:{
+        } : {
             label: 'Route Report',
             icon: require('../Assets/Images/homeicon6.png'),
             stack: 'RouteReportList'
@@ -132,12 +132,12 @@ export default function CustomDrawerContent(props) {
             label: 'Logout',
             icon: require('../Assets/Images/logout.png'),
             function: 'handleLogout',
-            stack:'SignIn',
+            stack: 'SignIn',
         },
         {
-            label:'Version 1.6.0',
+            label: 'Version 1.6.3',
             icon: require('../Assets/Images/index.jpg'),
-            stack:'Home',
+            stack: 'Home',
         }
     ]
 
@@ -155,9 +155,9 @@ export default function CustomDrawerContent(props) {
                         source={{ uri: 'https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }}
                     />
                     <Text style={styles.name}>{name}</Text>
-                    <Text style={styles.position}>{manager!=="1"&&'Sales Representative'}</Text>
+                    <Text style={styles.position}>{manager !== "1" && 'Sales Representative'}</Text>
                 </View>
-                    <LoaderTwo loader={loader} />
+                <LoaderTwo loader={loader} />
                 <View style={styles.line}></View>
                 {
                     stackArray.map((item, index) => {
@@ -203,7 +203,7 @@ export default function CustomDrawerContent(props) {
                                         <Text style={[styles.drawerLabel, { color: COLORS.gray_200 }]}>{item.label}</Text>
                                     }
                                     onPress={() =>
-                                      
+
                                         LogoutClear()
                                         // item.function ? handleLogout() && props.navigation.navigate(item.stack,
                                         //     item.screen && {
@@ -222,7 +222,7 @@ export default function CustomDrawerContent(props) {
                                     // focused={activeItem == item.stack ? true : false}
                                     key={index}
                                 />
-                                
+
                             )
                         }
                     })
