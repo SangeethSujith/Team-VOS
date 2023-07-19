@@ -36,7 +36,7 @@ export default function SplashSceen({ }) {
                         style={{resizeMode:'contain',alignSelf:'center',width:320 ,height:90}}
                         source={require('../../Assets/Images/namelogo.png')}
                     />
-            </SafeAreaView >
+            </SafeAreaView>
         );
     }
     else {

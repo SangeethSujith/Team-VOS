@@ -10,7 +10,7 @@ function BeforeLoginStack({ navigation }) {
     return (
         <NavigationContainer>
             <BeforeLoginCreator.Navigator
-                initialRouteName="SignIn"  >
+                initialRouteName="SignIn" >
                 <BeforeLoginCreator.Screen name="SignIn" component={SignIn}
                     options={{
                         header: () => null,
