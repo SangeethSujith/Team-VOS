@@ -413,6 +413,8 @@ const Expenses = ({ navigation, route }) => {
       })
       .catch(err => {
         console.log(err);
+        setloader(false);
+        Alert.alert('Failed Saving Expenses, Try Again');
       });
   };
 
