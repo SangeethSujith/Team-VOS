@@ -8,15 +8,11 @@ import {
   Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import { Icon, icoMoonConfigSet } from '../../Styles/icons';
 import { COLORS, Fonts, SIZES } from '../../Styles/theme';
 import { CustomHeaderTwo } from '../../Components/CustomHeaderTwo';
 import { CustomInput } from '../../Components/CustomInput';
 import { CustomButton } from '../../Components/CustomButton';
-import { CustomButtonTwo } from '../../Components/CustomButtonTwo';
-import LinearGradient from 'react-native-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DatePicker from 'react-native-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
@@ -417,6 +413,8 @@ const Expenses = ({ navigation, route }) => {
       })
       .catch(err => {
         console.log(err);
+        setloader(false);
+        Alert.alert('Failed Saving Expenses, Try Again');
       });
   };
 
