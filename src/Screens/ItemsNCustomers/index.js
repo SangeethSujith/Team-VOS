@@ -18,8 +18,6 @@ const ItemsNCustomers = ({ navigation, route }) => {
   const [state, setstate] = useState('');
   const [loader, setloader] = useState(false);
   const [loader1, setloader1] = useState(false);
-  const [details, setdetails] = useState('')
-  const [DetailsF, setDetailsF] = useState('')
   const [date, setDate] = useState(moment().subtract(30, 'days').format('DD-MM-YYYY'));
   const [total,settotal]=useState('0')
 
@@ -28,14 +26,6 @@ const ItemsNCustomers = ({ navigation, route }) => {
     console.log("30 days before" + date)
     setFilteredDataSource(state);
   }, []);
-  const Counter=(content)=>{
-    let count=content.reduce((acc, cur) => acc + 1, 0);
-    settotal(count)
-  }
-  const Height = Dimensions.get('window').height;
-  const [modalVisible, setModalVisible] = useState(false);
-  const [datePicker, setDatePicker] = useState(false);
-  const [datePicker1, setDatePicker1] = useState(false);
   const [value1, setvalue1] = useState(moment().format('DD-MM-YYYY'));
   const [value2, setvalue2] = useState(moment().subtract(30, 'days').format('DD-MM-YYYY'));
   const [date2, setDate2] = useState(new Date(Date.now()))
@@ -63,11 +53,6 @@ const ItemsNCustomers = ({ navigation, route }) => {
   async function getItems() {
     setloader(true);
     const token = await AsyncStorage.getItem('userToken');
-    // const current = new Date();
-    // const prior = new Date().setDate(current.getDate() - 30);
-    // const userData = await AsyncStorage.getItem('User_Data');
-    // let Data = JSON.parse(userData)
-    // console.log(current.toISOString().split('T')[0]);
     let headers = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -76,9 +61,9 @@ const ItemsNCustomers = ({ navigation, route }) => {
     console.log(param)
     axios.get(`${API_URL}/${NOT_PURCHASED}?FromDate=${value2}&ToDate=${value1}&CustomerCode=${param}`,
       headers).then(async (response) => {
-        await setstate(response.data.Data)
-        await setFilteredDataSource(response.data.Data)
-        await Counter(response.data.Data);
+        setstate(response.data.Data)
+        setFilteredDataSource(response.data.Data)
+        settotal(response.data.Data.length)
         setloader(false)
         return {
           response: response.data
@@ -89,7 +74,6 @@ const ItemsNCustomers = ({ navigation, route }) => {
   }
   const [search,setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState('');
-  // const [masterDataSource, setMasterDataSource] = useState(state);
   const searchFilterFunction = async(text) => {
     // Check if searched text is not blank
     if (text) {
